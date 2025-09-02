@@ -1,0 +1,15 @@
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\bin\Debug\net7.0\pratice.exe
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\bin\Debug\net7.0\pratice.deps.json
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\bin\Debug\net7.0\pratice.runtimeconfig.json
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\bin\Debug\net7.0\pratice.dll
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\bin\Debug\net7.0\pratice.pdb
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\pratice.csproj.AssemblyReference.cache
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\pratice.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\pratice.AssemblyInfoInputs.cache
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\pratice.AssemblyInfo.cs
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\pratice.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\pratice.dll
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\refint\pratice.dll
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\pratice.pdb
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\pratice.genruntimeconfig.cache
+C:\Users\user\Documents\GitHub\Team-Sparta-Unity-Education\pratice\obj\Debug\net7.0\ref\pratice.dll

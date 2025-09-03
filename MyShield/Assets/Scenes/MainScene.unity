@@ -194,6 +194,7 @@ MonoBehaviour:
   square: {fileID: 743312889066828344, guid: b156d1bad78251847ada9b83bc336297, type: 3}
   timeTxt: {fileID: 1925357290}
   nowScore: {fileID: 2103283172}
+  bestScore: {fileID: 1010992437}
 --- !u!4 &125414170
 Transform:
   m_ObjectHideFlags: 0

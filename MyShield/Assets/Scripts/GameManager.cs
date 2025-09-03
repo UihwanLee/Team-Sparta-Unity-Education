@@ -9,10 +9,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject square;
     [SerializeField] private Text timeTxt;
     [SerializeField] private Text nowScore;
+    [SerializeField] private Text bestScore;
 
     bool isPlay = true;
 
     float time = 0.0f;
+
+    string key = "bestScore";
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,6 +52,27 @@ public class GameManager : MonoBehaviour
         isPlay = false;
         Time.timeScale = 0.0f;
         nowScore.text = time.ToString("N2");
+
+        if(PlayerPrefs.HasKey(key))
+        {
+            float best = PlayerPrefs.GetFloat(key);
+            if(best < time)
+            {
+                PlayerPrefs.SetFloat(key, time);
+                bestScore.text = time.ToString("N2");
+            }
+            else
+            {
+                bestScore.text = best.ToString("N2");
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetFloat(key, time);
+            bestScore.text = time.ToString();
+        }
+
+
         endPannel.SetActive(true);
     }
 }

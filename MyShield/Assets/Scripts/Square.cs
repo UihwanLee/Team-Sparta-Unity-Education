@@ -18,7 +18,7 @@ public class Square : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        CheckTransform();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -26,6 +26,15 @@ public class Square : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             GameManager.Instance.GameOver();
+        }
+    }
+
+    // 화면에 벗어나면 삭제
+    private void CheckTransform()
+    {
+        if(this.gameObject.transform.position.y < -5.5f)
+        {
+            Destroy(this.gameObject);
         }
     }
 }

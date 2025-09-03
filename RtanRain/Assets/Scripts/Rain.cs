@@ -17,7 +17,7 @@ public class Rain : MonoBehaviour
 
         transform.position = new Vector3(x, y, 0);
 
-        int type = Random.Range(1, 4);
+        int type = Random.Range(1, 5);
 
         if(type == 1)
         {
@@ -37,14 +37,16 @@ public class Rain : MonoBehaviour
             score = 3;
             renderer.color = new Color(150 / 255f, 150 / 255f, 1f, 1f);
         }
+        // »¡°£ ºø¹æ¿ï ¸¸µé±â
+        else if (type == 4)
+        {
+            size = 0.8f;
+            score = -5;
+            renderer.color = new Color(1f, 100 / 255f, 100 / 255f, 1f);
+        }
+
 
         transform.localScale = new Vector3(size, size, 0);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

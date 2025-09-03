@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text nowScore;
     [SerializeField] private Text bestScore;
 
+    [SerializeField] private Animator anim;
+
     bool isPlay = true;
 
     float time = 0.0f;
@@ -50,7 +52,10 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isPlay = false;
-        Time.timeScale = 0.0f;
+        anim.SetBool("isDie", true);
+
+        Invoke("TimeStop", 0.5f);
+
         nowScore.text = time.ToString("N2");
 
         if(PlayerPrefs.HasKey(key))
@@ -74,5 +79,10 @@ public class GameManager : MonoBehaviour
 
 
         endPannel.SetActive(true);
+    }
+
+    void TimeStop()
+    {
+        Time.timeScale = 0.0f;
     }
 }

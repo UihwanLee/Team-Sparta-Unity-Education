@@ -7,6 +7,8 @@ public class GameManger : MonoBehaviour
 
     [SerializeField] private GameObject normalCat;
     [SerializeField] private GameObject fatCat;
+    [SerializeField] private GameObject pirateCat;
+
     [SerializeField] private GameObject retryBtn;
 
     [SerializeField] private RectTransform levelFront;
@@ -32,12 +34,6 @@ public class GameManger : MonoBehaviour
         InvokeRepeating("MakeCat", 0f, 1.0f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void MakeCat()
     {
         Instantiate(normalCat);
@@ -52,9 +48,13 @@ public class GameManger : MonoBehaviour
             int p = Random.Range(0, 10);
             if (p < 5) Instantiate(normalCat);
         }
-        else if(level >= 3)
+        else if(level == 3)
         {
             Instantiate(fatCat);
+        }
+        else if(level >= 4)
+        {
+            Instantiate(pirateCat);
         }
     }
 

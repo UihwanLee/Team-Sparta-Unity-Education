@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text timeTxt;
     [SerializeField] private GameObject endTxt;
 
+    private AudioSource audioSource;
+    public AudioClip clip;
+
     public int cardCount = 0;
 
     private float time = 30.0f;
@@ -27,6 +30,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1.0f;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -45,6 +49,7 @@ public class GameManager : MonoBehaviour
     {
         if(firstCard.idx == secondCard.idx)
         {
+            audioSource.PlayOneShot(clip);
             firstCard.DestoryCard();
             secondCard.DestoryCard();
             cardCount -= 2;

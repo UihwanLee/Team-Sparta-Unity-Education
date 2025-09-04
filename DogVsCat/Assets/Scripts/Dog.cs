@@ -7,7 +7,7 @@ public class Dog : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        InvokeRepeating("MakeFood", 0f, 0.5f);
+        InvokeRepeating("MakeFood", 0f, 0.2f);
     }
 
     private void Update()

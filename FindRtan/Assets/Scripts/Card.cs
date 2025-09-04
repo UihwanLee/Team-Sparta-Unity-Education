@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    int idx = 0;
+    public int idx = 0;
 
     [SerializeField] private GameObject front;
     [SerializeField] private GameObject back;
@@ -33,5 +33,37 @@ public class Card : MonoBehaviour
         anim.SetBool("isOpen", true);
         front.SetActive(true);
         back.SetActive(false);
+
+        if(GameManager.Instance.firstCard == null)
+        {
+            GameManager.Instance.firstCard = this;
+        }
+        else
+        {
+            GameManager.Instance.secondCard = this;
+            GameManager.Instance.Matched();
+        }
+    }
+
+    public void DestoryCard()
+    {
+        Invoke("DestoryCardInvoke", 1.0f);
+    }
+
+    public void DestoryCardInvoke()
+    {
+        Destroy(gameObject);
+    }
+
+    public void CloseCard()
+    {
+        Invoke("CloseCardInvoke", 1.0f);
+    }
+
+    public void CloseCardInvoke()
+    {
+        anim.SetBool("isOpen", false);
+        front.SetActive(false);
+        back.SetActive(true);
     }
 }

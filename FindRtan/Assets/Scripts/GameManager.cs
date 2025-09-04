@@ -9,8 +9,11 @@ public class GameManager : MonoBehaviour
     public Card secondCard;
 
     [SerializeField] private Text timeTxt;
+    [SerializeField] private GameObject endTxt;
 
-    private float time = 0.0f;
+    public int cardCount = 0;
+
+    private float time = 30.0f;
 
     private void Awake()
     {
@@ -23,14 +26,19 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        Time.timeScale = 1.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
+        time -= Time.deltaTime;
         timeTxt.text = time.ToString("N2");
+
+        if(time <= 0)
+        {
+            EndGame();
+        }
     }
 
     public void Matched()
@@ -39,6 +47,11 @@ public class GameManager : MonoBehaviour
         {
             firstCard.DestoryCard();
             secondCard.DestoryCard();
+            cardCount -= 2;
+            if(cardCount == 0)
+            {
+                EndGame();
+            }
         }
         else
         {
@@ -48,5 +61,11 @@ public class GameManager : MonoBehaviour
 
         firstCard = null;
         secondCard = null;
+    }
+
+    public void EndGame()
+    {
+        Time.timeScale = 0.0f;
+        endTxt.SetActive(true);
     }
 }

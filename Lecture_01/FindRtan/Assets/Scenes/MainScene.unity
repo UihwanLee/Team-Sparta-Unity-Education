@@ -638,7 +638,7 @@ GameObject:
   - component: {fileID: 1286451556}
   - component: {fileID: 1286451555}
   - component: {fileID: 1286451558}
-  - component: {fileID: 1286451557}
+  - component: {fileID: 1286451559}
   m_Layer: 5
   m_Name: EndTxt
   m_TagString: Untagged
@@ -707,18 +707,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1286451553}
   m_CullTransparentMesh: 1
---- !u!114 &1286451557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286451553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b84778f28bdf74a8db4c10fa4c7990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1286451558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -763,9 +751,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1286451557}
-        m_TargetAssemblyTypeName: RetryButton, Assembly-CSharp
-        m_MethodName: Retry
+      - m_Target: {fileID: 1286451559}
+        m_TargetAssemblyTypeName: RewardedButton, Assembly-CSharp
+        m_MethodName: ShowAd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -775,6 +763,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1286451559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286451553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8111c9c197dc8974a9f35d953988ab3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _androidAdUnitId: Rewarded_Android
+  _iOSAdUnitId: Rewarded_iOS
 --- !u!1 &1299603632
 GameObject:
   m_ObjectHideFlags: 0

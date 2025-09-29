@@ -62,7 +62,12 @@ namespace Text_RPG
             uiManager.OpenMenu();
             string input;
 
-            while(true)
+            Console.WriteLine("1. 상태 보기");
+            Console.WriteLine("2. 인벤토리");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+
+            while (true)
             {
                 Console.Write(">> ");
                 input = Console.ReadLine();
@@ -89,7 +94,10 @@ namespace Text_RPG
         {
             if (character == null) OpenMenu();
 
+            Console.Clear();
+
             uiManager.ShowState(character);
+
             string input;
 
             while (true)
@@ -118,7 +126,10 @@ namespace Text_RPG
         {
             if (character == null) OpenMenu();
 
+            Console.Clear();
+
             uiManager.ShowInventory(character.Inventroy);
+
             string input;
 
             while (true)
@@ -137,9 +148,56 @@ namespace Text_RPG
                     OpenMenu();
                     break;
                 case "1":
+                    ShowInventoryEquipped();
                     break;
                 default:
                     break;
+            }
+        }
+
+        // 인벤토리 - 장착 관리
+        private void ShowInventoryEquipped()
+        {
+            if (character == null) OpenMenu();
+
+            Console.Clear();
+
+            bool isEquipped = false;
+
+            uiManager.ShowInventoryEquipped(character.Inventroy);
+
+            string input;
+
+            while (true)
+            {
+                Console.Write(">> ");
+                input = Console.ReadLine();
+                Console.WriteLine();
+                if (input == "0") break;
+                if(int.TryParse(input, out int tmp))
+                {
+                    if(int.Parse(input) > 0 ||  int.Parse(input) < character.Inventroy.Items.Count)
+                    {
+                        // 현재 리스트에 내에 있는 숫자를 골랐을 때
+                        isEquipped = true;
+                        break;
+                    }
+                }
+                
+                // 인벤토리 
+                Console.WriteLine("잘못된 입력입니다");
+            }
+
+            if (input == "0")
+            {
+                Console.Clear();
+                OpenMenu();
+            }
+            
+            if(isEquipped)
+            {
+                // 인벤토리에서 idx로 검색하여 해당 아이템 장착
+                character.Inventroy.EquippedItemByIdx(int.Parse(input)-1, true);
             }
         }
     }

@@ -8,6 +8,6 @@ namespace ConsoleApp2
 {
     internal interface IAttackable
     {
-        void Attack();
+        void Attack(Character target);
     }
 }

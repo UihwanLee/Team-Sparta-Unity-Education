@@ -16,7 +16,7 @@ namespace Text_RPG
         public int price;
         public ItemType Type { get; private set; }
 
-        bool isEquipped;
+        public bool isEquipped;
 
         public Item(string name, string effect, string description, int price, ItemType type, bool isEquipped)
         {
@@ -34,10 +34,10 @@ namespace Text_RPG
             isEquipped = _isEquipped;
         }
 
-        public void DisplayInfo(bool _isEquipped)
+        public void DisplayInfo()
         {
             // 현재 장착 관리 상태인지 확인 후 아이템 정보 표시
-            string isEquippedTxt = (isEquipped && _isEquipped) ? "[E]" : "";
+            string isEquippedTxt = (isEquipped) ? "[E]" : "";
             Console.WriteLine($"{isEquippedTxt}{name}  | {effect}  | {description}");
         }
     }

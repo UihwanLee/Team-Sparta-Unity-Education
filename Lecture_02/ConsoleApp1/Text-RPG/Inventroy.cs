@@ -53,11 +53,15 @@ namespace Text_RPG
         }
 
         // 장비 장착/해제 - 인덱스 검색
-        public void EquippedItemByIdx(int idx, bool isEquipped)
+        public void EquippedItemByIdx(int idx)
         {
             if(items.Count <= 0 || idx >= items.Count) return;
 
-            items[idx].EquippedItem(isEquipped);
+            // 이미 장착 중이라면 장착 해제
+            if (items[idx].isEquipped) { items[idx].EquippedItem(false); }
+
+            // 장착 중인 상태가 아니라면 장착
+            else { items[idx].EquippedItem(true); }
         }
 
         // 인벤토리 보여주기
@@ -66,8 +70,9 @@ namespace Text_RPG
             Console.WriteLine("[아이템 목록]");
             for(int i=0; i<items.Count; i++)
             {
-                Console.Write($"- {i+1} : ");
-                items[i].DisplayInfo(isEquipped);
+                string idxTxt = (isEquipped) ? $"{i + 1} : " : "";
+                Console.Write($"- {idxTxt}");
+                items[i].DisplayInfo();
             }
         }
 

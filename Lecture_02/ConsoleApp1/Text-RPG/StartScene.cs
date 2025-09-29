@@ -163,6 +163,7 @@ namespace Text_RPG
             Console.Clear();
 
             bool isEquipped = false;
+            int equippedIdx = 0;
 
             uiManager.ShowInventoryEquipped(character.Inventroy);
 
@@ -174,10 +175,11 @@ namespace Text_RPG
                 input = Console.ReadLine();
                 Console.WriteLine();
                 if (input == "0") break;
-                if(int.TryParse(input, out int tmp))
+                if(int.TryParse(input, out equippedIdx))
                 {
-                    if(int.Parse(input) > 0 ||  int.Parse(input) < character.Inventroy.Items.Count)
+                    if (equippedIdx > 0 && equippedIdx <= character.Inventroy.Items.Count)
                     {
+                        Console.WriteLine("짱");
                         // 현재 리스트에 내에 있는 숫자를 골랐을 때
                         isEquipped = true;
                         break;
@@ -197,8 +199,10 @@ namespace Text_RPG
             if(isEquipped)
             {
                 // 인벤토리에서 idx로 검색하여 해당 아이템 장착
-                character.Inventroy.EquippedItemByIdx(int.Parse(input)-1, true);
+                character.Inventroy.EquippedItemByIdx(equippedIdx-1);
             }
+
+            ShowInventoryEquipped();
         }
     }
 }

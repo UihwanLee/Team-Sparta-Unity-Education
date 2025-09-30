@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,12 +16,10 @@ namespace Text_RPG
          * 다만 모든 오브젝트는 start(), update()를 실행한다.
          * 
          */
-        private Character character;
-        List<IGameObject> gameObjects = new List<IGameObject>();
 
-        private delegate void uiHandler();
+        private Character character;    // 이 Scene에서 사용할 Character
 
-        private Action<int, int> Event;
+        private Action currentView;   // 현재 창 (시작창, 스탯창 등)
 
         public StartScene(int index, UIManager uIManager) : base(index, uIManager)
         {
@@ -44,8 +43,8 @@ namespace Text_RPG
                 gameObject.Start();
             }
 
-            // 튜토리얼 띄우기
-            OpenMenu();
+            // 처음 View 설정: StarView
+            currentView = StartView;
         }
 
         public override void Update()
@@ -57,95 +56,51 @@ namespace Text_RPG
             {
                 gameObject.Update();
             }
+
+            // View 변할 때 마다 실행
+            currentView?.Invoke();
         }
 
-        //public void RunGame(int _option)
-        //{
-        //    switch(_option)
-        //    {
-        //        case 0:
-        //            uiHandler = OpenMenu;
-        //            break;
-
-        //    }
-        //}
-
         // 메뉴 열기
-        private void OpenMenu()
+        private void StartView()
         {
             Console.Clear();
             uiManager.OpenMenu();
 
             var choice = GetUserChoice(["1", "2"]);
 
-            switch (choice)
-            {
-                case "1":
-                    ShowState();
-                    break;
-                case "2":
-                    ShowInventory();
-                    break;
-                default:
-                    break;
-            }
+            currentView = (choice == "1") ? StateView : InventoryView;
         }
 
         // 상태 보기
-        private void ShowState()
+        private void StateView()
         {
-            if (character == null) OpenMenu();
-
             Console.Clear();
 
             uiManager.ShowState(character);
 
             var choice = GetUserChoice(["0"]);
 
-            switch (choice)
-            {
-                case "0":
-                    OpenMenu();
-                    break;
-                default:
-                    Console.WriteLine("잘못된 입력입니다");
-                    break;
-
-            }
+            currentView =StartView;
         }
 
         // 인벤토리 보기
-        private void ShowInventory()
+        private void InventoryView()
         {
-            if (character == null) OpenMenu();
-
             Console.Clear();
 
             uiManager.ShowInventory(character.Inventroy);
 
             var choice = GetUserChoice(["0", "1"]);
 
-            switch (choice)
-            {
-                case "0":
-                    OpenMenu();
-                    break;
-                case "1":
-                    ShowInventoryEquipped();
-                    break;
-                default:
-                    break;
-            }
+            currentView = (choice == "0") ? StartView : InventoryEquippedView;
         }
 
         // 인벤토리 - 장착 관리
-        private void ShowInventoryEquipped()
+        private void InventoryEquippedView()
         {
-            if (character == null) OpenMenu();
-
             Console.Clear();
 
-            bool isEquipped = false;
             int equippedIdx = 0;
 
             uiManager.ShowInventoryEquipped(character.Inventroy);
@@ -156,26 +111,15 @@ namespace Text_RPG
 
             var choice = GetUserChoice(vaildItemOption);
 
-            switch(choice)
-            {
-                case "0":
-                    OpenMenu();
-                    break;
-                default:
-                    {
-                        equippedIdx = int.Parse(choice.ToString());
-                        isEquipped = true;
-                        break;
-                    }
-            }
-            
-            if(isEquipped)
-            {
-                // 인벤토리에서 idx로 검색하여 해당 아이템 장착
-                character.Inventroy.EquippedItemByIdx(equippedIdx-1);
-            }
+            // 나가기 설정
+            if(choice=="0") { currentView = StartView; return; }
 
-            ShowInventoryEquipped();
+            // 인벤토리에서 idx로 검색하여 해당 아이템 장착
+            equippedIdx = int.Parse(choice.ToString());
+            character.Inventroy.EquippedItemByIdx(equippedIdx - 1);
+
+            // 창 변경
+            currentView = InventoryEquippedView;
         }
 
         // 옵션 메뉴 창만 따로 빼기

@@ -11,6 +11,9 @@ namespace Text_RPG
         protected int index;
         protected UIManager uiManager;
 
+        // Scene에서 표시할 모든 오브젝트
+        protected List<IGameObject> gameObjects = new List<IGameObject>();
+
         public Scene(int index, UIManager uIManager)
         {
             this.index = index;

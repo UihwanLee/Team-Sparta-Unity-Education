@@ -18,6 +18,10 @@ namespace Text_RPG
         private Character character;
         List<IGameObject> gameObjects = new List<IGameObject>();
 
+        private delegate void uiHandler();
+
+        private Action<int, int> Event;
+
         public StartScene(int index, UIManager uIManager) : base(index, uIManager)
         {
 
@@ -55,28 +59,26 @@ namespace Text_RPG
             }
         }
 
+        //public void RunGame(int _option)
+        //{
+        //    switch(_option)
+        //    {
+        //        case 0:
+        //            uiHandler = OpenMenu;
+        //            break;
+
+        //    }
+        //}
+
         // 메뉴 열기
         private void OpenMenu()
         {
             Console.Clear();
             uiManager.OpenMenu();
-            string input;
 
-            Console.WriteLine("1. 상태 보기");
-            Console.WriteLine("2. 인벤토리");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            var choice = GetUserChoice(["1", "2"]);
 
-            while (true)
-            {
-                Console.Write(">> ");
-                input = Console.ReadLine();
-                Console.WriteLine();
-                if (input == "1" || input == "2") break;
-                Console.WriteLine("잘못된 입력입니다");
-            }
-
-            switch (input)
+            switch (choice)
             {
                 case "1":
                     ShowState();
@@ -98,18 +100,9 @@ namespace Text_RPG
 
             uiManager.ShowState(character);
 
-            string input;
+            var choice = GetUserChoice(["0"]);
 
-            while (true)
-            {
-                Console.Write(">> ");
-                input = Console.ReadLine();
-                Console.WriteLine();
-                if (input == "0") break;
-                Console.WriteLine("잘못된 입력입니다");
-            }
-
-            switch (input)
+            switch (choice)
             {
                 case "0":
                     OpenMenu();
@@ -130,19 +123,9 @@ namespace Text_RPG
 
             uiManager.ShowInventory(character.Inventroy);
 
-            string input;
+            var choice = GetUserChoice(["0", "1"]);
 
-            while (true)
-            {
-                Console.Write(">> ");
-                input = Console.ReadLine();
-                Console.WriteLine();
-                if (input == "1" || input == "0") break;
-                Console.WriteLine("잘못된 입력입니다");
-            }
-
-
-            switch (input)
+            switch (choice)
             {
                 case "0":
                     OpenMenu();
@@ -167,33 +150,23 @@ namespace Text_RPG
 
             uiManager.ShowInventoryEquipped(character.Inventroy);
 
-            string input;
+            // 선택 가능한 장비 배열 만들기
+            int vaildCount = character.Inventroy.Items.Count;
+            string[] vaildItemOption = Enumerable.Range(0, vaildCount+1).Select(i => i.ToString()).ToArray();   // LINQ 문법
 
-            while (true)
+            var choice = GetUserChoice(vaildItemOption);
+
+            switch(choice)
             {
-                Console.Write(">> ");
-                input = Console.ReadLine();
-                Console.WriteLine();
-                if (input == "0") break;
-                if(int.TryParse(input, out equippedIdx))
-                {
-                    if (equippedIdx > 0 && equippedIdx <= character.Inventroy.Items.Count)
+                case "0":
+                    OpenMenu();
+                    break;
+                default:
                     {
-                        Console.WriteLine("짱");
-                        // 현재 리스트에 내에 있는 숫자를 골랐을 때
+                        equippedIdx = int.Parse(choice.ToString());
                         isEquipped = true;
                         break;
                     }
-                }
-                
-                // 인벤토리 
-                Console.WriteLine("잘못된 입력입니다");
-            }
-
-            if (input == "0")
-            {
-                Console.Clear();
-                OpenMenu();
             }
             
             if(isEquipped)
@@ -203,6 +176,21 @@ namespace Text_RPG
             }
 
             ShowInventoryEquipped();
+        }
+
+        // 옵션 메뉴 창만 따로 빼기
+        private string GetUserChoice(string[] vaildOptions)
+        {
+            string choice;
+            while(true) {
+                Console.Write(">> ");
+                choice = Console.ReadLine();
+                Console.WriteLine();
+
+                foreach (var option in vaildOptions) if (choice == option) return choice;
+
+                Console.WriteLine("잘못된 입력입니다.");
+            }
         }
     }
 }

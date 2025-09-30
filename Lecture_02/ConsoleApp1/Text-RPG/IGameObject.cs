@@ -13,3 +13,4 @@ namespace Text_RPG
         void Render();
     }
 }
+

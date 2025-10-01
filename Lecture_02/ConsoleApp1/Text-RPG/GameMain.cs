@@ -18,7 +18,6 @@ namespace Text_RPG
         static bool isRunning;              // 게임 종료/실행 변수r
       
         static Scene currentScene;          // 현재 실행되고 있는 Scene
-        static Scene scene01;
 
         static void Main(string[] args)
         {
@@ -32,11 +31,9 @@ namespace Text_RPG
             // 게임 실행
             isRunning = true;
 
-            // UI, Scene 오브젝트 생성
-            scene01 = new StartScene(0);
-
             // 현재 씬 지정
-            currentScene = scene01;
+            SceneManager.Instance.InitScene();
+            currentScene = SceneManager.Instance.LoadScene("MainScene");
         }
 
         static void Start()

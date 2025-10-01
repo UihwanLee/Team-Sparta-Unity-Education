@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG.Scenes
 {
-    internal class StartScene : Scene
+    internal class MainScene : Scene
     {
         /*
          * StartScene: 초기 상태를 확인할 수 있는 씬
@@ -27,7 +27,7 @@ namespace Text_RPG.Scenes
 
         private Action currentView;   // 현재 창 (시작창, 스탯창 등)
 
-        public StartScene(int index) : base(index)
+        public MainScene(int index) : base(index)
         {
 
         }

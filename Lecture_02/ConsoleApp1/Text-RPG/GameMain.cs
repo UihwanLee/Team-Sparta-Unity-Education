@@ -16,11 +16,7 @@ namespace Text_RPG
      */
     internal class GameMain
     {
-        static bool isRunning;              // 게임 종료/실행 변수r
-      
-        static Scene currentScene;          // 현재 실행되고 있는 Scene
-
-        static float elapsed;
+        static bool isRunning;              // 게임 종료/실행 변수
 
         static void Main(string[] args)
         {
@@ -46,21 +42,16 @@ namespace Text_RPG
 
         static void Update()
         {
-            // 시간 경과 확인 할 수 있는 DataTime 구조체 생성
-            DateTime prevTime = DateTime.Now;
+            TimeManager.Instance.InitTime();
 
             // 게임이 실행되는 동안 동작하는 부분
             while (isRunning)
             {
-                // DeltaTime 계산 후 elapsed 반환
-                DateTime now = DateTime.Now;
-                TimeSpan delta = now - prevTime;
-                prevTime = now;
-
-                elapsed = (float)delta.TotalSeconds;
+                // elapsed / deltaTime 계산
+                TimeManager.Instance.UpdateTime();
 
                 // 현재 씬 Update()
-                GameManager.Instance.CurrentScene.Update(elapsed);
+                GameManager.Instance.CurrentScene.Update(TimeManager.Instance.Elapsed);
             }
         }
     }

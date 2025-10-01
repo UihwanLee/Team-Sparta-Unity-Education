@@ -23,8 +23,6 @@ namespace Text_RPG.Scenes
          * 
          */
 
-        private float time;
-
         public MainScene(int index) : base(index)
         {
 
@@ -51,23 +49,27 @@ namespace Text_RPG.Scenes
             ChangeView(MainView);
         }
 
-        public override void Update(float elasped)
+        public override void Update(float elapsed)
         {
-            base .Update(elasped);
+            base .Update(elapsed);
 
             // 오브젝트 업데이트
             foreach(var gameObject in gameObjects)
             {
-                gameObject.Update(elasped);
+                gameObject.Update(elapsed);
             }
 
-            time = elasped;
+            currentView?.Invoke(elapsed);
         }
 
         // 메뉴 열기
-        private void MainView()
+        private void MainView(float elapsed)
         {
-            UIManager.Instance.MainView();
+            if(!hasExecuted)
+            {
+                UIManager.Instance.MainView();
+                hasExecuted = true;
+            }
 
             var choice = GetUserChoice(["1", "2", "3"]);
 
@@ -91,7 +93,7 @@ namespace Text_RPG.Scenes
         }
 
         // 상태 보기
-        private void StateView()
+        private void StateView(float elapsed)
         {
             UIManager.Instance.StateView(player);
             var choice = GetUserChoice(["0"]);
@@ -99,9 +101,8 @@ namespace Text_RPG.Scenes
         }
 
         // 인벤토리 보기
-        private void InventoryView()
+        private void InventoryView(float elapsed)
         {
-            Console.Clear();
             UIManager.Instance.InventoryView(player.Inventroy);
             var choice = GetUserChoice(["0", "1"]);
 
@@ -110,7 +111,7 @@ namespace Text_RPG.Scenes
         }
 
         // 인벤토리 - 장착 관리
-        private void InventoryEquippedView()
+        private void InventoryEquippedView(float elapsed)
         {
             Console.Clear();
             int equippedIdx = 0;

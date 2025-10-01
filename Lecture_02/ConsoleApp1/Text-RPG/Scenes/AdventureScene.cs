@@ -22,9 +22,7 @@ namespace Text_RPG.Scenes
          */
         private Player player;
 
-        private Action currentView;
-
-        float elapsed = 0f;
+        float startTime = 0f;
 
         public AdventureScene(int index) : base(index)
         {
@@ -55,30 +53,33 @@ namespace Text_RPG.Scenes
         {
             base.Update(elapsed);
 
-            // 시간 경과 체크
-            this.elapsed = elapsed;
-
             // 오브젝트 업데이트
             foreach (var gameObject in gameObjects)
             {
                 gameObject.Update(elapsed);
             }
+
+            currentView?.Invoke(elapsed);
         }
 
-        private void AdventureView()
+        private void AdventureView(float elapsed)
         {
-            UIManager.Instance.AdventureView();
+            if(!hasExecuted)
+            {
+                UIManager.Instance.AdventureView();
+                hasExecuted = true;
+            }
 
             var choice = GetUserChoice(["1", "0"]);
 
             // 나가기 누르면 MainScene으로 이동
-            if(choice == "0")
+            if (choice == "0")
             {
                 GameManager.Instance.LoadScene("MainScene");
                 return;
             }
 
-            Action view;
+            Action<float> view;
             // 현재 캐릭터의 스태미너가 부족하면 돌아감
             if (player.Stamina < 20)
             {
@@ -95,19 +96,46 @@ namespace Text_RPG.Scenes
             // 3초 시간 경과 후 실행
             Thread.Sleep(3000);
 
-            // 3초 지남
-            Console.WriteLine("3초지남");
-            ChangeView(view);
+            ChangeView(RandomAdventureView);
         }
 
-        private async void RandomAdventureView()
+        private void RandomAdventureView(float elapsed)
         {
-            UIManager.Instance.RandomAdventureView();
+            if (!hasExecuted)
+            {
+                UIManager.Instance.RandomAdventureView();
+                hasExecuted = true;
+            }
 
-            // 모험 중. 표시
-            string message = (elapsed % 5 > 3f) ? "모험중.." : "모험중...";
-            Console.WriteLine(message);
+            RandomEvent(10.0f);
+        }
 
+        private void RandomEvent(float duration)
+        {
+            if(!hasExecuted)
+            {
+                startTime = TimeManager.Instance.Elapsed;
+            }
+
+            TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
+
+            if (TimeManager.Instance.LocalElapsed < duration)
+            {
+                // 모험중 깜빡임
+                string baseText = "모험중";
+                int dotCount = ((int)(TimeManager.Instance.LocalElapsed * 2) % 3) + 1; // 1~3점
+                string message = baseText + new string('.', dotCount);
+                Console.Write("\r" + message.PadRight(baseText.Length + 3));
+            }
+            else if (TimeManager.Instance.LocalElapsed > 3f && TimeManager.Instance.LocalElapsed < duration)
+            {
+                Console.Write("\r" + "곰이 나타남");
+            }
+            else
+            {
+                // 이벤트 종료
+                ChangeView(AdventureView);
+            }
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Text_RPG
         };
 
         // 현재 창 (시작창, 스탯창 등)
-        protected Action currentView;
+        protected Action<float> currentView;
 
         // 초기 씬 생성
         public void InitGame()

@@ -29,7 +29,7 @@ namespace Text_RPG
         }
 
         // 업데이트
-        public virtual void Update()
+        public virtual void Update(float elapsed)
         {
             
         }

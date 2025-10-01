@@ -49,14 +49,14 @@ namespace Text_RPG.Scenes
             currentView = MainView;
         }
 
-        public override void Update()
+        public override void Update(float elasped)
         {
-            base .Update();
+            base .Update(elasped);
 
             // 오브젝트 업데이트
             foreach(var gameObject in gameObjects)
             {
-                gameObject.Update();
+                gameObject.Update(elasped);
             }
 
             // View 변할 때 마다 실행

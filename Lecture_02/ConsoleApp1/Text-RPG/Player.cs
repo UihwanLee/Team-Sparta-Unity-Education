@@ -41,9 +41,9 @@ namespace Text_RPG
         }
 
         // 업데이트
-        public override void Update()
+        public override void Update(float elapsed)
         {
-            base.Update();
+            base.Update(elapsed);
         }
 
         // 랜더

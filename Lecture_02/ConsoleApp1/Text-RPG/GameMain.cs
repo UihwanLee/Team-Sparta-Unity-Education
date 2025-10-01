@@ -1,4 +1,5 @@
-﻿using Text_RPG.Scenes;
+﻿using System.Diagnostics;
+using Text_RPG.Scenes;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace Text_RPG
@@ -43,11 +44,19 @@ namespace Text_RPG
 
         static void Update()
         {
+            // 시간 경과 확인 할 수 있는 시간 클래스 생성
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             // 게임이 실행되는 동안 동작하는 부분
             while (isRunning)
             {
+                // 이전 루프에서 경과한 시간 계산
+                float elapsed = (float)stopwatch.Elapsed.TotalSeconds;
+                stopwatch.Restart(); // 다음 루프를 위해 초기화
+
                 // 현재 씬 Update()
-                GameManager.Instance.CurrentScene.Update();
+                GameManager.Instance.CurrentScene.Update(elapsed);
             }
         }
     }

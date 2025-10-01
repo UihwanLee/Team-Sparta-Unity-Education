@@ -27,7 +27,7 @@ namespace Text_RPG.Scenes
 
         }
 
-        public virtual void Update()
+        public virtual void Update(float elapsed)
         {
 
         }

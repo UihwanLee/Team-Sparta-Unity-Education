@@ -9,7 +9,7 @@ namespace Text_RPG
     internal interface IGameObject
     {
         void Start();
-        void Update();
+        void Update(float elapsed);
         void Render();
     }
 }

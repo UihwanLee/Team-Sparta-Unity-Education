@@ -49,14 +49,14 @@ namespace Text_RPG.Scenes
             currentView = AdventureView;
         }
 
-        public override void Update()
+        public override void Update(float elapsed)
         {
-            base.Update();
+            base.Update(elapsed);
 
             // 오브젝트 업데이트
             foreach (var gameObject in gameObjects)
             {
-                gameObject.Update();
+                gameObject.Update(elapsed);
             }
 
             // View 변할 때 마다 실행

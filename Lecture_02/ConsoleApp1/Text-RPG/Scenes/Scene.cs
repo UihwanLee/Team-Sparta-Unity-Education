@@ -14,7 +14,7 @@ namespace Text_RPG.Scenes
 
         protected Action<float> currentView;   // 현재 창 (시작창, 스탯창 등)
 
-        protected bool hasExecuted = false;       // 한번만 호출할 수 있게 하는 변수
+        protected Dictionary<string, bool> hasExecutedList = new Dictionary<string, bool>();     // 한번만 호출할 수 있게 하는 변수
 
         // Scene에서 표시할 모든 오브젝트
         protected List<IGameObject> gameObjects = new List<IGameObject>();
@@ -22,6 +22,11 @@ namespace Text_RPG.Scenes
         public Scene(int index)
         {
             this.index = index;
+        }
+
+        public virtual void Init()
+        { 
+
         }
 
         public virtual void Start()
@@ -35,12 +40,11 @@ namespace Text_RPG.Scenes
         }
 
         // View 바꾸기
-        protected void ChangeView(Action<float> view)
+        public virtual void ChangeView(Action<float> view)
         {
             if (view == null) return;
 
             Console.Clear();
-            hasExecuted = false;
             currentView = view;
             currentView.Invoke(0f);
         }
@@ -60,8 +64,5 @@ namespace Text_RPG.Scenes
                 Console.WriteLine("잘못된 입력입니다.");
             }
         }
-
-        // 프로퍼티
-        public bool HasExecuted { get { return hasExecuted; } set { hasExecuted = value; } }
     }
 }

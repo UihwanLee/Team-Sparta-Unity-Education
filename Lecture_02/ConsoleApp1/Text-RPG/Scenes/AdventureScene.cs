@@ -24,13 +24,14 @@ namespace Text_RPG.Scenes
 
         float startTime = 0f;
 
+
         public AdventureScene(int index) : base(index)
         {
         }
 
-        public override void Start()
+        public override void Init()
         {
-            base.Start();
+            base.Init();
 
             // 오브젝트 초기화
             gameObjects.Clear();
@@ -45,8 +46,25 @@ namespace Text_RPG.Scenes
                 gameObject.Start();
             }
 
+            // bool 값 초기화
+            hasExecutedList.Clear();
+            hasExecutedList["AdventureView"] = false;
+            hasExecutedList["RandomAdventureView"] = false;
+            hasExecutedList["RandomEvent"] = false;
+
             // 처음 View 설정: StarView
             ChangeView(AdventureView);
+        }
+
+        public override void Start()
+        {
+            base.Start();
+
+            // 초기화 (모든 값 false로)
+            foreach (var key in hasExecutedList.Keys.ToList())
+            {
+                hasExecutedList[key] = false;
+            }
         }
 
         public override void Update(float elapsed)
@@ -64,10 +82,10 @@ namespace Text_RPG.Scenes
 
         private void AdventureView(float elapsed)
         {
-            if(!hasExecuted)
+            if(!hasExecutedList["AdventureView"])
             {
-                UIManager.Instance.AdventureView();
-                hasExecuted = true;
+                UIManager.Instance.AdventureView(player);
+                hasExecutedList["AdventureView"] = true;
             }
 
             var choice = GetUserChoice(["1", "0"]);
@@ -101,10 +119,10 @@ namespace Text_RPG.Scenes
 
         private void RandomAdventureView(float elapsed)
         {
-            if (!hasExecuted)
+            if (!hasExecutedList["RandomAdventureView"])
             {
                 UIManager.Instance.RandomAdventureView();
-                hasExecuted = true;
+                hasExecutedList["RandomAdventureView"] = true;
             }
 
             RandomEvent(10.0f);
@@ -112,9 +130,10 @@ namespace Text_RPG.Scenes
 
         private void RandomEvent(float duration)
         {
-            if(!hasExecuted)
+            if(!hasExecutedList["RandomEvent"])
             {
                 startTime = TimeManager.Instance.Elapsed;
+                hasExecutedList["RandomEvent"] = true;
             }
 
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
@@ -136,6 +155,12 @@ namespace Text_RPG.Scenes
                 // 이벤트 종료
                 ChangeView(AdventureView);
             }
+        }
+
+        public override void ChangeView(Action<float> view)
+        {
+            this.Start();
+            base.ChangeView(view);
         }
     }
 }

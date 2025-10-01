@@ -37,7 +37,7 @@ namespace Text_RPG
         static void Start()
         {
             // 현재 씬 Start()
-            GameManager.Instance.CurrentScene.Start();
+            GameManager.Instance.CurrentScene.Init();
         }
 
         static void Update()

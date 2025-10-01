@@ -90,7 +90,7 @@ namespace Text_RPG
 
             Console.Clear();
             currentScene = sceneList[idx];
-            currentScene.Start();
+            currentScene.Init();
         }
 
         // 씬 이동 : 이름으로 탐색
@@ -101,7 +101,7 @@ namespace Text_RPG
 
             Console.Clear();
             currentScene = sceneList[sceneDictionary[name]];
-            currentScene.Start();
+            currentScene.Init();
         }
 
         // 프러퍼티

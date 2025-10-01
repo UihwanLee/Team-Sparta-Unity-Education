@@ -28,9 +28,9 @@ namespace Text_RPG.Scenes
 
         }
 
-        public override void Start()
+        public override void Init()
         {
-            base.Start();
+            base.Init();
 
             // 오브젝트 초기화
             gameObjects.Clear();
@@ -45,8 +45,23 @@ namespace Text_RPG.Scenes
                 gameObject.Start();
             }
 
+            // bool 값 초기화
+            hasExecutedList.Clear();
+            hasExecutedList["MainView"] = false;
+
             // 처음 View 설정: StarView
             ChangeView(MainView);
+        }
+
+        public override void Start()
+        {
+            base.Start();
+
+            // 초기화 (모든 값 false로)
+            foreach (var key in hasExecutedList.Keys.ToList())
+            {
+                hasExecutedList[key] = false;
+            }
         }
 
         public override void Update(float elapsed)
@@ -65,10 +80,10 @@ namespace Text_RPG.Scenes
         // 메뉴 열기
         private void MainView(float elapsed)
         {
-            if(!hasExecuted)
+            if (!hasExecutedList["MainView"])
             {
                 UIManager.Instance.MainView();
-                hasExecuted = true;
+                hasExecutedList["MainView"] = true;
             }
 
             var choice = GetUserChoice(["1", "2", "3"]);
@@ -131,6 +146,12 @@ namespace Text_RPG.Scenes
 
             // 창 변경
             ChangeView(InventoryEquippedView);
+        }
+
+        public override void ChangeView(Action<float> view)
+        {
+            this.Start();
+            base.ChangeView(view);
         }
     }
 }

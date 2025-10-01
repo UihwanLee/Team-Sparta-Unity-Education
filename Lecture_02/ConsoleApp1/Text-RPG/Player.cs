@@ -90,6 +90,17 @@ namespace Text_RPG
                 if (value < 0) stamina = 0;
                 else stamina = value;
             } 
-        } 
+        }
+
+        // 골드
+        public int Gold
+        {
+            get { return gold; }
+            set
+            {
+                if (value < 0) gold = 0;
+                else gold = value;
+            }
+        }
     }
 }

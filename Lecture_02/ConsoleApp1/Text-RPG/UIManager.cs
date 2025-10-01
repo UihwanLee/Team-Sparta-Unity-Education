@@ -48,12 +48,12 @@ namespace Text_RPG
         }
 
         // 캐릭터 정보 화면
-        public void StateView(Character character)
+        public void StateView(Player player)
         {
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
-            character.ShowInfo();
+            player.ShowInfo();
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -93,7 +93,7 @@ namespace Text_RPG
         /// </summary>
         
         // 모험 화면
-        public void AdventureView()
+        public void AdventureView(Player player)
         {
             int width = 20;
             int height = 5;
@@ -104,6 +104,7 @@ namespace Text_RPG
             for (int i = 0; i < width; i++) Console.Write(" ");
             Console.Write("』");
             Console.WriteLine();
+            Console.WriteLine($"현재 스태미나: {player.Stamina}");
             Console.WriteLine("1. 랜덤 모험");
             Console.WriteLine("0. 나가기");
             Console.WriteLine();

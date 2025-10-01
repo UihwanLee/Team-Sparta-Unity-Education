@@ -24,6 +24,8 @@ namespace Text_RPG.Scenes
 
         private Action currentView;
 
+        float elapsed = 0f;
+
         public AdventureScene(int index) : base(index)
         {
         }
@@ -46,27 +48,27 @@ namespace Text_RPG.Scenes
             }
 
             // 처음 View 설정: StarView
-            currentView = AdventureView;
+            ChangeView(AdventureView);
         }
 
         public override void Update(float elapsed)
         {
             base.Update(elapsed);
 
+            // 시간 경과 체크
+            this.elapsed = elapsed;
+
             // 오브젝트 업데이트
             foreach (var gameObject in gameObjects)
             {
                 gameObject.Update(elapsed);
             }
-
-            // View 변할 때 마다 실행
-            currentView?.Invoke();
         }
 
-        private async void AdventureView()
+        private void AdventureView()
         {
-            Console.Clear();
             UIManager.Instance.AdventureView();
+
             var choice = GetUserChoice(["1", "0"]);
 
             // 나가기 누르면 MainScene으로 이동
@@ -90,27 +92,22 @@ namespace Text_RPG.Scenes
                 view = RandomAdventureView;
             }
 
-            // 3초 뒤 ReturnInvoke 실행
-            await Task.Delay(3000);
-            ReturnInvoke(view);
+            // 3초 시간 경과 후 실행
+            Thread.Sleep(3000);
+
+            // 3초 지남
+            Console.WriteLine("3초지남");
+            ChangeView(view);
         }
 
         private async void RandomAdventureView()
         {
-            Console.Clear();
             UIManager.Instance.RandomAdventureView();
 
             // 모험 중. 표시
+            string message = (elapsed % 5 > 3f) ? "모험중.." : "모험중...";
+            Console.WriteLine(message);
 
-            // 3초 뒤 ReturnInvoke 실행
-            await Task.Delay(3000);
-            ReturnInvoke(AdventureView);
-        }
-
-        public void ReturnInvoke(Action view)
-        {
-            // 몇 초 후 처음 화면으로 돌아감
-            currentView = view;
         }
     }
 }

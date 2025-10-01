@@ -23,6 +23,8 @@ namespace Text_RPG.Scenes
          * 
          */
 
+        private float time;
+
         public MainScene(int index) : base(index)
         {
 
@@ -46,7 +48,7 @@ namespace Text_RPG.Scenes
             }
 
             // 처음 View 설정: StarView
-            currentView = MainView;
+            ChangeView(MainView);
         }
 
         public override void Update(float elasped)
@@ -59,25 +61,26 @@ namespace Text_RPG.Scenes
                 gameObject.Update(elasped);
             }
 
-            // View 변할 때 마다 실행
-            currentView?.Invoke();
+            time = elasped;
         }
 
         // 메뉴 열기
         private void MainView()
         {
-            Console.Clear();
             UIManager.Instance.MainView();
+
             var choice = GetUserChoice(["1", "2", "3"]);
 
             // MainView 분기점
             switch (choice)
             {
                 case "1": // 캐릭터 정보 창
-                    currentView = StateView;        
+                    Console.Clear();
+                    ChangeView(StateView);
                     break;
                 case "2": // 캐릭터 인벤토리 창
-                    currentView = InventoryView;   
+                    Console.Clear();
+                    ChangeView(InventoryView);
                     break;
                 case "3": // 모험 씬으로 이동
                     GameManager.Instance.LoadScene("AdventureScene");
@@ -90,10 +93,9 @@ namespace Text_RPG.Scenes
         // 상태 보기
         private void StateView()
         {
-            Console.Clear();
             UIManager.Instance.StateView(player);
             var choice = GetUserChoice(["0"]);
-            currentView =MainView;
+            ChangeView(MainView);
         }
 
         // 인벤토리 보기
@@ -102,7 +104,9 @@ namespace Text_RPG.Scenes
             Console.Clear();
             UIManager.Instance.InventoryView(player.Inventroy);
             var choice = GetUserChoice(["0", "1"]);
-            currentView = choice == "0" ? MainView : InventoryEquippedView;
+
+            if (choice == "0") ChangeView(MainView);
+            else ChangeView(InventoryEquippedView);
         }
 
         // 인벤토리 - 장착 관리
@@ -118,14 +122,14 @@ namespace Text_RPG.Scenes
             var choice = GetUserChoice(vaildItemOption);
 
             // 나가기 설정
-            if(choice=="0") { currentView = MainView; return; }
+            if(choice=="0") { ChangeView(MainView); return; }
 
             // 인벤토리에서 idx로 검색하여 해당 아이템 장착
             equippedIdx = int.Parse(choice.ToString());
             player.Inventroy.EquippedItemByIdx(equippedIdx - 1);
 
             // 창 변경
-            currentView = InventoryEquippedView;
+            ChangeView(InventoryEquippedView);
         }
     }
 }

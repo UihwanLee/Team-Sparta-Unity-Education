@@ -32,6 +32,16 @@ namespace Text_RPG.Scenes
 
         }
 
+        // View 바꾸기
+        protected void ChangeView(Action view)
+        {
+            if (view == null) return;
+
+            Console.Clear();
+            currentView = view;
+            currentView?.Invoke();
+        }
+
         // 옵션 메뉴 창만 따로 빼기
         protected string GetUserChoice(string[] vaildOptions)
         {

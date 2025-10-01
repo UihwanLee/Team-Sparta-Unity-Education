@@ -88,6 +88,7 @@ namespace Text_RPG
         {
             if (idx > sceneList.Count && idx < 0) return;
 
+            Console.Clear();
             currentScene = sceneList[idx];
             currentScene.Start();
         }
@@ -98,6 +99,7 @@ namespace Text_RPG
             // Dictionary에 씬 이름이 존재하는지 확인
             if (sceneDictionary.Keys.Contains(name)==false) return;
 
+            Console.Clear();
             currentScene = sceneList[sceneDictionary[name]];
             currentScene.Start();
         }

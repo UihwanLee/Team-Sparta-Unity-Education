@@ -1,14 +1,24 @@
-﻿using static System.Formats.Asn1.AsnWriter;
+﻿using Text_RPG.Scenes;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Text_RPG
 {
+    /*
+     * Text_RPG Main 스크립트
+     * 
+     * 게임 시작 시 Main을 담당하고 있으며
+     * 다양한 Manager 클래스들을 가지고 있다.
+     * 
+     * SceneManager:    게임 Scene을 관리할 클래스
+     * UIManager:       게임 UI를 관리할 클래스
+     * 
+     */
     internal class GameMain
     {
-        static bool isRunning;
-
-        static Scene currentScene;
+        static bool isRunning;              // 게임 종료/실행 변수r
+      
+        static Scene currentScene;          // 현재 실행되고 있는 Scene
         static Scene scene01;
-        static UIManager uiManager;
 
         static void Main(string[] args)
         {
@@ -23,8 +33,7 @@ namespace Text_RPG
             isRunning = true;
 
             // UI, Scene 오브젝트 생성
-            uiManager = new UIManager();
-            scene01 = new StartScene(0, uiManager);
+            scene01 = new StartScene(0);
 
             // 현재 씬 지정
             currentScene = scene01;

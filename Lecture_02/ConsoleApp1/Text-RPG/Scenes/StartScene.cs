@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Text_RPG
+namespace Text_RPG.Scenes
 {
     internal class StartScene : Scene
     {
@@ -15,13 +15,19 @@ namespace Text_RPG
          * 
          * 다만 모든 오브젝트는 start(), update()를 실행한다.
          * 
+         * [StartScene 정보]
+         * 0: StartView                 - 게임 시작 창
+         * 1: StateView                 - 플레이어 스탯 정보 창
+         * 2: InventoryView             - 인벤토리 창
+         * 3: InventoryEquippedView     - 인벤토리 관리 창
+         * 
          */
 
         private Character character;    // 이 Scene에서 사용할 Character
 
         private Action currentView;   // 현재 창 (시작창, 스탯창 등)
 
-        public StartScene(int index, UIManager uIManager) : base(index, uIManager)
+        public StartScene(int index) : base(index)
         {
 
         }
@@ -44,7 +50,7 @@ namespace Text_RPG
             }
 
             // 처음 View 설정: StarView
-            currentView = StartView;
+            currentView = MainView;
         }
 
         public override void Update()
@@ -62,57 +68,46 @@ namespace Text_RPG
         }
 
         // 메뉴 열기
-        private void StartView()
+        private void MainView()
         {
             Console.Clear();
-            uiManager.OpenMenu();
-
+            UIManager.Instance.MainView();
             var choice = GetUserChoice(["1", "2"]);
-
-            currentView = (choice == "1") ? StateView : InventoryView;
+            currentView = choice == "1" ? StateView : InventoryView;
         }
 
         // 상태 보기
         private void StateView()
         {
             Console.Clear();
-
-            uiManager.ShowState(character);
-
+            UIManager.Instance.StateView(character);
             var choice = GetUserChoice(["0"]);
-
-            currentView =StartView;
+            currentView =MainView;
         }
 
         // 인벤토리 보기
         private void InventoryView()
         {
             Console.Clear();
-
-            uiManager.ShowInventory(character.Inventroy);
-
+            UIManager.Instance.InventoryView(character.Inventroy);
             var choice = GetUserChoice(["0", "1"]);
-
-            currentView = (choice == "0") ? StartView : InventoryEquippedView;
+            currentView = choice == "0" ? MainView : InventoryEquippedView;
         }
 
         // 인벤토리 - 장착 관리
         private void InventoryEquippedView()
         {
             Console.Clear();
-
             int equippedIdx = 0;
-
-            uiManager.ShowInventoryEquipped(character.Inventroy);
+            UIManager.Instance.InventoryEquippedView(character.Inventroy);
 
             // 선택 가능한 장비 배열 만들기
             int vaildCount = character.Inventroy.Items.Count;
             string[] vaildItemOption = Enumerable.Range(0, vaildCount+1).Select(i => i.ToString()).ToArray();   // LINQ 문법
-
             var choice = GetUserChoice(vaildItemOption);
 
             // 나가기 설정
-            if(choice=="0") { currentView = StartView; return; }
+            if(choice=="0") { currentView = MainView; return; }
 
             // 인벤토리에서 idx로 검색하여 해당 아이템 장착
             equippedIdx = int.Parse(choice.ToString());

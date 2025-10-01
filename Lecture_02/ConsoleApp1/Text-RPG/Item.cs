@@ -4,6 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * Item 스크립트
+ * 
+ * 이 게임에서 사용하는 아이템 옵션은 다음과 같다.
+ * [Armor] 방어구
+ * [Weapon] 무기
+ * [Porion] 포션
+ * [Etc] 기타 아이템
+ * 
+ */
 namespace Text_RPG
 {
     public enum ItemType { Weapon, Armor, Potion, Etc }

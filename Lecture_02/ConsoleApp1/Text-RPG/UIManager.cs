@@ -95,12 +95,13 @@ namespace Text_RPG
         // 모험 화면
         public void AdventureView()
         {
-            int size = 5;
+            int width = 20;
+            int height = 5;
             Console.WriteLine("[모험 패널]");
             Console.Write("『");
-            for (int i = 0; i < size; i++) Console.Write(" ");
-            for (int i = 0; i < size; i++) Console.WriteLine();
-            for (int i = 0; i < size; i++) Console.Write(" ");
+            for (int i = 0; i < width; i++) Console.Write(" ");
+            for (int i = 0; i < height; i++) Console.WriteLine();
+            for (int i = 0; i < width; i++) Console.Write(" ");
             Console.Write("』");
             Console.WriteLine();
             Console.WriteLine("1. 랜덤 모험");
@@ -112,7 +113,15 @@ namespace Text_RPG
         // 랜덤 모험
         public void RandomAdventureView()
         {
-
+            int width = 20;
+            int height = 5;
+            Console.WriteLine("[랜덤 모험]");
+            Console.Write("『");
+            for (int i = 0; i < width; i++) Console.Write(" ");
+            for (int i = 0; i < height; i++) Console.WriteLine();
+            for (int i = 0; i < width; i++) Console.Write(" ");
+            Console.Write("』");
+            Console.WriteLine();
         }
 
         // 오류 메세지

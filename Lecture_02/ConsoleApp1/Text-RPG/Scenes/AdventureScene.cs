@@ -63,7 +63,7 @@ namespace Text_RPG.Scenes
             currentView?.Invoke();
         }
 
-        private void AdventureView()
+        private async void AdventureView()
         {
             Console.Clear();
             UIManager.Instance.AdventureView();
@@ -76,12 +76,41 @@ namespace Text_RPG.Scenes
                 return;
             }
 
-            currentView = RandomAdventureView;
+            Action view;
+            // 현재 캐릭터의 스태미너가 부족하면 돌아감
+            if (player.Stamina < 20)
+            {
+                Console.WriteLine("스태미나 가 부족합니다.");
+                view = AdventureView;
+            }
+            else
+            {
+                Console.WriteLine("스태미나 20 소모되었습니다.");
+                player.Stamina -= 20;
+                view = RandomAdventureView;
+            }
+
+            // 3초 뒤 ReturnInvoke 실행
+            await Task.Delay(3000);
+            ReturnInvoke(view);
         }
 
-        private void RandomAdventureView()
+        private async void RandomAdventureView()
         {
+            Console.Clear();
+            UIManager.Instance.RandomAdventureView();
 
+            // 모험 중. 표시
+
+            // 3초 뒤 ReturnInvoke 실행
+            await Task.Delay(3000);
+            ReturnInvoke(AdventureView);
+        }
+
+        public void ReturnInvoke(Action view)
+        {
+            // 몇 초 후 처음 화면으로 돌아감
+            currentView = view;
         }
     }
 }

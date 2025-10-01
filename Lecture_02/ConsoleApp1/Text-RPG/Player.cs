@@ -20,7 +20,7 @@ namespace Text_RPG
             this.job = job;
             this.gold = gold;
 
-            this.stamina = 0;
+            this.stamina = 100;
             this.exp = 0;
         }
 
@@ -70,5 +70,26 @@ namespace Text_RPG
 
         // 변수 프로퍼티
         public Inventroy Inventroy { get { return inventroy; } }
+
+        // HP
+        public int HP
+        {
+            get { return hp; }
+            set
+            {
+                if (value < 0) hp = 0;
+                else hp = value;
+            }
+        }
+
+        // 스태미나
+        public int Stamina 
+        { get { return stamina; } 
+          set 
+            {
+                if (value < 0) stamina = 0;
+                else stamina = value;
+            } 
+        } 
     }
 }

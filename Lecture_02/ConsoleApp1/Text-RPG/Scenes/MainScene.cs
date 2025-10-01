@@ -10,7 +10,7 @@ namespace Text_RPG.Scenes
     internal class MainScene : Scene
     {
         /*
-         * StartScene: 초기 상태를 확인할 수 있는 씬
+         * MainScene: 초기 상태를 확인할 수 있는 씬
          * 기본적으로 이 씬에서 보여줄 오브젝트만 관리한다.
          * 
          * 다만 모든 오브젝트는 start(), update()를 실행한다.
@@ -23,7 +23,7 @@ namespace Text_RPG.Scenes
          * 
          */
 
-        private Player character;    // 이 Scene에서 사용할 Character
+        private Player player;    // 이 Scene에서 사용할 Character
 
         private Action currentView;   // 현재 창 (시작창, 스탯창 등)
 
@@ -40,8 +40,8 @@ namespace Text_RPG.Scenes
             gameObjects.Clear();
 
             // 캐릭터 추가
-            character = new Player(1, "이의환", 10, 10, 100, "초보자", 0);
-            gameObjects.Add(character);
+            player = GameManager.Instance.GetPlayer();
+            gameObjects.Add(player);
 
             // 오브젝트 초기화
             foreach (var gameObject in gameObjects)
@@ -80,7 +80,7 @@ namespace Text_RPG.Scenes
         private void StateView()
         {
             Console.Clear();
-            UIManager.Instance.StateView(character);
+            UIManager.Instance.StateView(player);
             var choice = GetUserChoice(["0"]);
             currentView =MainView;
         }
@@ -89,7 +89,7 @@ namespace Text_RPG.Scenes
         private void InventoryView()
         {
             Console.Clear();
-            UIManager.Instance.InventoryView(character.Inventroy);
+            UIManager.Instance.InventoryView(player.Inventroy);
             var choice = GetUserChoice(["0", "1"]);
             currentView = choice == "0" ? MainView : InventoryEquippedView;
         }
@@ -99,10 +99,10 @@ namespace Text_RPG.Scenes
         {
             Console.Clear();
             int equippedIdx = 0;
-            UIManager.Instance.InventoryEquippedView(character.Inventroy);
+            UIManager.Instance.InventoryEquippedView(player.Inventroy);
 
             // 선택 가능한 장비 배열 만들기
-            int vaildCount = character.Inventroy.Items.Count;
+            int vaildCount = player.Inventroy.Items.Count;
             string[] vaildItemOption = Enumerable.Range(0, vaildCount+1).Select(i => i.ToString()).ToArray();   // LINQ 문법
             var choice = GetUserChoice(vaildItemOption);
 
@@ -111,7 +111,7 @@ namespace Text_RPG.Scenes
 
             // 인벤토리에서 idx로 검색하여 해당 아이템 장착
             equippedIdx = int.Parse(choice.ToString());
-            character.Inventroy.EquippedItemByIdx(equippedIdx - 1);
+            player.Inventroy.EquippedItemByIdx(equippedIdx - 1);
 
             // 창 변경
             currentView = InventoryEquippedView;

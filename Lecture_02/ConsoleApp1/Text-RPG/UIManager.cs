@@ -42,6 +42,7 @@ namespace Text_RPG
             Console.WriteLine();
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 인벤토리");
+            Console.WriteLine("3. 랜덤 모험");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
         }

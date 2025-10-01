@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Text_RPG.Scenes;
 
 /*
-  * SceneManager 스크립트
+  * GameManager 스크립트
   * 
   * 게임 등장하는 모든 씬을 관리하며
+  * 씬들이 공유하는 객체 정보를 관리한다
+  * 
   * 관리하는 게임 씬으로는 다음과 같다.
   * 
   * MainScene:          게임 시작 시 나오는 메인 씬
@@ -19,25 +22,32 @@ using Text_RPG.Scenes;
   * DungeonScene:       던전 탐험이 일어나는 공간
   * RestScene:          회복, 상태 이상 제거, 하루 마무리 같은 기능
   * 
+  * 공유하는 객체 정보는 다음과 같다.
+  * 
+  * Player:             플레이어 정보 공유
+  * 
   */
 namespace Text_RPG
 {
-    internal class SceneManager
+    internal class GameManager
     {
         // 싱글톤 패턴
-        private static SceneManager instance;
+        private static GameManager instance;
 
-        public static SceneManager Instance
+        public static GameManager Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new SceneManager();
+                    instance = new GameManager();
                 }
                 return instance;
             }
         }
+
+        // 공유 객체
+        private Player player;
 
         // 현재 씬
         private Scene currentScene;
@@ -52,8 +62,12 @@ namespace Text_RPG
         };
 
         // 초기 씬 생성
-        public void InitScene()
+        public void InitGame()
         {
+            // 게임 오브젝트 생성
+            player = new Player(1, "이의환", 10, 10, 100, "초보자", 0);
+
+            // 씬 생성
             sceneList = new List<Scene>();
 
             Scene mainScene = new MainScene(sceneDictionary["MainScene"]);
@@ -79,5 +93,8 @@ namespace Text_RPG
             currentScene = sceneList[sceneDictionary[name]];
             return currentScene;
         }
+
+        // 프러퍼티
+        public Player GetPlayer() { return player; }
     }
 }

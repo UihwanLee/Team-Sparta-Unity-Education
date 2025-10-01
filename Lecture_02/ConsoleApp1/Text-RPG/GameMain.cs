@@ -9,7 +9,7 @@ namespace Text_RPG
      * 게임 시작 시 Main을 담당하고 있으며
      * 다양한 Manager 클래스들을 가지고 있다.
      * 
-     * SceneManager:    게임 Scene을 관리할 클래스
+     * GameManager:    게임 Scene을 관리할 클래스
      * UIManager:       게임 UI를 관리할 클래스
      * 
      */
@@ -32,8 +32,8 @@ namespace Text_RPG
             isRunning = true;
 
             // 현재 씬 지정
-            SceneManager.Instance.InitScene();
-            currentScene = SceneManager.Instance.LoadScene("MainScene");
+            GameManager.Instance.InitGame();
+            currentScene = GameManager.Instance.LoadScene("MainScene");
         }
 
         static void Start()

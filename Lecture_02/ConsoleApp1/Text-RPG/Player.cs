@@ -10,6 +10,8 @@ namespace Text_RPG
     {
         protected string job;
         protected int gold;
+        protected int stamina;
+        protected int exp;
 
         protected Inventroy inventroy;
 
@@ -17,6 +19,9 @@ namespace Text_RPG
         {
             this.job = job;
             this.gold = gold;
+
+            this.stamina = 0;
+            this.exp = 0;
         }
 
         public override void Start()
@@ -58,7 +63,9 @@ namespace Text_RPG
             Console.WriteLine($"공격력 : {atk}");
             Console.WriteLine($"방어력 : {def}");
             Console.WriteLine($"체력 : {hp}");
-            Console.WriteLine($"Gold : {gold}");
+            Console.WriteLine($"골드 : {gold}");
+            Console.WriteLine($"스태미나 : {stamina}");
+            Console.WriteLine($"경험치 : {exp}");
         }
 
         // 변수 프로퍼티

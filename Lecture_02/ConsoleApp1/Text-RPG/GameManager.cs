@@ -61,6 +61,9 @@ namespace Text_RPG
             { "MainScene", 0 }, { "AdventureScene", 1 },
         };
 
+        // 현재 창 (시작창, 스탯창 등)
+        protected Action currentView;
+
         // 초기 씬 생성
         public void InitGame()
         {
@@ -71,30 +74,36 @@ namespace Text_RPG
             sceneList = new List<Scene>();
 
             Scene mainScene = new MainScene(sceneDictionary["MainScene"]);
+            Scene adventureScene = new AdventureScene(sceneDictionary["AdventureScene"]);
             
             sceneList.Add(mainScene);
+            sceneList.Add(adventureScene);
+
+            // 처음 씬 지정
+            currentScene = mainScene;
         }
 
         // 씬 이동 : idx로 탐색
-        public Scene LoadScene(int idx)
+        public void LoadScene(int idx)
         {
-            if (idx > sceneList.Count && idx < 0) return null;
+            if (idx > sceneList.Count && idx < 0) return;
 
             currentScene = sceneList[idx];
-            return currentScene;
+            currentScene.Start();
         }
 
         // 씬 이동 : 이름으로 탐색
-        public Scene LoadScene(string name)
+        public void LoadScene(string name)
         {
             // Dictionary에 씬 이름이 존재하는지 확인
-            if (sceneDictionary.Keys.Contains(name)==false) return null;
+            if (sceneDictionary.Keys.Contains(name)==false) return;
 
             currentScene = sceneList[sceneDictionary[name]];
-            return currentScene;
+            currentScene.Start();
         }
 
         // 프러퍼티
+        public Scene CurrentScene { get { return currentScene; } }
         public Player GetPlayer() { return player; }
     }
 }

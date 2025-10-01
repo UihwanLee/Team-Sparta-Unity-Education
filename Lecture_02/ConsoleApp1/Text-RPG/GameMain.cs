@@ -31,15 +31,14 @@ namespace Text_RPG
             // 게임 실행
             isRunning = true;
 
-            // 현재 씬 지정
+            // 게임 매니저 초기화
             GameManager.Instance.InitGame();
-            currentScene = GameManager.Instance.LoadScene("MainScene");
         }
 
         static void Start()
         {
             // 현재 씬 Start()
-            currentScene.Start();
+            GameManager.Instance.CurrentScene.Start();
         }
 
         static void Update()
@@ -48,7 +47,7 @@ namespace Text_RPG
             while (isRunning)
             {
                 // 현재 씬 Update()
-                currentScene.Update();
+                GameManager.Instance.CurrentScene.Update();
             }
         }
     }

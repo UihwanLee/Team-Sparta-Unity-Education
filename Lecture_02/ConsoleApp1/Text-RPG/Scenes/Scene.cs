@@ -10,6 +10,10 @@ namespace Text_RPG.Scenes
     {
         protected int index;
 
+        protected Player player;    // 이 Scene에서 사용할 Character
+
+        protected Action currentView;   // 현재 창 (시작창, 스탯창 등)
+
         // Scene에서 표시할 모든 오브젝트
         protected List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -26,6 +30,22 @@ namespace Text_RPG.Scenes
         public virtual void Update()
         {
 
+        }
+
+        // 옵션 메뉴 창만 따로 빼기
+        protected string GetUserChoice(string[] vaildOptions)
+        {
+            string choice;
+            while (true)
+            {
+                Console.Write(">> ");
+                choice = Console.ReadLine();
+                Console.WriteLine();
+
+                foreach (var option in vaildOptions) if (choice == option) return choice;
+
+                Console.WriteLine("잘못된 입력입니다.");
+            }
         }
     }
 }

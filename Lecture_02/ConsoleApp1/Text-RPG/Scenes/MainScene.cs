@@ -23,10 +23,6 @@ namespace Text_RPG.Scenes
          * 
          */
 
-        private Player player;    // 이 Scene에서 사용할 Character
-
-        private Action currentView;   // 현재 창 (시작창, 스탯창 등)
-
         public MainScene(int index) : base(index)
         {
 
@@ -72,8 +68,23 @@ namespace Text_RPG.Scenes
         {
             Console.Clear();
             UIManager.Instance.MainView();
-            var choice = GetUserChoice(["1", "2"]);
-            currentView = choice == "1" ? StateView : InventoryView;
+            var choice = GetUserChoice(["1", "2", "3"]);
+
+            // MainView 분기점
+            switch (choice)
+            {
+                case "1": // 캐릭터 정보 창
+                    currentView = StateView;        
+                    break;
+                case "2": // 캐릭터 인벤토리 창
+                    currentView = InventoryView;   
+                    break;
+                case "3": // 모험 씬으로 이동
+                    GameManager.Instance.LoadScene("AdventureScene");
+                    break;
+                default:
+                    break;
+            }
         }
 
         // 상태 보기
@@ -115,21 +126,6 @@ namespace Text_RPG.Scenes
 
             // 창 변경
             currentView = InventoryEquippedView;
-        }
-
-        // 옵션 메뉴 창만 따로 빼기
-        private string GetUserChoice(string[] vaildOptions)
-        {
-            string choice;
-            while(true) {
-                Console.Write(">> ");
-                choice = Console.ReadLine();
-                Console.WriteLine();
-
-                foreach (var option in vaildOptions) if (choice == option) return choice;
-
-                Console.WriteLine("잘못된 입력입니다.");
-            }
         }
     }
 }

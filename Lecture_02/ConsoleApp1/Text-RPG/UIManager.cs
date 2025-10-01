@@ -88,6 +88,33 @@ namespace Text_RPG
             Console.WriteLine("원하시는 행동을 입력해주세요.");
         }
 
+        /// <summary>
+        /// -------------------------------------------------------------------------------------------------------
+        /// </summary>
+        
+        // 모험 화면
+        public void AdventureView()
+        {
+            int size = 5;
+            Console.WriteLine("[모험 패널]");
+            Console.Write("『");
+            for (int i = 0; i < size; i++) Console.Write(" ");
+            for (int i = 0; i < size; i++) Console.WriteLine();
+            for (int i = 0; i < size; i++) Console.Write(" ");
+            Console.Write("』");
+            Console.WriteLine();
+            Console.WriteLine("1. 랜덤 모험");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+        }
+
+        // 랜덤 모험
+        public void RandomAdventureView()
+        {
+
+        }
+
         // 오류 메세지
         public void MessageError()
         {

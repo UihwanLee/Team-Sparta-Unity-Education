@@ -60,7 +60,7 @@
 
             List<IAttackable> attackers = new List<IAttackable>();
             attackers.Add(playerAttack);
-            attackers.Add(fireball);
+            attackers.Add(fireball); 
             attackers.Add(goblin);
 
             // IAttackable 구현한 객체들의 모임 Attack 밖에 못함

@@ -23,7 +23,7 @@ namespace Text_RPG.Scenes
          * 
          */
 
-        private Character character;    // 이 Scene에서 사용할 Character
+        private Player character;    // 이 Scene에서 사용할 Character
 
         private Action currentView;   // 현재 창 (시작창, 스탯창 등)
 
@@ -40,7 +40,7 @@ namespace Text_RPG.Scenes
             gameObjects.Clear();
 
             // 캐릭터 추가
-            character = new Character(1, "이의환", "초보자", 10, 10, 100, 0);
+            character = new Player(1, "이의환", 10, 10, 100, "초보자", 0);
             gameObjects.Add(character);
 
             // 오브젝트 초기화

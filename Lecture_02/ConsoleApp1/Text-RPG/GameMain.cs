@@ -52,6 +52,8 @@ namespace Text_RPG
 
                 // 현재 씬 Update()
                 GameManager.Instance.CurrentScene.Update(TimeManager.Instance.Elapsed);
+
+                Thread.Sleep(100);
             }
         }
     }

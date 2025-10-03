@@ -23,6 +23,7 @@ namespace Text_RPG.Scenes
         private Player player;
 
         float startTime = 0f;
+        int isFindMonster = -1;
 
 
         public AdventureScene(int index) : base(index)
@@ -51,6 +52,7 @@ namespace Text_RPG.Scenes
             hasExecutedList["AdventureView"] = false;
             hasExecutedList["RandomAdventureView"] = false;
             hasExecutedList["RandomEvent"] = false;
+            hasExecutedList["IsFindMonster"] = false;
 
             // 처음 View 설정: StarView
             ChangeView(AdventureView);
@@ -135,6 +137,8 @@ namespace Text_RPG.Scenes
         {
             if(!hasExecutedList["RandomEvent"])
             {
+                isFindMonster = -1;
+                TimeManager.Instance.InitLocalElapsed();
                 startTime = TimeManager.Instance.Elapsed;
                 hasExecutedList["RandomEvent"] = true;
             }
@@ -143,23 +147,59 @@ namespace Text_RPG.Scenes
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
             // duration 동안 if문 수행
-            if (TimeManager.Instance.LocalElapsed < duration)
+            if(TimeManager.Instance.LocalElapsed < duration)
             {
-                // 모험중 깜빡임
+                // 커서 위치 고정
+                int baseLine = 8;
+
+                // 모험 중 깜빡임
                 string baseText = "모험중";
                 int dotCount = ((int)(TimeManager.Instance.LocalElapsed * 2) % 3) + 1; // 1~3점
                 string message = baseText + new string('.', dotCount);
-                Console.Write("\r" + message.PadRight(baseText.Length + 3));
-            }
-            else if (TimeManager.Instance.LocalElapsed > 3f && TimeManager.Instance.LocalElapsed < duration)
-            {
-                Console.Write("\r" + "곰이 나타남");
+                WriteLine(message, baseLine);
+
+                // (4~6) 랜덤 이벤트 발생
+                if (TimeManager.Instance.LocalElapsed > 4f && TimeManager.Instance.LocalElapsed < 6f)
+                {
+                    // 랜덤 값으로 초반에 확률을 정하고 그 다음부터는 정해진 값 실행
+                    if (!hasExecutedList["IsFindMonster"])
+                    {
+                        Random random = new Random();
+                        isFindMonster = random.Next(0, 2);
+
+                        if(isFindMonster==1) player.Gold += 500;
+                        hasExecutedList["IsFindMonster"] = true;
+                    }
+
+                    if (isFindMonster == 1)
+                    {
+                        // 50% 확률로 몬스터 조우 후 500G 흭득
+                        message = "몬스터 조우! 골드 500G 흭득!";
+                        int consoleWidth = Console.WindowWidth;
+                        WriteLine(message, baseLine + 2);
+                    }
+                    else
+                    {
+                        // 50% 확률로 아무 일도 일어나지 않음
+                        message = "아무 일도 일어나지 않았다";
+                        WriteLine(message, baseLine + 2);
+                    }
+                }
             }
             else
             {
                 // 이벤트 종료
                 ChangeView(AdventureView);
             }
+        }
+
+        // SetCurPosition 함수를 이용한 한 줄 덮어쓰기 함수
+        private void WriteLine(string message, int line)
+        {
+            Console.SetCursorPosition(0, line);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, line);
+            Console.Write(message);
         }
 
         public override void ChangeView(Action<float> view)

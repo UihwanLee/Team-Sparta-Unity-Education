@@ -138,6 +138,23 @@ namespace Text_RPG
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// -------------------------------------------------------------------------------------------------------
+        /// </summary>
+        ///
+
+        // 훈련
+        public void TrainingView()
+        {
+            Console.WriteLine("[훈련]");
+            Console.Write("『");
+            for (int i = 0; i < width; i++) Console.Write(" ");
+            for (int i = 0; i < height; i++) Console.WriteLine();
+            for (int i = 0; i < width; i++) Console.Write(" ");
+            Console.Write("』");
+            Console.WriteLine();
+        }
+
         // 오류 메세지
         public void MessageError()
         {
@@ -168,6 +185,11 @@ namespace Text_RPG
         public string PatrolTown_FindHeadMan = "촌장님을 만나서 심부름을 했다.";
         public string PatrolTown_LostMan = "길 읽은 사람을 안내해주었다.";
         public string PatrolTown_FindPeople = "마을 주민과 인사를 나눴다. 선물을 받았다.";
+
+        // Text 관리 : 훈련
+        public string Training_GreatSuccess = "훈련이 잘 되었습니다!";
+        public string Training_Success = "오늘하루 열심히 훈련했습니다.";
+        public string Training_Fail = "하기 싫다... 훈련이...";
         
     }
 }

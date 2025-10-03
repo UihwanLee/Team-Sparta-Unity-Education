@@ -114,5 +114,16 @@ namespace Text_RPG
                 else gold = value;
             }
         }
+
+        // 경험치
+        public int Exp
+        {
+            get { return exp; }
+            set
+            {
+                if (value < 0) exp = 0;
+                else exp = value;
+            }
+        }
     }
 }

@@ -27,6 +27,8 @@ namespace Text_RPG.Scenes
 
         protected Dictionary<string, bool> hasExecutedList = new Dictionary<string, bool>();     // 한번만 호출할 수 있게 하는 변수
 
+        protected float startTime = 0f;   // Scene에 입장 했을 때 초기 elapsed 값
+
         // Scene에서 표시할 모든 오브젝트
         protected List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -52,6 +54,9 @@ namespace Text_RPG.Scenes
 
             // bool 값 초기화
             hasExecutedList.Clear();
+
+            // 초기 elapsed 초기화
+            startTime = 0f;
         }
 
         public virtual void Start()
@@ -61,7 +66,13 @@ namespace Text_RPG.Scenes
 
         public virtual void Update(float elapsed)
         {
-
+            // LocalElapsed 초기화
+            if (!hasExecutedList["TimeSet"])
+            {
+                startTime = TimeManager.Instance.Elapsed;
+                TimeManager.Instance.LocalElapsed = 0f;
+                hasExecutedList["TimeSet"] = true;
+            }
         }
 
         // View 바꾸기

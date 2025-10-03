@@ -21,7 +21,6 @@ namespace Text_RPG.Scenes
          */
         private Player player;
 
-        float startTime = 0f;
         int isFindMonster = -1;
 
 
@@ -83,14 +82,6 @@ namespace Text_RPG.Scenes
                 gameObject.Update(elapsed);
             }
 
-            // LocalElapsed 초기화
-            if (!hasExecutedList["TimeSet"])
-            {
-                startTime = TimeManager.Instance.Elapsed;
-                TimeManager.Instance.LocalElapsed = 0f;
-                hasExecutedList["TimeSet"] = true;
-            }
-
             currentView?.Invoke(elapsed);
         }
 
@@ -112,7 +103,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            WriteLine($"모험 시간: {TimeManager.Instance.LocalElapsed:F1} (초)", 8);
+            WriteLine($"모험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
 
             // duration 동안 if문 수행
             if (TimeManager.Instance.LocalElapsed < duration)
@@ -142,9 +133,14 @@ namespace Text_RPG.Scenes
                     if (isFindMonster == 1)
                     {
                         // 50% 확률로 몬스터 조우 후 500G 흭득
-                        message = UIManager.Instance.MatchMonsterAndGainGold(500);
+                        message = UIManager.Instance.MatchMonster();
                         int consoleWidth = Console.WindowWidth;
                         WriteLine(message, baseLine + 2);
+
+                        if (TimeManager.Instance.LocalElapsed > 5f)
+                        {
+                            WriteLine(UIManager.Instance.GainGold(500), baseLine + 4);
+                        }
                     }
                     else
                     {

@@ -19,7 +19,6 @@ namespace Text_RPG.Scenes
          * - 스태미나가 부족하다면 → **스태미나 가 부족합니다.** 출력
          * 
          */
-        private Player player;
 
         int isFindMonster = -1;
 
@@ -32,22 +31,8 @@ namespace Text_RPG.Scenes
         {
             base.Init();
 
-            // 오브젝트 초기화
-            gameObjects.Clear();
-
             // 변수 초기화
-            startTime = 0f;
             isFindMonster = -1;
-
-            // 캐릭터 추가
-            player = GameManager.Instance.GetPlayer();
-            gameObjects.Add(player);
-
-            // 오브젝트 초기화
-            foreach (var gameObject in gameObjects)
-            {
-                gameObject.Start();
-            }
 
             // bool 값 초기화
             hasExecutedList.Clear();

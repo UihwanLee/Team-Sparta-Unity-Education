@@ -24,8 +24,6 @@ namespace Text_RPG.Scenes
         * 
         */
 
-        private Player player;
-
         int eventIdx = -1;
         int gainGold = 0;
 
@@ -37,21 +35,8 @@ namespace Text_RPG.Scenes
         {
             base.Init();
 
-            // 오브젝트 초기화
-            gameObjects.Clear();
-
             // 변수 초기화
             eventIdx = -1;
-
-            // 캐릭터 추가
-            player = GameManager.Instance.GetPlayer();
-            gameObjects.Add(player);
-
-            // 오브젝트 초기화
-            foreach (var gameObject in gameObjects)
-            {
-                gameObject.Start();
-            }
 
             // bool 값 초기화
             hasExecutedList.Clear();
@@ -112,7 +97,7 @@ namespace Text_RPG.Scenes
                 // 커서 위치 고정
                 int baseLine = 10;
 
-                // 모험 중 깜빡임
+                // 순찰 중 깜빡임
                 string baseText = "마을 순찰 중";
                 int dotCount = ((int)(TimeManager.Instance.LocalElapsed * 2) % 3) + 1; // 1~3점
                 string message = baseText + new string('.', dotCount);

@@ -35,7 +35,9 @@ namespace Text_RPG.Scenes
 
             // bool 값 초기화
             hasExecutedList.Clear();
+            hasExecutedList["TimeSet"] = false;
             hasExecutedList["TrainingView"] = false;
+            hasExecutedList["isFindEvent"] = false;
 
             // 변수 초기화
             eventIdx = 0;
@@ -78,7 +80,7 @@ namespace Text_RPG.Scenes
                 hasExecutedList["TrainingView"] = true;
             }
 
-            if (hasExecutedList["TimeSet"]) TrainingEvent(10.0f);
+            if (hasExecutedList["TimeSet"]) TrainingEvent(6.0f);
         }
 
         // 랜덤 이벤트 : 일정 확률로 골드 흭득 가능
@@ -102,7 +104,7 @@ namespace Text_RPG.Scenes
                 WriteLine(message, baseLine);
 
                 // (4~6) 랜덤 이벤트 발생
-                if (TimeManager.Instance.LocalElapsed > 4f && TimeManager.Instance.LocalElapsed < 6f)
+                if (TimeManager.Instance.LocalElapsed > 3f && TimeManager.Instance.LocalElapsed < 5f)
                 {
                     // 랜덤 값으로 초반에 확률을 정하고 그 다음부터는 정해진 값 실행
                     if (!hasExecutedList["isFindEvent"])
@@ -118,9 +120,9 @@ namespace Text_RPG.Scenes
 
                     WriteLine(GetTrainingEventText(eventIdx), baseLine + 2);
 
-                    if (TimeManager.Instance.LocalElapsed > 5f)
+                    if (TimeManager.Instance.LocalElapsed > 4f)
                     {
-                        WriteLine(UIManager.Instance.GainGold(gainExp), baseLine + 4);
+                        WriteLine(UIManager.Instance.GainExp(gainExp), baseLine + 4);
                     }
                 }
             }

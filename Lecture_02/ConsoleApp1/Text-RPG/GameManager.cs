@@ -82,12 +82,14 @@ namespace Text_RPG
             Scene inventoryScene = new InventroyScene(sceneDictionary["InventoryScene"]);
             Scene adventureScene = new AdventureScene(sceneDictionary["AdventureScene"]);
             Scene townScene = new TownScene(sceneDictionary["TownScene"]);
+            Scene trainingScene = new TrainingScene(sceneDictionary["TrainingScene"]);
             
             sceneList.Add(mainScene);
             sceneList.Add(stateScene);
             sceneList.Add(inventoryScene); 
             sceneList.Add(adventureScene);
             sceneList.Add(townScene);
+            sceneList.Add(trainingScene);
 
             // 처음 씬 지정
             currentScene = mainScene;

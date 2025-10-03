@@ -72,7 +72,7 @@ namespace Text_RPG.Scenes
                 hasExecutedList["MainView"] = true;
             }
 
-            var choice = GetUserChoice(["1", "2", "3", "4"]);
+            var choice = GetUserChoice(["1", "2", "3", "4", "5"]);
 
             // MainView 분기점
             switch (choice)
@@ -84,44 +84,24 @@ namespace Text_RPG.Scenes
                     GameManager.Instance.LoadScene("InventoryScene");
                     break;
                 case "3": // 모험 씬으로 이동
-                    CheckAdventure();
+                    CheckStamina(20, "AdventureScene");
                     break;
                 case "4": // 마을 씬으로 이동
-                    CheckPatrolTown();
+                    CheckStamina(5, "TownScene");
+                    break;
+                case "5": // 훈련 씬으로 이동
+                    CheckStamina(15, "TrainingScene");
                     break;
                 default:
                     break;
             }
         }
 
-        private void CheckAdventure()
+        // 스태미나 체크 후 해당 씬 로드
+        private void CheckStamina(int stanima, string loadScene)
         {
             string scene;
-            if (player.Stamina < 20)
-            {
-                // 현재 캐릭터의 스태미너가 부족하면 돌아감
-                Console.WriteLine(UIManager.Instance.NoStamina);
-                scene = "MainScene";
-            }
-            else
-            {
-                // 현재 캐릭터의 스태미너가 충분하면 스태미나 20 소모
-                Console.WriteLine(UIManager.Instance.UseStamin(20));
-                Console.WriteLine();
-                Console.WriteLine(UIManager.Instance.Entering);
-                player.Stamina -= 20;
-                scene = "AdventureScene";
-            }
-
-            // 3초 시간 경과 후 창 바꿈
-            Thread.Sleep(3000);
-            GameManager.Instance.LoadScene(scene);
-        }
-
-        private void CheckPatrolTown()
-        {
-            string scene;
-            if(player.Stamina < 5)
+            if (player.Stamina < stanima)
             {
                 // 현재 캐릭터의 스태미너가 부족하면 돌아감
                 Console.WriteLine(UIManager.Instance.NoStamina);
@@ -131,10 +111,12 @@ namespace Text_RPG.Scenes
             }
             else
             {
-                // 현재 캐릭터의 스태미너가 충분하면 스태미나 5 소모
+                // 현재 캐릭터의 스태미너가 충분하면 스태미나 소모
                 Console.WriteLine(UIManager.Instance.UseStamin(5));
-                player.Stamina -= 5;
-                scene = "TownScene";
+                Console.WriteLine();
+                Console.WriteLine(UIManager.Instance.Entering);
+                player.Stamina -= stanima;
+                scene = loadScene;
             }
 
             // 3초 시간 경과 후 창 바꿈

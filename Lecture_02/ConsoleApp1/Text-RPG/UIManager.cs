@@ -55,6 +55,7 @@ namespace Text_RPG
             Console.WriteLine("2. 인벤토리");
             Console.WriteLine("3. 랜덤 모험");
             Console.WriteLine("4. 마을 순찰하기");
+            Console.WriteLine("5. 훈련하기");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
         }
@@ -175,6 +176,7 @@ namespace Text_RPG
         public string ERROR_INDEX = "인덱스 에러";
 
         public string GainGold(int gold) { return (gold >= 0) ? $"{gold}G 흭득" : $"{gold}G 소모"; }
+        public string GainExp(int exp) { return$"{exp}exp 흭득"; }
 
 
         // Text 관리 : 모험

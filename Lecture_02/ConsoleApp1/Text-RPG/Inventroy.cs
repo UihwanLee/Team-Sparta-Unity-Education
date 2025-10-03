@@ -75,8 +75,14 @@ namespace Text_RPG
         // 인벤토리 보여주기
         public void DisplayInfo(bool isEquipped)
         {
-            Console.WriteLine("[아이템 목록]");
-            for(int i=0; i<items.Count; i++)
+            Console.WriteLine("[아이템 목록]\n");
+            Console.WriteLine(
+                ((isEquipped) ? UIManager.Instance.PadRightForConsole(" ", 6) : $"  ") +
+                $"{UIManager.Instance.PadRightForConsole("[아이템 이름]", 20)} | " +
+                $"{UIManager.Instance.PadRightForConsole("[아이템 효과]", 15)} | " +
+                $"[아이템 설명]\n");
+
+            for (int i=0; i<items.Count; i++)
             {
                 string idxTxt = (isEquipped) ? $"{i + 1} : " : "";
                 Console.Write($"- {idxTxt}");

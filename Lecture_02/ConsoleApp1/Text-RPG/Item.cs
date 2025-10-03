@@ -48,7 +48,13 @@ namespace Text_RPG
         {
             // 현재 장착 관리 상태인지 확인 후 아이템 정보 표시
             string isEquippedTxt = (isEquipped) ? "[E]" : "";
-            Console.WriteLine($"{isEquippedTxt}{name}  | {effect}  | {description}");
+            string itemName = $"{isEquippedTxt}{name}";
+
+            Console.WriteLine(
+                $"{UIManager.Instance.PadRightForConsole(itemName, 20)} | " +
+                $"{UIManager.Instance.PadRightForConsole(effect, 15)} | " +
+                $"{description}"
+            );
         }
     }
 }

@@ -192,6 +192,30 @@ namespace Text_RPG
         public string Training_GreatSuccess = "훈련이 잘 되었습니다!";
         public string Training_Success = "오늘하루 열심히 훈련했습니다.";
         public string Training_Fail = "하기 싫다... 훈련이...";
-        
+
+        /// <summary>
+        /// -------------------------------------------------------------------------------------------------------
+        /// </summary>
+        ///
+
+        // 문자열 실제 표시 폭 계산 (한글 2칸, 알파벳 1칸 가정)
+        public int GetDisplayWidth(string text)
+        {
+            int width = 0;
+            foreach (char c in text)
+            {
+                if (char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.OtherLetter) width += 2; // 한글 등 넓은 글자
+                else width += 1; // 알파벳, 숫자 등
+            }
+            return width;
+        }
+
+        // 문자열을 특정 칸에 맞춰 정렬
+        public string PadRightForConsole(string text, int totalWidth)
+        {
+            int pad = totalWidth - GetDisplayWidth(text);
+            if (pad > 0) return text + new string(' ', pad);
+            else return text;
+        }
     }
 }

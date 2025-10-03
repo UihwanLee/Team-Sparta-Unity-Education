@@ -19,6 +19,8 @@ namespace Text_RPG
           * 관리하는 게임 씬으로는 다음과 같다.
           * 
           * MainScene:          게임 시작 시 나오는 메인 씬
+          * StateScene:         플레이어 스탯 창 씬
+          * InventoryScene:     플레이어 인벤토리 씬
           * AdventureScene:     퀘스트/스토리 진행 공간 (혹은 던전과 별개로 “탐험 이벤트” 진행)
           * TownScene:          마을 순찰 및 골드 흭득
           * TrainingScene:      캐릭터 능력 강화, 레벨업 관련 기능
@@ -58,7 +60,9 @@ namespace Text_RPG
         // 씬 Dictionary
         private Dictionary<string, int> sceneDictionary = new Dictionary<string, int>()
         {
-            { "MainScene", 0 }, { "AdventureScene", 1 },
+            { "MainScene", 0 }, { "StateScene", 1 }, { "InventoryScene", 2 }, { "AdventureScene", 3 },
+            { "TownScene", 4 }, { "TrainingScene", 5 }, { "ShopScene", 6 }, { "DungeonScene", 7 },
+            { "RestScene", 8 },
         };
 
         // 현재 창 (시작창, 스탯창 등)
@@ -74,10 +78,16 @@ namespace Text_RPG
             sceneList = new List<Scene>();
 
             Scene mainScene = new MainScene(sceneDictionary["MainScene"]);
+            Scene stateScene = new StateScene(sceneDictionary["StateScene"]);
+            Scene inventoryScene = new InventroyScene(sceneDictionary["InventoryScene"]);
             Scene adventureScene = new AdventureScene(sceneDictionary["AdventureScene"]);
+            Scene townScene = new TownScene(sceneDictionary["TownScene"]);
             
             sceneList.Add(mainScene);
+            sceneList.Add(stateScene);
+            sceneList.Add(inventoryScene); 
             sceneList.Add(adventureScene);
+            sceneList.Add(townScene);
 
             // 처음 씬 지정
             currentScene = mainScene;

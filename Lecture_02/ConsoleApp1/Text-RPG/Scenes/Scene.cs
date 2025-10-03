@@ -36,8 +36,22 @@ namespace Text_RPG.Scenes
         }
 
         public virtual void Init()
-        { 
+        {
+            // 오브젝트 초기화
+            gameObjects.Clear();
 
+            // 캐릭터 추가
+            player = GameManager.Instance.GetPlayer();
+            gameObjects.Add(player);
+
+            // 오브젝트 초기화
+            foreach (var gameObject in gameObjects)
+            {
+                gameObject.Start();
+            }
+
+            // bool 값 초기화
+            hasExecutedList.Clear();
         }
 
         public virtual void Start()

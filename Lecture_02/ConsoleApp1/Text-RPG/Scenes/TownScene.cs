@@ -41,6 +41,10 @@ namespace Text_RPG.Scenes
             // 오브젝트 초기화
             gameObjects.Clear();
 
+            // 변수 초기화
+            startTime = 0f;
+            eventIdx = -1;
+
             // 캐릭터 추가
             player = GameManager.Instance.GetPlayer();
             gameObjects.Add(player);
@@ -53,6 +57,7 @@ namespace Text_RPG.Scenes
 
             // bool 값 초기화
             hasExecutedList.Clear();
+            hasExecutedList["TimeSet"] = false;
             hasExecutedList["TownView"] = false;
             hasExecutedList["PatrolTownView"] = false;
             hasExecutedList["isFindEvent"] = false;
@@ -82,6 +87,14 @@ namespace Text_RPG.Scenes
                 gameObject.Update(elapsed);
             }
 
+            // LocalElapsed 초기화
+            if (!hasExecutedList["TimeSet"])
+            {
+                startTime = TimeManager.Instance.Elapsed;
+                TimeManager.Instance.LocalElapsed = 0f;
+                hasExecutedList["TimeSet"] = true;
+            }
+
             currentView?.Invoke(elapsed);
         }
 
@@ -93,25 +106,21 @@ namespace Text_RPG.Scenes
                 hasExecutedList["TownView"] = true;
             }
 
-            PatrolTownView(10f);
+            if (hasExecutedList["TimeSet"]) PatrolTownView(10f);
         }
 
         private void PatrolTownView(float duration)
         {
-            if (!hasExecutedList["PatrolTownView"])
-            {
-                TimeManager.Instance.InitLocalElapsed();
-                hasExecutedList["PatrolTownView"] = true;
-            }
-
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
+
+            WriteLine($"마을 순찰 시간: {TimeManager.Instance.LocalElapsed:F1} (초)", 8);
 
             // duration 동안 if문 수행
             if (TimeManager.Instance.LocalElapsed < duration)
             {
                 // 커서 위치 고정
-                int baseLine = 8;
+                int baseLine = 10;
 
                 // 모험 중 깜빡임
                 string baseText = "마을 순찰 중";

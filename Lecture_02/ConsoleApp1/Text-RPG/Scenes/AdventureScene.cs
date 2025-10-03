@@ -36,6 +36,10 @@ namespace Text_RPG.Scenes
             // 오브젝트 초기화
             gameObjects.Clear();
 
+            // 변수 초기화
+            startTime = 0f;
+            isFindMonster = -1;
+
             // 캐릭터 추가
             player = GameManager.Instance.GetPlayer();
             gameObjects.Add(player);
@@ -48,6 +52,7 @@ namespace Text_RPG.Scenes
 
             // bool 값 초기화
             hasExecutedList.Clear();
+            hasExecutedList["TimeSet"] = false;
             hasExecutedList["AdventureView"] = false;
             hasExecutedList["RandomAdventureView"] = false;
             hasExecutedList["RandomEvent"] = false;
@@ -78,6 +83,14 @@ namespace Text_RPG.Scenes
                 gameObject.Update(elapsed);
             }
 
+            // LocalElapsed 초기화
+            if (!hasExecutedList["TimeSet"])
+            {
+                startTime = TimeManager.Instance.Elapsed;
+                TimeManager.Instance.LocalElapsed = 0f;
+                hasExecutedList["TimeSet"] = true;
+            }
+
             currentView?.Invoke(elapsed);
         }
 
@@ -90,28 +103,22 @@ namespace Text_RPG.Scenes
                 hasExecutedList["AdventureView"] = true;
             }
 
-            RandomEvent(10.0f);
+            if(hasExecutedList["TimeSet"]) RandomEvent(10.0f);
         }
 
         // 랜덤 이벤트 : 일정 확률로 골드 흭득 가능
         private void RandomEvent(float duration)
         {
-            if(!hasExecutedList["RandomEvent"])
-            {
-                isFindMonster = -1;
-                TimeManager.Instance.InitLocalElapsed();
-                startTime = TimeManager.Instance.Elapsed;
-                hasExecutedList["RandomEvent"] = true;
-            }
-
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
+            WriteLine($"모험 시간: {TimeManager.Instance.LocalElapsed:F1} (초)", 8);
+
             // duration 동안 if문 수행
-            if(TimeManager.Instance.LocalElapsed < duration)
+            if (TimeManager.Instance.LocalElapsed < duration)
             {
                 // 커서 위치 고정
-                int baseLine = 8;
+                int baseLine = 10;
 
                 // 모험 중 깜빡임
                 string baseText = "모험중";

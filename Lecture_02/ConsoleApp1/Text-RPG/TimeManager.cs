@@ -44,12 +44,6 @@ namespace Text_RPG
             lastTime = startTime; // 이전 프레임 시간
         }
 
-        public void InitLocalElapsed()
-        {
-            // 로컬 경과 시간 초기화
-            localElapsed = 0f;
-        }
-
         public void UpdateTime()
         {
             DateTime now = DateTime.Now;

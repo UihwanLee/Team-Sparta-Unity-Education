@@ -8,6 +8,19 @@ namespace Text_RPG
 {
     internal class Character : IGameObject
     {
+        /*
+         * Character 부모 클래스
+         *
+         * Character은 다음과 같은 공통 속성을 가지고 있다.
+         * 
+         * [속성]
+         * 0: level                     - 캐릭터 레벨
+         * 1: name                      - 캐릭터 이름
+         * 2: atk                       - 캐릭터 공격력
+         * 3: def                       - 캐릭터 방어력
+         * 4: hp                        - 캐릭터 체력
+         *
+         */
         protected int level;
         protected string name;
         protected int atk;

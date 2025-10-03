@@ -8,6 +8,17 @@ namespace Text_RPG.Scenes
 {
     internal class Scene
     {
+        /*
+         * Scene 부모 클래스
+         *
+         * 각 Scene은 공통적으로 Player 객체를 가지고 있다.
+         * 또한, Scene에서 다양한 view가 존재하며
+         * currentView로 보여줄 창을 관리한다.
+         * 
+         * update 루프 내 scene이 동작하므로
+         * ui 창 같은 한번만 보여줄 오브젝트는 hasExcuted 변수로 관리한다.
+         *
+         */
         protected int index;
 
         protected Player player;    // 이 Scene에서 사용할 Character

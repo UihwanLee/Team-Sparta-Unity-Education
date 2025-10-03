@@ -6,31 +6,31 @@ using System.Text;
 using System.Threading.Tasks;
 using Text_RPG.Scenes;
 
-/*
-  * GameManager 스크립트
-  * 
-  * 게임 등장하는 모든 씬을 관리하며
-  * 씬들이 공유하는 객체 정보를 관리한다
-  * 
-  * 관리하는 게임 씬으로는 다음과 같다.
-  * 
-  * MainScene:          게임 시작 시 나오는 메인 씬
-  * AdventureScene:     퀘스트/스토리 진행 공간 (혹은 던전과 별개로 “탐험 이벤트” 진행)
-  * TownScene:          마을 순찰 및 골드 흭득
-  * TrainingScene:      캐릭터 능력 강화, 레벨업 관련 기능
-  * ShopScene:          아이템 구매/판매
-  * DungeonScene:       던전 탐험이 일어나는 공간
-  * RestScene:          회복, 상태 이상 제거, 하루 마무리 같은 기능
-  * 
-  * 공유하는 객체 정보는 다음과 같다.
-  * 
-  * Player:             플레이어 정보 공유
-  * 
-  */
 namespace Text_RPG
 {
     internal class GameManager
     {
+        /*
+          * GameManager 스크립트
+          * 
+          * 게임 등장하는 모든 씬을 관리하며
+          * 씬들이 공유하는 객체 정보를 관리한다
+          * 
+          * 관리하는 게임 씬으로는 다음과 같다.
+          * 
+          * MainScene:          게임 시작 시 나오는 메인 씬
+          * AdventureScene:     퀘스트/스토리 진행 공간 (혹은 던전과 별개로 “탐험 이벤트” 진행)
+          * TownScene:          마을 순찰 및 골드 흭득
+          * TrainingScene:      캐릭터 능력 강화, 레벨업 관련 기능
+          * ShopScene:          아이템 구매/판매
+          * DungeonScene:       던전 탐험이 일어나는 공간
+          * RestScene:          회복, 상태 이상 제거, 하루 마무리 같은 기능
+          * 
+          * 공유하는 객체 정보는 다음과 같다.
+          * 
+          * Player:             플레이어 정보 공유
+          * 
+          */
         // 싱글톤 패턴
         private static GameManager instance;
 

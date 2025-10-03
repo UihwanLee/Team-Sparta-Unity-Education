@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/*
-  * UIManager 스크립트
-  * 
-  * 게임에 나오는 내용들이 UI등을 관리하는 스크립트이다.
-  * 
-  * UIManager 객체는 단 한게 밖에 없으며
-  * 어디서든 사용할 수 있다.
-  * 
-  */
 namespace Text_RPG
 {
     internal class UIManager
     {
+        /*
+          * UIManager 스크립트
+          * 
+          * 게임에 나오는 내용들이 UI등을 관리하는 스크립트이다.
+          * 
+          * UIManager 객체는 단 한게 밖에 없으며
+          * 어디서든 사용할 수 있다.
+          * 
+          */
         // 싱글톤 생성
         private static UIManager instance;
 

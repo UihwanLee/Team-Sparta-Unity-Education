@@ -8,6 +8,18 @@ namespace Text_RPG
 {
     internal class Player : Character
     {
+        /*
+         * 게임에서 플레이어 역할을 할 Player 클래스
+         *
+         * Character를 상속 받고 있으며 Player는 다음과 같은 특성을 가지고 있다.
+         * 
+         * [속성]
+         * 0: job                       - 플레이어 직업
+         * 1: gold                      - 플레이어 골드
+         * 2: stamin                    - 플레이어 스태미나
+         * 3: exp                       - 플레이어 경험치
+         *
+         */
         protected string job;
         protected int gold;
         protected int stamina;

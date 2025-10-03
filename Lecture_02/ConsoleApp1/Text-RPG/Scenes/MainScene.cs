@@ -77,7 +77,7 @@ namespace Text_RPG.Scenes
             currentView?.Invoke(elapsed);
         }
 
-        // 메뉴 열기
+        // 메인 메뉴 : 플레이어가 번호 지정을 통해 여러 행동을 할 수 있는 메인 창
         private void MainView(float elapsed)
         {
             if (!hasExecutedList["MainView"])
@@ -107,7 +107,7 @@ namespace Text_RPG.Scenes
             }
         }
 
-        // 상태 보기
+        // 플레이어 스탯 창 : 플레이어의 스탯을 볼 수 있는 창
         private void StateView(float elapsed)
         {
             UIManager.Instance.StateView(player);
@@ -115,7 +115,7 @@ namespace Text_RPG.Scenes
             ChangeView(MainView);
         }
 
-        // 인벤토리 보기
+        // 플레이어 인벤토리 창 : 플레이어의 인벤토리를 볼 수 있는 창. 아이템을 확인 할 수 있다.
         private void InventoryView(float elapsed)
         {
             UIManager.Instance.InventoryView(player.Inventroy);
@@ -125,7 +125,7 @@ namespace Text_RPG.Scenes
             else ChangeView(InventoryEquippedView);
         }
 
-        // 인벤토리 - 장착 관리
+        // 플레이어 인벤토리 관리 창 : 플레이어의 아이템을 장착/해제 할 수 있다.
         private void InventoryEquippedView(float elapsed)
         {
             Console.Clear();

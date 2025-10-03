@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    /*
-      * TImeManager 스크립트
-      * 
-      * 게임에서 시간 관련된 변수를 제어하는 스크립트이다.
-      * 
-      * 경과 시간과 DeltaTime을 관리한다.
-      * 
-      */
     internal class TimeManager
     {
+        /*
+          * TImeManager 스크립트
+          * 
+          * 게임에서 시간 관련된 변수를 제어하는 스크립트이다.
+          * 
+          * 경과 시간과 DeltaTime을 관리한다.
+          * 
+          */
         public static TimeManager instance;
 
         public static TimeManager Instance
@@ -33,9 +33,9 @@ namespace Text_RPG
         private DateTime startTime;
         private DateTime lastTime;
 
-        private float elapsed = 0f;
-        private float deltaTime = 0f;
-        private float localElapsed = 0f;
+        private float elapsed = 0f;             // 시간 경과 시간 (전체 시간)
+        private float deltaTime = 0f;           // 시간 deltaTime
+        private float localElapsed = 0f;        // 전체가 아닌 부분 경과 시간 변수
 
         public void InitTime()
         {

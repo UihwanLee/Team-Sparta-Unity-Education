@@ -80,6 +80,7 @@ namespace Text_RPG.Scenes
             currentView?.Invoke(elapsed);
         }
 
+        // 모험 창 : 랜덤 모험 기능 수행 가능
         private void AdventureView(float elapsed)
         {
             if(!hasExecutedList["AdventureView"])
@@ -98,25 +99,26 @@ namespace Text_RPG.Scenes
             }
 
             Action<float> view;
-            // 현재 캐릭터의 스태미너가 부족하면 돌아감
             if (player.Stamina < 20)
             {
+                // 현재 캐릭터의 스태미너가 부족하면 돌아감
                 Console.WriteLine("스태미나 가 부족합니다.");
                 view = AdventureView;
             }
             else
             {
+                // 현재 캐릭터의 스태미너가 충분하면 스태미나 20 소모
                 Console.WriteLine("스태미나 20 소모되었습니다.");
                 player.Stamina -= 20;
                 view = RandomAdventureView;
             }
 
-            // 3초 시간 경과 후 실행
+            // 3초 시간 경과 후 창 바꿈
             Thread.Sleep(3000);
-
             ChangeView(RandomAdventureView);
         }
 
+        // 랜덤 모험 창 : 모험 중인 UI 띄우기
         private void RandomAdventureView(float elapsed)
         {
             if (!hasExecutedList["RandomAdventureView"])
@@ -128,6 +130,7 @@ namespace Text_RPG.Scenes
             RandomEvent(10.0f);
         }
 
+        // 랜덤 이벤트 : 일정 확률로 골드 흭득 가능
         private void RandomEvent(float duration)
         {
             if(!hasExecutedList["RandomEvent"])
@@ -136,8 +139,10 @@ namespace Text_RPG.Scenes
                 hasExecutedList["RandomEvent"] = true;
             }
 
+            // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
+            // duration 동안 if문 수행
             if (TimeManager.Instance.LocalElapsed < duration)
             {
                 // 모험중 깜빡임

@@ -149,10 +149,22 @@ namespace Text_RPG
         /// </summary>
         ///
 
-        // Text 관리
+        // Text 관리 : 공통
         public string NoStamina = "스태미나가 부족합니다.";
         public string UseStamin(int stamina) { return $"스태미나 {stamina} 소모되었습니다."; }
-        public string MatchMonsterAndGainGold(int gold) { return $"몬스터 조우! 골드 {gold}G 흭득!"; }
         public string NothingHappen = "아무 일도 일어나지 않았다";
+
+        public string ERROR_INDEX = "인덱스 에러";
+
+        // Text 관리 : 모험
+        public string MatchMonsterAndGainGold(int gold) { return $"몬스터 조우! 골드 {gold}G 흭득!"; }
+
+        // Text 관리 : 마을 순찰
+        public string PatrolTown_FindChild = "마을 아이들이 모여있다. 간식을 사줘볼까?";
+        public string PatrolTown_FindHeadMan = "촌장님을 만나서 심부름을 했다.";
+        public string PatrolTown_LostMan = "길 읽은 사람을 안내해주었다.";
+        public string PatrolTown_FindPeople = "마을 주민과 인사를 나눴다. 선물을 받았다.";
+        public string PatrolTown_ShowGold(int gold) { return (gold >= 0) ? $"{gold}G 흭득" : $"{gold}G 소모"; }
+        
     }
 }

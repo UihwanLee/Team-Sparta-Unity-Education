@@ -87,7 +87,7 @@ namespace Text_RPG.Scenes
                     CheckAdventure();
                     break;
                 case "4": // 마을 씬으로 이동
-                    GameManager.Instance.LoadScene("TownScene");
+                    CheckPatrolTown();
                     break;
                 default:
                     break;
@@ -109,6 +109,28 @@ namespace Text_RPG.Scenes
                 Console.WriteLine(UIManager.Instance.UseStamin(20));
                 player.Stamina -= 20;
                 scene = "AdventureScene";
+            }
+
+            // 3초 시간 경과 후 창 바꿈
+            Thread.Sleep(3000);
+            GameManager.Instance.LoadScene(scene);
+        }
+
+        private void CheckPatrolTown()
+        {
+            string scene;
+            if(player.Stamina < 5)
+            {
+                // 현재 캐릭터의 스태미너가 부족하면 돌아감
+                Console.WriteLine(UIManager.Instance.NoStamina);
+                scene = "MainScene";
+            }
+            else
+            {
+                // 현재 캐릭터의 스태미너가 충분하면 스태미나 5 소모
+                Console.WriteLine(UIManager.Instance.UseStamin(5));
+                player.Stamina -= 5;
+                scene = "TownScene";
             }
 
             // 3초 시간 경과 후 창 바꿈

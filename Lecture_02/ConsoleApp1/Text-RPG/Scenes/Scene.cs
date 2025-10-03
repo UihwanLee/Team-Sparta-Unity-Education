@@ -32,6 +32,8 @@ namespace Text_RPG.Scenes
         // Scene에서 표시할 모든 오브젝트
         protected List<IGameObject> gameObjects = new List<IGameObject>();
 
+        Random random = new Random();
+
         public Scene(int index)
         {
             this.index = index;
@@ -101,13 +103,10 @@ namespace Text_RPG.Scenes
             }
         }
 
-        // SetCurPosition 함수를 이용한 한 줄 덮어쓰기 함수
-        protected void WriteLine(string message, int line)
+        // 랜덤 값 뽑기
+        protected int GetRadomInt(int min, int max)
         {
-            Console.SetCursorPosition(0, line);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, line);
-            Console.Write(message);
+            return random.Next(min, max + 1);
         }
     }
 }

@@ -20,8 +20,12 @@ namespace Text_RPG.Scenes
          * 
          */
 
-        int isFindMonster = -1;
-
+        int eventIdx = -1;
+        int baseLine = 10;
+        int gainGold = 0;
+        string baseMessage = "";
+        private float EventStartTime = 3f;
+        private float EventEndTime = 6f;
 
         public AdventureScene(int index) : base(index)
         {
@@ -32,7 +36,12 @@ namespace Text_RPG.Scenes
             base.Init();
 
             // 변수 초기화
-            isFindMonster = -1;
+            eventIdx = -1;
+            baseLine = 10;
+            gainGold = 0;
+            baseMessage = "모험 중";
+            EventStartTime = 3f;
+            EventEndTime = 6f;
 
             // bool 값 초기화
             hasExecutedList.Clear();
@@ -40,7 +49,7 @@ namespace Text_RPG.Scenes
             hasExecutedList["AdventureView"] = false;
             hasExecutedList["RandomAdventureView"] = false;
             hasExecutedList["RandomEvent"] = false;
-            hasExecutedList["IsFindMonster"] = false;
+            hasExecutedList["isFindEvent"] = false;
 
             // 처음 View 설정: StarView
             ChangeView(AdventureView);
@@ -88,58 +97,65 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            WriteLine($"모험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            UIManager.Instance.WriteLine($"모험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
 
-            // duration 동안 if문 수행
-            if (TimeManager.Instance.LocalElapsed < duration)
-            {
-                // 커서 위치 고정
-                int baseLine = 10;
-
-                // 모험 중 깜빡임
-                string baseText = "모험중";
-                int dotCount = ((int)(TimeManager.Instance.LocalElapsed * 2) % 3) + 1; // 1~3점
-                string message = baseText + new string('.', dotCount);
-                WriteLine(message, baseLine);
-
-                // (4~6) 랜덤 이벤트 발생
-                if (TimeManager.Instance.LocalElapsed > 4f && TimeManager.Instance.LocalElapsed < 6f)
-                {
-                    // 랜덤 값으로 초반에 확률을 정하고 그 다음부터는 정해진 값 실행
-                    if (!hasExecutedList["IsFindMonster"])
-                    {
-                        Random random = new Random();
-                        isFindMonster = random.Next(0, 2);
-
-                        if(isFindMonster==1) player.Gold += 500;
-                        hasExecutedList["IsFindMonster"] = true;
-                    }
-
-                    if (isFindMonster == 1)
-                    {
-                        // 50% 확률로 몬스터 조우 후 500G 흭득
-                        message = UIManager.Instance.MatchMonster();
-                        int consoleWidth = Console.WindowWidth;
-                        WriteLine(message, baseLine + 2);
-
-                        if (TimeManager.Instance.LocalElapsed > 5f)
-                        {
-                            WriteLine(UIManager.Instance.GainGold(500), baseLine + 4);
-                        }
-                    }
-                    else
-                    {
-                        // 50% 확률로 아무 일도 일어나지 않음
-                        message = UIManager.Instance.NothingHappen;
-                        WriteLine(message, baseLine + 2);
-                    }
-                }
-            }
-            else
+            // 정해진 시간이 지나면 MainScene으로 이동
+            if (TimeManager.instance.LocalElapsed >= duration)
             {
                 // 이벤트 종료
                 GameManager.Instance.LoadScene("MainScene");
+                return;
             }
+
+            // 모험 중 깜빡임
+            baseMessage = "모험 중";
+            UIManager.Instance.BlinkingMessageWithDot(baseLine, baseMessage);
+
+            // 이벤트 발생
+            if(TimeManager.Instance.LocalElapsed > EventStartTime && TimeManager.Instance.LocalElapsed < EventEndTime)
+            {
+                AdventureEventHandle();
+            }
+        }
+
+        private void AdventureEventHandle()
+        {
+            // 랜덤 값으로 초반에 확률을 정하고 그 다음부터는 정해진 값 실행
+            if (!hasExecutedList["isFindEvent"])
+            {
+                hasExecutedList["isFindEvent"] = true;
+                eventIdx = GetRadomInt(1,100);
+
+                gainGold = GetAdventureEventGold(eventIdx);
+                player.Gold += gainGold;
+            }
+
+            // 이벤트 텍스트 표시
+            UIManager.Instance.WriteLine(GetAdventureEventText(eventIdx), baseLine + 2);
+
+            // 이벤트 효과 표시
+            if (TimeManager.Instance.LocalElapsed > EventStartTime + 1)
+            {
+                UIManager.Instance.WriteLine(UIManager.Instance.GainGold(gainGold), baseLine + 4);
+            }
+        }
+
+        private string GetAdventureEventText(int value)
+        {
+            // 예외처리
+            if (value < 0 || value > 100) return UIManager.Instance.ERROR_INDEX;
+
+            if (value > 0 && value <= 50) return UIManager.Instance.MatchMonster;               // 몬스터 조우 이벤트
+            else return UIManager.Instance.NothingHappen;                                       // 몬스터 조우 실패 이벤트
+        }
+
+        private int GetAdventureEventGold(int value)
+        {
+            // 예외처리
+            if (value < 0 || value > 100) return 0;
+
+            if (value > 0 && value <= 50) return 500;           // 몬스터 조우 이벤트
+            else return 0;                                      // 몬스터 조우 실패 이벤트
         }
 
         public override void ChangeView(Action<float> view)

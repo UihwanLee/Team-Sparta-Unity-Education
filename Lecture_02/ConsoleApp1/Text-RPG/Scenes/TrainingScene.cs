@@ -24,6 +24,9 @@ namespace Text_RPG.Scenes
 
         private int eventIdx = 0;
         private int gainExp = 0;
+        private int baseLine = 0;
+        private float EventStartTime = 3f;
+        private float EventEndTime = 6f;
 
         public override void Init()
         {
@@ -42,6 +45,9 @@ namespace Text_RPG.Scenes
             // 변수 초기화
             eventIdx = 0;
             gainExp = 0;
+            baseLine = 10;
+            EventStartTime = 3f;
+            EventEndTime = 6f;
 
             // 처음 View 설정: StarView
             ChangeView(TrainingView);
@@ -89,47 +95,47 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            WriteLine($"훈련 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            UIManager.Instance.WriteLine($"훈련 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
 
-            // duration 동안 if문 수행
-            if (TimeManager.Instance.LocalElapsed < duration)
-            {
-                // 커서 위치 고정
-                int baseLine = 10;
-
-                // 훈련 중 깜빡임
-                string baseText = "훈련 중";
-                int dotCount = ((int)(TimeManager.Instance.LocalElapsed * 2) % 3) + 1; // 1~3점
-                string message = baseText + new string('.', dotCount);
-                WriteLine(message, baseLine);
-
-                // (4~6) 랜덤 이벤트 발생
-                if (TimeManager.Instance.LocalElapsed > 3f && TimeManager.Instance.LocalElapsed < 5f)
-                {
-                    // 랜덤 값으로 초반에 확률을 정하고 그 다음부터는 정해진 값 실행
-                    if (!hasExecutedList["isFindEvent"])
-                    {
-                        hasExecutedList["isFindEvent"] = true;
-                        Random random = new Random();
-                        eventIdx = random.Next(1, 101); // 1 ~ 100까지 랜덤 값
-
-                        // 이벤트에 따른 경험치 처리
-                        gainExp = GetTrainingEventExp(eventIdx);
-                        player.Exp += gainExp;
-                    }
-
-                    WriteLine(GetTrainingEventText(eventIdx), baseLine + 2);
-
-                    if (TimeManager.Instance.LocalElapsed > 4f)
-                    {
-                        WriteLine(UIManager.Instance.GainExp(gainExp), baseLine + 4);
-                    }
-                }
-            }
-            else
+            // 정해진 시간이 지나면 MainScene으로 이동
+            if(TimeManager.instance.LocalElapsed >= duration)
             {
                 // 이벤트 종료
                 GameManager.Instance.LoadScene("MainScene");
+                return;
+            }
+
+            // 훈련 중 깜빡임
+            string baseMessage = "훈련 중";
+            UIManager.Instance.BlinkingMessageWithDot(baseLine, baseMessage);
+
+            // 이벤트 발생
+            if (TimeManager.Instance.LocalElapsed > EventStartTime && TimeManager.Instance.LocalElapsed < EventEndTime)
+            {
+                TrainingEventHandle();
+            }
+        }
+
+        private void TrainingEventHandle()
+        {
+            // 랜덤 값으로 초반에 확률을 정하고 그 다음부터는 정해진 값 실행
+            if (!hasExecutedList["isFindEvent"])
+            {
+                hasExecutedList["isFindEvent"] = true;
+                eventIdx = GetRadomInt(1,100); // 1 ~ 100까지 랜덤 값
+
+                // 이벤트에 따른 경험치 처리
+                gainExp = GetTrainingEventExp(eventIdx);
+                player.Exp += gainExp;
+            }
+
+            // 이벤트 텍스트 표시
+            UIManager.Instance.WriteLine(GetTrainingEventText(eventIdx), baseLine + 2);
+
+            // 이벤트 효과 표시
+            if (TimeManager.Instance.LocalElapsed > EventStartTime + 1)
+            {
+                UIManager.Instance.WriteLine(UIManager.Instance.GainExp(gainExp), baseLine + 4);
             }
         }
 

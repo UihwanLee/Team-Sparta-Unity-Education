@@ -180,7 +180,7 @@ namespace Text_RPG
 
 
         // Text 관리 : 모험
-        public string MatchMonster() { return $"몬스터 조우!"; }
+        public string MatchMonster = "몬스터 조우!"; 
 
         // Text 관리 : 마을 순찰
         public string PatrolTown_FindChild = "마을 아이들이 모여있다. 간식을 사줘볼까?";
@@ -197,6 +197,23 @@ namespace Text_RPG
         /// -------------------------------------------------------------------------------------------------------
         /// </summary>
         ///
+
+        // SetCurPosition 함수를 이용한 한 줄 덮어쓰기 함수
+        public void WriteLine(string message, int line)
+        {
+            Console.SetCursorPosition(0, line);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, line);
+            Console.Write(message);
+        }
+
+        // 문자열 깜빡임 애니메이션
+        public void BlinkingMessageWithDot(int baseLine, string baseMessage)
+        {
+            int dotCount = ((int)(TimeManager.Instance.LocalElapsed * 2) % 3) + 1; // 1~3점
+            string message = baseMessage + new string('.', dotCount);
+            WriteLine(message, baseLine);
+        }
 
         // 문자열 실제 표시 폭 계산 (한글 2칸, 알파벳 1칸 가정)
         public int GetDisplayWidth(string text)

@@ -100,13 +100,13 @@ namespace Text_RPG.Scenes
             if (player.Stamina < 20)
             {
                 // 현재 캐릭터의 스태미너가 부족하면 돌아감
-                Console.WriteLine("스태미나 가 부족합니다.");
+                Console.WriteLine(UIManager.Instance.NoStamina);
                 scene = "MainScene";
             }
             else
             {
                 // 현재 캐릭터의 스태미너가 충분하면 스태미나 20 소모
-                Console.WriteLine("스태미나 20 소모되었습니다.");
+                Console.WriteLine(UIManager.Instance.UseStamin(20));
                 player.Stamina -= 20;
                 scene = "AdventureScene";
             }

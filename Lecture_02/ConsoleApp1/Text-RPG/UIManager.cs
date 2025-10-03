@@ -127,7 +127,7 @@ namespace Text_RPG
         ///
 
         // 마을 순찰
-        public void PatrolTownView()
+        public void TownView()
         {
             Console.WriteLine("[마을 순찰]");
             Console.Write("『");
@@ -143,5 +143,16 @@ namespace Text_RPG
         {
             Console.WriteLine("잘못된 입력입니다");
         }
+
+        /// <summary>
+        /// -------------------------------------------------------------------------------------------------------
+        /// </summary>
+        ///
+
+        // Text 관리
+        public string NoStamina = "스태미나가 부족합니다.";
+        public string UseStamin(int stamina) { return $"스태미나 {stamina} 소모되었습니다."; }
+        public string MatchMonsterAndGainGold(int gold) { return $"몬스터 조우! 골드 {gold}G 흭득!"; }
+        public string NothingHappen = "아무 일도 일어나지 않았다";
     }
 }

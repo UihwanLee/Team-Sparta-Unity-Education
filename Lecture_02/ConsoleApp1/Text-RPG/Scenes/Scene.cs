@@ -89,5 +89,14 @@ namespace Text_RPG.Scenes
                 Console.WriteLine("잘못된 입력입니다.");
             }
         }
+
+        // SetCurPosition 함수를 이용한 한 줄 덮어쓰기 함수
+        protected void WriteLine(string message, int line)
+        {
+            Console.SetCursorPosition(0, line);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, line);
+            Console.Write(message);
+        }
     }
 }

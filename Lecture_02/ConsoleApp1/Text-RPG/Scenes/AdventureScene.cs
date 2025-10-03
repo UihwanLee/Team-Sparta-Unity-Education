@@ -135,14 +135,14 @@ namespace Text_RPG.Scenes
                     if (isFindMonster == 1)
                     {
                         // 50% 확률로 몬스터 조우 후 500G 흭득
-                        message = "몬스터 조우! 골드 500G 흭득!";
+                        message = UIManager.Instance.MatchMonsterAndGainGold(500);
                         int consoleWidth = Console.WindowWidth;
                         WriteLine(message, baseLine + 2);
                     }
                     else
                     {
                         // 50% 확률로 아무 일도 일어나지 않음
-                        message = "아무 일도 일어나지 않았다";
+                        message = UIManager.Instance.NothingHappen;
                         WriteLine(message, baseLine + 2);
                     }
                 }
@@ -152,15 +152,6 @@ namespace Text_RPG.Scenes
                 // 이벤트 종료
                 GameManager.Instance.LoadScene("MainScene");
             }
-        }
-
-        // SetCurPosition 함수를 이용한 한 줄 덮어쓰기 함수
-        private void WriteLine(string message, int line)
-        {
-            Console.SetCursorPosition(0, line);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, line);
-            Console.Write(message);
         }
 
         public override void ChangeView(Action<float> view)

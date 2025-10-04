@@ -49,28 +49,35 @@ namespace Text_RPG
         }
 
         // 장비 장착/해제 - 아이템 검색
-        public void EquippedItem(Item _item, bool isEquipped)
+        public void EquipItem(Item _item, bool isEquipped)
         {
             foreach(var item in items)
             {
-                if(item.name == _item.name)
+                if(item.Id == _item.Id)
                 {
-                    item.EquippedItem(isEquipped);
+                    item.SetEquipped(isEquipped);
                 }
             }
         }
 
         // 장비 장착/해제 - 인덱스 검색
-        public void EquippedItemByIdx(int idx)
+        public void EquipItemByIdx(int idx)
         {
             if(items.Count <= 0 || idx >= items.Count) return;
 
             // 이미 장착 중이라면 장착 해제
-            if (items[idx].isEquipped) { items[idx].EquippedItem(false); }
+            if (items[idx].isEquipped) { 
+                items[idx].SetEquipped(false);
+            }
 
             // 장착 중인 상태가 아니라면 장착
-            else { items[idx].EquippedItem(true); }
+            else { 
+                items[idx].SetEquipped(true);
+                GameManager.Instance.GetPlayer().EquipItem(items[idx]);
+            }
         }
+
+        // Armor, Weapon 유무 알려주기
 
         // 인벤토리 보여주기
         public void DisplayInfo(bool isEquipped)

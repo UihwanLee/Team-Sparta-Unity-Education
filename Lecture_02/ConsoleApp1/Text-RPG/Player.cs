@@ -18,6 +18,11 @@ namespace Text_RPG
          * 1: gold                      - 플레이어 골드
          * 2: stamin                    - 플레이어 스태미나
          * 3: exp                       - 플레이어 경험치
+         * 
+         * Player는 장비를 무기와 방어구 각 한 개씩만 장착할 수 있다.
+         * 
+         * Armor : 1
+         * Weapon : 1
          *
          */
         protected string job;
@@ -27,6 +32,11 @@ namespace Text_RPG
 
         protected Inventroy inventroy;
 
+        // 장착 중인 무기와 방어구
+        private int origin_atk, origin_def;
+        private Weapon weapon;
+        private Armor armor;
+
         public Player(int level, string name, int atk, int def, int hp, string job, int gold) : base(level, name, atk, def, hp)
         {
             this.job = job;
@@ -34,6 +44,10 @@ namespace Text_RPG
 
             this.stamina = 100;
             this.exp = 0;
+            
+            // 생성 시 기본 스탯을 저장
+            origin_atk = atk;
+            origin_def = def;
         }
 
         public override void Start()
@@ -43,12 +57,12 @@ namespace Text_RPG
             // 캐릭터 초기 생성 시 자신만의 인벤토리를 생성한다.
             inventroy = new Inventroy();
 
-            inventroy.Add(new Item("무쇠갑옷", "방어력+5",
-                "무쇠로 만들어져 튼튼한 갑옷입니다.", 10000, ItemType.Weapon, true));
-            inventroy.Add(new Item("낡은 검", "공격력+2",
-                "쉽게 볼 수 있는 낡은 검 입니다.", 20000, ItemType.Weapon, false));
-            inventroy.Add(new Item("연습용 창", "공격력+3",
-                "검보다는 그대로 창이 다루기 쉽죠.", 20000, ItemType.Weapon, false));
+            inventroy.Add(new Armor("무쇠갑옷", "방어력+5",
+                "무쇠로 만들어져 튼튼한 갑옷입니다.", 10000, ItemType.Weapon, true, 5));
+            inventroy.Add(new Weapon("낡은 검", "공격력+2",
+                "쉽게 볼 수 있는 낡은 검 입니다.", 20000, ItemType.Weapon, false, 2));
+            inventroy.Add(new Weapon("연습용 창", "공격력+3",
+                "검보다는 그대로 창이 다루기 쉽죠.", 20000, ItemType.Weapon, false, 3));
 
         }
 
@@ -78,6 +92,24 @@ namespace Text_RPG
             Console.WriteLine($"골드 : {gold}");
             Console.WriteLine($"스태미나 : {stamina}");
             Console.WriteLine($"경험치 : {exp}");
+        }
+
+        // 아이템 장착 - 무기
+        public void EquipWeapon(Weapon weapon)
+        {
+            this.weapon = weapon;
+
+            // 무기 속성에 따라 스탯 증가
+            this.atk = origin_atk + weapon.ATK;
+        }
+
+        // 아이템 장착 - 방어구
+        public void EquipArmor(Armor armor)
+        {
+            this.armor = armor;
+
+            // 방어구 속성에 따라 스탯 증가
+            this.def = origin_def + armor.DEF;
         }
 
         // 변수 프로퍼티

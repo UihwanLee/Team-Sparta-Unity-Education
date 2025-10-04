@@ -8,7 +8,7 @@ namespace Text_RPG
 {
     public enum ItemType { Weapon, Armor, Potion, Etc }
 
-    internal class Item
+    internal abstract class Item
     {
         /*
          * Item 스크립트
@@ -20,6 +20,8 @@ namespace Text_RPG
          * [Etc] 기타 아이템
          * 
          */
+
+        public int Id { get; }
         public string name;
         public string effect;
         public string description;
@@ -28,8 +30,9 @@ namespace Text_RPG
 
         public bool isEquipped;
 
-        public Item(string name, string effect, string description, int price, ItemType type, bool isEquipped)
+        public Item(int id, string name, string effect, string description, int price, ItemType type, bool isEquipped)
         {
+            this.Id = id;
             this.name = name;
             this.price = price;
             this.Type = type;
@@ -38,11 +41,25 @@ namespace Text_RPG
             this.isEquipped = isEquipped;
         }
 
-        public void EquippedItem(bool _isEquipped)
+        protected Item(string name, string effect, string description, int price, ItemType type, bool isEquipped)
+        {
+            this.name = name;
+            this.effect = effect;
+            this.description = description;
+            this.price = price;
+            Type = type;
+            this.isEquipped = isEquipped;
+        }
+
+        public void SetEquipped(bool _isEquipped)
         {
             // 아이템 장착/해제
             isEquipped = _isEquipped;
         }
+
+        // 아이템 장착은 무기/방어구 클래스에서 실행한다.
+        public abstract void EquipItem(Player player);
+        public abstract void UnequipItem(Player player);
 
         public void DisplayInfo()
         {

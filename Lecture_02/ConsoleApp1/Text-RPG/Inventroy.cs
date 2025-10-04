@@ -55,7 +55,7 @@ namespace Text_RPG
             {
                 if(item.Id == _item.Id)
                 {
-                    item.SetEquipped(isEquipped);
+                    item.EquipItem(GameManager.Instance.GetPlayer(), isEquipped);
                 }
             }
         }
@@ -67,13 +67,12 @@ namespace Text_RPG
 
             // 이미 장착 중이라면 장착 해제
             if (items[idx].isEquipped) { 
-                items[idx].SetEquipped(false);
+                items[idx].EquipItem(GameManager.Instance.GetPlayer(), false);
             }
 
             // 장착 중인 상태가 아니라면 장착
             else { 
-                items[idx].SetEquipped(true);
-                GameManager.Instance.GetPlayer().EquipItem(items[idx]);
+                items[idx].EquipItem(GameManager.Instance.GetPlayer(), true);
             }
         }
 

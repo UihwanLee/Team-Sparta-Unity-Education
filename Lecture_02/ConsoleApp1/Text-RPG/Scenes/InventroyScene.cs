@@ -92,7 +92,7 @@ namespace Text_RPG.Scenes
 
             // 인벤토리에서 idx로 검색하여 해당 아이템 장착
             equippedIdx = int.Parse(choice.ToString());
-            player.Inventroy.EquippedItemByIdx(equippedIdx - 1);
+            player.Inventroy.EquipItemByIdx(equippedIdx - 1);
 
             // 창 변경
             ChangeView(InventoryEquippedView);

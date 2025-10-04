@@ -95,21 +95,37 @@ namespace Text_RPG
         }
 
         // 아이템 장착 - 무기
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(Weapon weapon, bool isEquipped)
         {
-            this.weapon = weapon;
+            if (weapon == null) return;
+
+            // 기존 무기가 있다면 해제
+            if(this.weapon != null)
+            {
+                this.weapon.isEquipped = false;
+            }
+
+            this.weapon = (isEquipped) ? weapon : null;
 
             // 무기 속성에 따라 스탯 증가
-            this.atk = origin_atk + weapon.ATK;
+            this.atk = (isEquipped) ? origin_atk + weapon.ATK : origin_atk;
         }
 
         // 아이템 장착 - 방어구
-        public void EquipArmor(Armor armor)
+        public void EquipArmor(Armor armor, bool isEquipped)
         {
-            this.armor = armor;
+            if (armor == null) return;
+
+            // 기존 방어구가 있다면 해제
+            if (this.armor != null)
+            {
+                this.armor.isEquipped = false;
+            }
+
+            this.armor = (isEquipped) ? armor : null;
 
             // 방어구 속성에 따라 스탯 증가
-            this.def = origin_def + armor.DEF;
+            this.def = (isEquipped) ? origin_def + armor.DEF : origin_def;
         }
 
         // 변수 프로퍼티

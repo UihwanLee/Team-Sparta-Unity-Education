@@ -22,14 +22,12 @@ namespace Text_RPG
             this.atk = atk;
         }
 
-        public override void EquipItem(Player player)
+        public override void EquipItem(Player player, bool isEquipped)
         {
-            player.EquipItem(this);
-        }
+            base.EquipItem(player, isEquipped);
 
-        public override void UnequipItem(Player player)
-        {
-            
+            // 플레이어 무기 장착
+            player.EquipWeapon(this, isEquipped);
         }
 
         // 프로퍼티

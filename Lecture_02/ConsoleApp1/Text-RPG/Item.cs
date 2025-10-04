@@ -51,15 +51,12 @@ namespace Text_RPG
             this.isEquipped = isEquipped;
         }
 
-        public void SetEquipped(bool _isEquipped)
+        // 아이템 장착은 무기/방어구 클래스에서 실행한다.
+        public virtual void EquipItem(Player player, bool isEquipped)
         {
             // 아이템 장착/해제
-            isEquipped = _isEquipped;
+            this.isEquipped = isEquipped;
         }
-
-        // 아이템 장착은 무기/방어구 클래스에서 실행한다.
-        public abstract void EquipItem(Player player);
-        public abstract void UnequipItem(Player player);
 
         public void DisplayInfo()
         {

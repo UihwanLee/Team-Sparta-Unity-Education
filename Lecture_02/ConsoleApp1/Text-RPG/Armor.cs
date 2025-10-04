@@ -22,14 +22,12 @@ namespace Text_RPG
             this.def = def;
         }
 
-        public override void EquipItem(Player player)
+        public override void EquipItem(Player player, bool isEquipped)
         {
-            player.EquipArmor(this);
-        }
+            base.EquipItem(player, isEquipped);
 
-        public override void UnequipItem(Player player)
-        {
-            
+            // 플레이어 방어구 장착
+            player.EquipArmor(this, isEquipped);
         }
 
         // 프로퍼티

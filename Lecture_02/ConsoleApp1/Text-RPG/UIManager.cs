@@ -242,7 +242,7 @@ namespace Text_RPG
         public string Shop_Success_Purchase = "구매를 완료했습니다.";
         public string Not_Enough_Gold = "Gold가 부족합니다.";
 
-        public string Shop_Success_Sale = "판매를 완료했습니다.";
+        public string Shop_Success_Sale(Item item) { return $"{item.name} 판매 완료. {item.price}G 흭득!"; }
 
         /// <summary>
         /// -------------------------------------------------------------------------------------------------------

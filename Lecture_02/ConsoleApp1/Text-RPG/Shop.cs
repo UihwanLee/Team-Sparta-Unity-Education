@@ -82,7 +82,8 @@ namespace Text_RPG
         // 상품 판매 시도 - 인덱스 검색
         public bool TrySaleItem(int idx)
         {
-            if (productList.Count <= 0 || idx >= productList.Count) return false;
+            Player player = GameManager.Instance.GetPlayer();
+            if (player.Inventroy.Items.Count <= 0 || idx >= player.Inventroy.Items.Count) return false;
 
             // 아이템 판매
             SailItem(idx);
@@ -94,13 +95,20 @@ namespace Text_RPG
         {
             Player player = GameManager.Instance.GetPlayer();
 
+            // 이미 장착 중인 아이템이라면 장착 해제
+            if (player.Inventroy.Items[idx].isEquipped)
+            {
+                player.Inventroy.Items[idx].EquipItem(player, false);
+            }
+
             // 판매 골드 흭득
-            player.Gold += productList[idx].price;
+            player.Gold += player.Inventroy.Items[idx].price;
+
+            // 판매 및 골드 흭득 메세지 출력
+            Console.WriteLine(UIManager.Instance.Shop_Success_Sale(player.Inventroy.Items[idx]));
 
             // 플레이어 인벤토리에서 삭제
             player.Inventroy.Items.RemoveAt(idx);
-
-            Console.WriteLine(UIManager.Instance.Shop_Success_Sale);
         }
 
         // 상품 목록 보여주기

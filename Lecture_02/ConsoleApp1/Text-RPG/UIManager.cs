@@ -38,6 +38,26 @@ namespace Text_RPG
 
         public UIManager() { }
 
+        private void DisplayScreen()
+        {
+            Console.Write("『");
+            for (int i = 0; i < width; i++) Console.Write(" ");
+            for (int i = 0; i < height; i++) Console.WriteLine();
+            for (int i = 0; i < width; i++) Console.Write(" ");
+            Console.Write("』");
+            Console.WriteLine();
+        }
+
+        private void DisplayOption(string[] options)
+        {
+            foreach (var option in options)
+            {
+                Console.WriteLine(option);
+            }
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+        }
+
         // 메인 화면
         public void MainView()
         {
@@ -45,20 +65,8 @@ namespace Text_RPG
             Console.WriteLine("이곳에서 던전으로 들어가진 전 활동을 할 수 있습니다.");
             Console.WriteLine();
             Console.WriteLine("[마을]");
-            Console.Write("『");
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            for (int i = 0; i < height; i++) Console.WriteLine();
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            Console.Write("』");
-            Console.WriteLine();
-            Console.WriteLine("1. 상태 보기");
-            Console.WriteLine("2. 인벤토리");
-            Console.WriteLine("3. 랜덤 모험");
-            Console.WriteLine("4. 마을 순찰하기");
-            Console.WriteLine("5. 훈련하기");
-            Console.WriteLine("6. 상점");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            DisplayScreen();
+            DisplayOption(["1. 상태 보기", "2. 인벤토리", "3. 랜덤 모험", "4. 마을 순찰하기", "5. 훈련하기", "6. 상점"]);
         }
 
         // 캐릭터 정보 화면
@@ -66,17 +74,10 @@ namespace Text_RPG
         {
             Console.WriteLine("[캐릭터 상태]");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
-            Console.Write("『");
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            for (int i = 0; i < height; i++) Console.WriteLine();
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            Console.Write("』");
-            Console.WriteLine();
+            DisplayScreen();
             player.ShowInfo();
             Console.WriteLine();
-            Console.WriteLine("0. 나가기");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            DisplayOption(["0. 나가기"]);
         }
 
         // 캐릭터 인벤토리 화면
@@ -87,11 +88,7 @@ namespace Text_RPG
             Console.WriteLine();
             inventory.DisplayInfo(false);
             Console.WriteLine();
-            Console.WriteLine("1. 장착 관리");
-            Console.WriteLine("2. 아이템 정렬");
-            Console.WriteLine("0. 나가기");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            DisplayOption(["1. 장착 관리", "2. 아이템 정렬", "0. 나가기"]);
         }
 
         // 캐릭터 인벤토리 관리 화면
@@ -102,10 +99,7 @@ namespace Text_RPG
             Console.WriteLine();
             inventory.DisplayInfo(true);
             Console.WriteLine();
-            Console.WriteLine("(번호). 해당 장비 장착");
-            Console.WriteLine("0. 나가기");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            DisplayOption(["(번호). 해당 장비 장착", "0. 나가기"]);
         }
 
         // 캐릭터 인벤토리 정렬 화면
@@ -116,13 +110,7 @@ namespace Text_RPG
             Console.WriteLine();
             inventory.DisplayInfo(false);
             Console.WriteLine();
-            Console.WriteLine("1. 이름");
-            Console.WriteLine("2. 장착순");
-            Console.WriteLine("3. 공격력");
-            Console.WriteLine("4. 방어력");
-            Console.WriteLine("0. 나가기");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            DisplayOption(["1. 이름", "2. 장착순", "3. 공격력", "4. 방어력", "0. 나가기"]);
         }
 
         /// <summary>
@@ -133,12 +121,7 @@ namespace Text_RPG
         public void AdventureView(Player player)
         {
             Console.WriteLine("[랜덤 모험]");
-            Console.Write("『");
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            for (int i = 0; i < height; i++) Console.WriteLine();
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            Console.Write("』");
-            Console.WriteLine();
+            DisplayScreen();
         }
 
         /// <summary>
@@ -150,12 +133,7 @@ namespace Text_RPG
         public void TownView()
         {
             Console.WriteLine("[마을 순찰]");
-            Console.Write("『");
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            for (int i = 0; i < height; i++) Console.WriteLine();
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            Console.Write("』");
-            Console.WriteLine();
+            DisplayScreen();
         }
 
         /// <summary>
@@ -167,12 +145,7 @@ namespace Text_RPG
         public void TrainingView()
         {
             Console.WriteLine("[훈련]");
-            Console.Write("『");
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            for (int i = 0; i < height; i++) Console.WriteLine();
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            Console.Write("』");
-            Console.WriteLine();
+            DisplayScreen();
         }
 
         /// <summary>
@@ -191,10 +164,7 @@ namespace Text_RPG
             Console.WriteLine();
             shop.DisplayInfo(false);
             Console.WriteLine();
-            Console.WriteLine("1. 아이템 구매");
-            Console.WriteLine("0. 나가기");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            DisplayOption(["1. 아이템 구매", "0. 나가기"]);
         }
 
         // 상점 : 상품 구매
@@ -208,10 +178,7 @@ namespace Text_RPG
             Console.WriteLine();
             shop.DisplayInfo(true);
             Console.WriteLine();
-            Console.WriteLine("(번호). 해당 아이템 구매");
-            Console.WriteLine("0. 나가기");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            DisplayOption(["(번호). 해당 아이템 구매", "0. 나가기"]);
         }
 
         /// <summary>

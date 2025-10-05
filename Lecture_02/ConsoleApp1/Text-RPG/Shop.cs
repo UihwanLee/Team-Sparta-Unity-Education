@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -41,8 +42,8 @@ namespace Text_RPG
             productList.Add(ItemDatabase.GetWeapon("스파르타의 창"));
         }
 
-        // 상품 구매 - 인덱스 검색
-        public bool PurchaseItemByIdx(int idx)
+        // 상품 구매 시도 - 인덱스 검색
+        public bool TryPurchaseItem(int idx)
         {
             if (productList.Count <= 0 || idx >= productList.Count) return false;
 
@@ -62,10 +63,17 @@ namespace Text_RPG
             }
 
             // 아이템 구매
-            productList[idx].isPurchase = true;
-            player.PurchaseItem(productList[idx]);
-            Console.WriteLine(UIManager.Instance.Shop_Success_Purchase);
+            PurchaseItem(productList[idx]);
             return true;
+        }
+
+        // 상품 구매
+        public void PurchaseItem(Item item)
+        {
+            item.isPurchase = true;
+            Player player = GameManager.Instance.GetPlayer();
+            player.PurchaseItem(item);
+            Console.WriteLine(UIManager.Instance.Shop_Success_Purchase);
         }
 
         // 상품 목록 보여주기

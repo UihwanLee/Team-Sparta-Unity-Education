@@ -90,15 +90,13 @@ namespace Text_RPG.Scenes
             string[] vaildItemOption = Enumerable.Range(0, vaildCount + 1).Select(i => i.ToString()).ToArray();   // LINQ 문법
             var choice = GetUserChoice(vaildItemOption);
 
-            if (choice == "0") { ChangeView(ShopView); return; }
-
             // 아이템 구매
             while(true)
             {
-                if(shop.PurchaseItemByIdx(int.Parse(choice)-1)==true)
-                {
-                    break;
-                }
+                if (choice == "0") { ChangeView(ShopView); return; }
+
+                // 구매 가능한 아이템이면 구매 
+                if (shop.TryPurchaseItem(int.Parse(choice)-1)==true) break;
 
                 choice = GetUserChoice(vaildItemOption);
             }

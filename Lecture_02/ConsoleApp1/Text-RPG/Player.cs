@@ -48,11 +48,6 @@ namespace Text_RPG
             // 생성 시 기본 스탯을 저장
             origin_atk = atk;
             origin_def = def;
-        }
-
-        public override void Start()
-        {
-            base.Start();
 
             // 캐릭터 초기 생성 시 자신만의 인벤토리를 생성한다.
             inventroy = new Inventroy();
@@ -63,7 +58,11 @@ namespace Text_RPG
                 "쉽게 볼 수 있는 낡은 검 입니다.", 20000, ItemType.Weapon, false, 2));
             inventroy.Add(new Weapon("연습용 창", "공격력+3",
                 "검보다는 그대로 창이 다루기 쉽죠.", 20000, ItemType.Weapon, false, 3));
+        }
 
+        public override void Start()
+        {
+            base.Start();
         }
 
         // 업데이트

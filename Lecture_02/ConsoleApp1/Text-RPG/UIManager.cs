@@ -87,6 +87,7 @@ namespace Text_RPG
             inventory.DisplayInfo(false);
             Console.WriteLine();
             Console.WriteLine("1. 장착 관리");
+            Console.WriteLine("2. 아이템 정렬");
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
@@ -101,6 +102,23 @@ namespace Text_RPG
             inventory.DisplayInfo(true);
             Console.WriteLine();
             Console.WriteLine("(번호). 해당 장비 장착");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+        }
+
+        // 캐릭터 인벤토리 정렬 화면
+        public void InventorySortingView(Inventroy inventory)
+        {
+            Console.WriteLine("[인벤토리 - 아이템 정렬]");
+            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            Console.WriteLine();
+            inventory.DisplayInfo(false);
+            Console.WriteLine();
+            Console.WriteLine("1. 이름");
+            Console.WriteLine("2. 장착순");
+            Console.WriteLine("3. 공격력");
+            Console.WriteLine("4. 방어력");
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");

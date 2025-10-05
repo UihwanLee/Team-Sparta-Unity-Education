@@ -27,6 +27,7 @@ namespace Text_RPG.Scenes
             // bool 초기화
             hasExecutedList["InventoryView"] = false;
             hasExecutedList["InventoryEquippedView"] = false;
+            hasExecutedList["InventorySortingView"] = false;
 
             // 처음 View 설정: InventoryView
             ChangeView(InventoryView);
@@ -65,10 +66,11 @@ namespace Text_RPG.Scenes
                 hasExecutedList["InventoryView"] = true;
             }
 
-            var choice = GetUserChoice(["0", "1"]);
+            var choice = GetUserChoice(["0", "1", "2"]);
 
             if (choice == "0") GameManager.Instance.LoadScene("MainScene");
-            else ChangeView(InventoryEquippedView);
+            else if (choice == "1") ChangeView(InventoryEquippedView);
+            else ChangeView(InventorySortingView);
         }
 
         // 플레이어 인벤토리 관리 창 : 플레이어의 아이템을 장착/해제 할 수 있다.
@@ -88,7 +90,7 @@ namespace Text_RPG.Scenes
             var choice = GetUserChoice(vaildItemOption);
 
             // 나가기 설정
-            if (choice == "0") { GameManager.Instance.LoadScene("MainScene"); return; }
+            if (choice == "0") { ChangeView(InventoryView); return; }
 
             // 인벤토리에서 idx로 검색하여 해당 아이템 장착
             equippedIdx = int.Parse(choice.ToString());
@@ -96,6 +98,27 @@ namespace Text_RPG.Scenes
 
             // 창 변경
             ChangeView(InventoryEquippedView);
+        }
+
+        // 플레이어 인벤토리 정렬 창 : 인벤토리의 아이템들을 옵션에 따라 정렬할 수 있다.
+        private void InventorySortingView(float elapsed)
+        {
+            if (!hasExecutedList["InventorySortingView"])
+            {
+                UIManager.Instance.InventorySortingView(player.Inventroy);
+                hasExecutedList["InventorySortingView"] = true;
+            }
+
+            var choice = GetUserChoice(["0", "1", "2", "3", "4"]);
+
+            // 나가기 설정
+            if (choice == "0") { ChangeView(InventoryView); return; }
+
+            // 옵션에 따라 아이템 정렬
+            player.Inventroy.SortItemByOption(int.Parse(choice.ToString()));
+
+            // 창 변경
+            ChangeView(InventorySortingView);
         }
 
         public override void ChangeView(Action<float> view)

@@ -93,7 +93,18 @@ namespace Text_RPG.Scenes
             if (choice == "0") { ChangeView(ShopView); return; }
 
             // 아이템 구매
+            while(true)
+            {
+                if(shop.PurchaseItemByIdx(int.Parse(choice)-1)==true)
+                {
+                    break;
+                }
 
+                choice = GetUserChoice(vaildItemOption);
+            }
+
+            // 구매가 완료 되었으면 1초 후 갱신
+            Thread.Sleep(1000);
             ChangeView(ShopPurchaseView);
         }
 

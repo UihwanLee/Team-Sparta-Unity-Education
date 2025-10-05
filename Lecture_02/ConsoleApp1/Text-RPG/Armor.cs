@@ -17,7 +17,7 @@ namespace Text_RPG
 
         private int def;    // 방어력
 
-        public Armor(string name, string effect, string description, int price, ItemType type, bool isEquipped, int def) : base(name, effect, description, price, type, isEquipped)
+        public Armor(int id, string name, string effect, string description, int price, ItemType type, int def) : base(id, name, effect, description, price, type)
         {
             this.def = def;
         }

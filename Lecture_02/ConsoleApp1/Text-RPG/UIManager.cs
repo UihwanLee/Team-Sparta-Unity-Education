@@ -256,6 +256,11 @@ namespace Text_RPG
         public string Training_Success = "오늘하루 열심히 훈련했습니다.";
         public string Training_Fail = "하기 싫다... 훈련이...";
 
+        // Text 관리 : 상점
+        public string Shop_Already_Purchase = "이미 구매한 아이템입니다.";
+        public string Shop_Success_Purchase = "구매를 완료했습니다.";
+        public string Not_Enough_Gold = "Gold가 부족합니다.";
+
         /// <summary>
         /// -------------------------------------------------------------------------------------------------------
         /// </summary>

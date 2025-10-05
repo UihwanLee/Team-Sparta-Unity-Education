@@ -17,7 +17,7 @@ namespace Text_RPG
 
         private int atk;    // 공격력
 
-        public Weapon(string name, string effect, string description, int price, ItemType type, bool isEquipped, int atk) : base(name, effect, description, price, type, isEquipped)
+        public Weapon(int id, string name, string effect, string description, int price, ItemType type, int atk) : base(id, name, effect, description, price, type)
         {
             this.atk = atk;
         }

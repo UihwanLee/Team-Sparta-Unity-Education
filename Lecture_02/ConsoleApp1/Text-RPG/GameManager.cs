@@ -74,7 +74,7 @@ namespace Text_RPG
         public void InitGame()
         {
             // 게임 오브젝트 생성
-            player = new Player(1, "이의환", 10, 10, 100, "초보자", 0);
+            player = new Player(1, "이의환", 10, 10, 100, "초보자", 10000);
             shop = new Shop();
 
             // 씬 생성

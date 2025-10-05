@@ -125,6 +125,15 @@ namespace Text_RPG
             this.def = (isEquipped) ? origin_def + armor.DEF : origin_def;
         }
 
+        // 아이템 구매
+        public void PurchaseItem(Item item)
+        {
+            if (item == null) return;
+
+            this.gold -= item.price;
+            this.inventroy.Add(item);
+        }
+
         // 변수 프로퍼티
         public Inventroy Inventroy { get { return inventroy; } }
 

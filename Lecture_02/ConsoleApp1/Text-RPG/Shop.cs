@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Text_RPG
 {
@@ -40,21 +41,52 @@ namespace Text_RPG
             productList.Add(ItemDatabase.GetWeapon("스파르타의 창"));
         }
 
+        // 상품 구매 - 인덱스 검색
+        public bool PurchaseItemByIdx(int idx)
+        {
+            if (productList.Count <= 0 || idx >= productList.Count) return false;
+
+            // 이미 구매한 상품이라면 구매한 아이템입니다 출력
+            if (productList[idx].isPurchase)
+            {
+                Console.WriteLine(UIManager.Instance.Shop_Already_Purchase);
+                return false;
+            }
+
+            // 플레이어의 골드가 충분한지 체크
+            Player player = GameManager.Instance.GetPlayer();
+            if(player.Gold < productList[idx].price)
+            {
+                Console.WriteLine(UIManager.Instance.Not_Enough_Gold);
+                return false;
+            }
+
+            // 아이템 구매
+            productList[idx].isPurchase = true;
+            player.PurchaseItem(productList[idx]);
+            Console.WriteLine(UIManager.Instance.Shop_Success_Purchase);
+            return true;
+        }
+
         // 상품 목록 보여주기
         public void DisplayInfo(bool isPurchase)
         {
             Console.WriteLine("[아이템 목록]\n");
+            string purchase = (isPurchase) ? UIManager.Instance.PadRightForConsole(" ", 6) : $"  ";
+
             Console.WriteLine(
-                ((isPurchase) ? UIManager.Instance.PadRightForConsole(" ", 6) : $"  ") +
-                $"{UIManager.Instance.PadRightForConsole("[아이템 이름]", 20)} | " +
-                $"{UIManager.Instance.PadRightForConsole("[아이템 효과]", 15)} | " +
-                $"[아이템 설명]\n");
+                string.Format("{0}{1} | {2} | {3} | {4}",
+                purchase,
+                UIManager.Instance.PadRightForConsole("[아이템 이름]", 20),
+                UIManager.Instance.PadRightForConsole("[아이템 효과]", 15),
+                UIManager.Instance.PadRightForConsole("[아이템 설명]", 50),
+                "[아이템 가격]\n"));
 
             for (int i = 0; i < productList.Count; i++)
             {
                 string idxTxt = (isPurchase) ? $"{i + 1} : " : "";
                 Console.Write($"- {idxTxt}");
-                productList[i].DisplayInfo();
+                productList[i].DisplayInfoProduct();
             }
         }
 

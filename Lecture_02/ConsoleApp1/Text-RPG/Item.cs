@@ -29,8 +29,9 @@ namespace Text_RPG
         public ItemType Type { get; private set; }
 
         public bool isEquipped;
+        public bool isPurchase;
 
-        public Item(int id, string name, string effect, string description, int price, ItemType type, bool isEquipped)
+        public Item(int id, string name, string effect, string description, int price, ItemType type)
         {
             this.Id = id;
             this.name = name;
@@ -38,17 +39,8 @@ namespace Text_RPG
             this.Type = type;
             this.effect = effect;
             this.description = description;
-            this.isEquipped = isEquipped;
-        }
-
-        protected Item(string name, string effect, string description, int price, ItemType type, bool isEquipped)
-        {
-            this.name = name;
-            this.effect = effect;
-            this.description = description;
-            this.price = price;
-            Type = type;
-            this.isEquipped = isEquipped;
+            this.isEquipped = false;
+            this.isPurchase = false;
         }
 
         // 아이템 장착은 무기/방어구 클래스에서 실행한다.
@@ -65,10 +57,25 @@ namespace Text_RPG
             string itemName = $"{isEquippedTxt}{name}";
 
             Console.WriteLine(
-                $"{UIManager.Instance.PadRightForConsole(itemName, 20)} | " +
-                $"{UIManager.Instance.PadRightForConsole(effect, 15)} | " +
-                $"{description}"
-            );
+                string.Format("{0} | {1} | {2}",
+                UIManager.Instance.PadRightForConsole(itemName, 20),
+                UIManager.Instance.PadRightForConsole(effect, 15),
+                description));
+        }
+
+        public void DisplayInfoProduct()
+        {
+            // 상품 목록에서 보여줄 아이템 정보 표시
+            string itemPurchase = (isPurchase) ? "구매완료" : $"{price}";
+            string isGoldIcon = (isPurchase) ? "" : "G";
+
+            Console.WriteLine( 
+                string.Format("{0} | {1} | {2} | {3} {4}",
+                UIManager.Instance.PadRightForConsole(name, 20),
+                UIManager.Instance.PadRightForConsole(effect, 15),
+                UIManager.Instance.PadRightForConsole(description, 50),
+                UIManager.Instance.PadRightForConsole(itemPurchase, 6),
+                isGoldIcon));
         }
     }
 }

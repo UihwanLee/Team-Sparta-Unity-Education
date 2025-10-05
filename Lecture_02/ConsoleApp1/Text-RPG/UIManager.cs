@@ -56,6 +56,7 @@ namespace Text_RPG
             Console.WriteLine("3. 랜덤 모험");
             Console.WriteLine("4. 마을 순찰하기");
             Console.WriteLine("5. 훈련하기");
+            Console.WriteLine("6. 상점");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
         }
@@ -173,6 +174,50 @@ namespace Text_RPG
             Console.Write("』");
             Console.WriteLine();
         }
+
+        /// <summary>
+        /// -------------------------------------------------------------------------------------------------------
+        /// </summary>
+        ///
+
+        // 상점
+        public void ShopView(Player player, Shop shop)
+        {
+            Console.WriteLine("[상점]");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Console.WriteLine();
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine($"{player.Gold} G");
+            Console.WriteLine();
+            shop.DisplayInfo(false);
+            Console.WriteLine();
+            Console.WriteLine("1. 아이템 구매");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+        }
+
+        // 상점 : 상품 구매
+        public void ShopPurchaseView(Player player, Shop shop)
+        {
+            Console.WriteLine("[상점]");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Console.WriteLine();
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine($"{player.Gold} G");
+            Console.WriteLine();
+            shop.DisplayInfo(true);
+            Console.WriteLine();
+            Console.WriteLine("(번호). 해당 아이템 구매");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+        }
+
+        /// <summary>
+        /// -------------------------------------------------------------------------------------------------------
+        /// </summary>
+        ///
 
         // 오류 메세지
         public void MessageError()

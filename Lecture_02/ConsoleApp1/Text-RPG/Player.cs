@@ -52,12 +52,10 @@ namespace Text_RPG
             // 캐릭터 초기 생성 시 자신만의 인벤토리를 생성한다.
             inventroy = new Inventroy();
 
-            inventroy.Add(new Armor("무쇠갑옷", "방어력+5",
-                "무쇠로 만들어져 튼튼한 갑옷입니다.", 10000, ItemType.Weapon, true, 5));
-            inventroy.Add(new Weapon("낡은 검", "공격력+2",
-                "쉽게 볼 수 있는 낡은 검 입니다.", 20000, ItemType.Weapon, false, 2));
-            inventroy.Add(new Weapon("연습용 창", "공격력+3",
-                "검보다는 그대로 창이 다루기 쉽죠.", 20000, ItemType.Weapon, false, 3));
+            // 기본 장비 추가
+            inventroy.Add(ItemDatabase.GetArmor("무쇠갑옷"));
+            inventroy.Add(ItemDatabase.GetWeapon("낡은 검"));
+            inventroy.Add(ItemDatabase.GetWeapon("연습용 창"));
         }
 
         public override void Start()

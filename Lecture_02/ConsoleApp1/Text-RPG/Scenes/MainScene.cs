@@ -72,7 +72,7 @@ namespace Text_RPG.Scenes
                 hasExecutedList["MainView"] = true;
             }
 
-            var choice = GetUserChoice(["1", "2", "3", "4", "5"]);
+            var choice = GetUserChoice(["1", "2", "3", "4", "5", "6"]);
 
             // MainView 분기점
             switch (choice)
@@ -91,6 +91,9 @@ namespace Text_RPG.Scenes
                     break;
                 case "5": // 훈련 씬으로 이동
                     CheckStamina(15, "TrainingScene");
+                    break;
+                case "6": // 상점 씬으로 이동
+                    GameManager.Instance.LoadScene("ShopScene");
                     break;
                 default:
                     break;

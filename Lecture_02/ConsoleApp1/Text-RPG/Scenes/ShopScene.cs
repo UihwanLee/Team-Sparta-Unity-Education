@@ -72,7 +72,7 @@ namespace Text_RPG.Scenes
 
             var choice = GetUserChoice(["0", "1"]);
 
-            if (choice == "0") GameManager.Instance.LoadScene("MainScene");
+            if (choice == "0") { GameManager.Instance.LoadScene("MainScene"); return; }
 
             // 아이템 구매
             ChangeView(ShopPurchaseView);
@@ -90,7 +90,7 @@ namespace Text_RPG.Scenes
             string[] vaildItemOption = Enumerable.Range(0, vaildCount + 1).Select(i => i.ToString()).ToArray();   // LINQ 문법
             var choice = GetUserChoice(vaildItemOption);
 
-            if (choice == "0") ChangeView(ShopView);
+            if (choice == "0") { ChangeView(ShopView); return; }
 
             // 아이템 구매
 

@@ -115,7 +115,7 @@ namespace Text_RPG.Scenes
             else
             {
                 // 현재 캐릭터의 스태미너가 충분하면 스태미나 소모
-                Console.WriteLine(UIManager.Instance.UseStamin(5));
+                Console.WriteLine(UIManager.Instance.UseStamin(stanima));
                 Console.WriteLine();
                 Console.WriteLine(UIManager.Instance.Entering);
                 player.Stamina -= stanima;

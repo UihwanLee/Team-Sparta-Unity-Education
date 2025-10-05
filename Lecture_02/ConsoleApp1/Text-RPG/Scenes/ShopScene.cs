@@ -30,6 +30,7 @@ namespace Text_RPG.Scenes
             // bool 초기화
             hasExecutedList["ShopView"] = false;
             hasExecutedList["ShopPurchaseView"] = false;
+            hasExecutedList["ShopSaleView"] = false;
 
             // Shop 설정
             this.shop = GameManager.Instance.GetShop();
@@ -62,6 +63,7 @@ namespace Text_RPG.Scenes
             currentView?.Invoke(elapsed);
         }
 
+        // 상점 페이지 - 아이템 구매 / 판매 가능
         private void ShopView(float elapsed)
         {
             if (!hasExecutedList["ShopView"])
@@ -70,14 +72,16 @@ namespace Text_RPG.Scenes
                 hasExecutedList["ShopView"] = true;
             }
 
-            var choice = GetUserChoice(["0", "1"]);
+            var choice = GetUserChoice(["0", "1", "2"]);
 
             if (choice == "0") { GameManager.Instance.LoadScene("MainScene"); return; }
 
-            // 아이템 구매
-            ChangeView(ShopPurchaseView);
+            // 아이템 구매 or 판매 페이지로 이동
+            Action<float> view = (choice == "1") ? ShopPurchaseView : ShopSaleView;
+            ChangeView(view);
         }
 
+        // 상점 페이지(아이템 구매) - 구매 후 플레이어 정보 갱신
         private void ShopPurchaseView(float elapsed)
         {
             if (!hasExecutedList["ShopPurchaseView"])
@@ -104,6 +108,35 @@ namespace Text_RPG.Scenes
             // 구매가 완료 되었으면 1초 후 갱신
             Thread.Sleep(1000);
             ChangeView(ShopPurchaseView);
+        }
+
+        // 상점 페이지(아이템 판매) - 판매 후 플레이어 정보 갱신
+        private void ShopSaleView(float elapsed)
+        {
+            if (!hasExecutedList["ShopSaleView"])
+            {
+                UIManager.Instance.ShopSaleView(player);
+                hasExecutedList["ShopSaleView"] = true;
+            }
+
+            int vaildCount = player.Inventroy.Items.Count;
+            string[] vaildItemOption = Enumerable.Range(0, vaildCount + 1).Select(i => i.ToString()).ToArray();   // LINQ 문법
+            var choice = GetUserChoice(vaildItemOption);
+
+            // 아이템 구매
+            while (true)
+            {
+                if (choice == "0") { ChangeView(ShopView); return; }
+
+                // 판매 가능한 아이템이면 판매 
+                if (shop.TrySaleItem(int.Parse(choice) - 1) == true) break;
+
+                choice = GetUserChoice(vaildItemOption);
+            }
+
+            // 판매가 완료 되었으면 1초 후 갱신
+            Thread.Sleep(1000);
+            ChangeView(ShopSaleView);
         }
 
         public override void ChangeView(Action<float> view)

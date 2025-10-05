@@ -164,13 +164,13 @@ namespace Text_RPG
             Console.WriteLine();
             shop.DisplayInfo(false);
             Console.WriteLine();
-            DisplayOption(["1. 아이템 구매", "0. 나가기"]);
+            DisplayOption(["1. 아이템 구매", "2. 아이템 판매", "0. 나가기"]);
         }
 
         // 상점 : 상품 구매
         public void ShopPurchaseView(Player player, Shop shop)
         {
-            Console.WriteLine("[상점]");
+            Console.WriteLine("[상점 - 아이템 구매]");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine();
             Console.WriteLine("[보유 골드]");
@@ -179,6 +179,20 @@ namespace Text_RPG
             shop.DisplayInfo(true);
             Console.WriteLine();
             DisplayOption(["(번호). 해당 아이템 구매", "0. 나가기"]);
+        }
+
+        // 상점 : 아이템 판매
+        public void ShopSaleView(Player player)
+        {
+            Console.WriteLine("[상점 - 아이템 판매]");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Console.WriteLine();
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine($"{player.Gold} G");
+            Console.WriteLine();
+            player.Inventroy.DisplayInfoWithGold();
+            Console.WriteLine();
+            DisplayOption(["(번호). 해당 아이템 판매", "0. 나가기"]);
         }
 
         /// <summary>
@@ -227,6 +241,8 @@ namespace Text_RPG
         public string Shop_Already_Purchase = "이미 구매한 아이템입니다.";
         public string Shop_Success_Purchase = "구매를 완료했습니다.";
         public string Not_Enough_Gold = "Gold가 부족합니다.";
+
+        public string Shop_Success_Sale = "판매를 완료했습니다.";
 
         /// <summary>
         /// -------------------------------------------------------------------------------------------------------

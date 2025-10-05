@@ -30,6 +30,12 @@ namespace Text_RPG
             player.EquipWeapon(this, isEquipped);
         }
 
+        // 아이템 복제
+        public override Item Clone()
+        {
+            return new Weapon(Id, name, effect, description, price, Type, atk);
+        }
+
         // 프로퍼티
         public int ATK { get { return atk; } }
     }

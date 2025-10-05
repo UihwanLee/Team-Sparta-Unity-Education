@@ -72,8 +72,35 @@ namespace Text_RPG
         {
             item.isPurchase = true;
             Player player = GameManager.Instance.GetPlayer();
-            player.PurchaseItem(item);
+
+            // 상품 품목의 복제본을 player에게 전달
+            player.PurchaseItem(item.Clone());
+
             Console.WriteLine(UIManager.Instance.Shop_Success_Purchase);
+        }
+
+        // 상품 판매 시도 - 인덱스 검색
+        public bool TrySaleItem(int idx)
+        {
+            if (productList.Count <= 0 || idx >= productList.Count) return false;
+
+            // 아이템 판매
+            SailItem(idx);
+            return true;
+        }
+
+        // 상품 구매
+        public void SailItem(int idx)
+        {
+            Player player = GameManager.Instance.GetPlayer();
+
+            // 판매 골드 흭득
+            player.Gold += productList[idx].price;
+
+            // 플레이어 인벤토리에서 삭제
+            player.Inventroy.Items.RemoveAt(idx);
+
+            Console.WriteLine(UIManager.Instance.Shop_Success_Sale);
         }
 
         // 상품 목록 보여주기

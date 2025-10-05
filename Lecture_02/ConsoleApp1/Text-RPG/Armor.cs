@@ -30,6 +30,12 @@ namespace Text_RPG
             player.EquipArmor(this, isEquipped);
         }
 
+        // 아이템 복제
+        public override Item Clone()
+        {
+            return new Armor(Id, name, effect, description, price, Type, def);
+        }
+
         // 프로퍼티
         public int DEF { get { return def; } }
     }

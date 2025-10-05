@@ -12,6 +12,7 @@ namespace Text_RPG
          * ItemDatabase: 아이템 데이터베이스 클래스
          * 
          * 게임에서 사용하는 모든 아이템 정보를 보관한 Database 클래스입니다.
+         * Database 내 있는 모든 데이터는 원본 데이터이다.
          * 
          */
 
@@ -38,9 +39,9 @@ namespace Text_RPG
             itemDatabase["스파르타의 갑옷"] = new Armor(2002, "스파르타의 갑옷", "방어력 +15", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500, ItemType.Armor, 15);
         }
 
-        // 아이템 반환
-        public static Weapon GetWeapon(string name) { if (itemDatabase.TryGetValue(name, out var item) && item is Weapon weapon) return weapon; else return null; }
-        public static Armor GetArmor(string name) { if(itemDatabase.TryGetValue(name, out var item) && item is Armor armor) return armor; else return null; }
-        public static Item GetItem(string name) { return itemDatabase.TryGetValue(name, out var item) ? item : null; }
+        // 아이템 반환 : itemDatabase는 원본 데이털를 가지고 있으므로 복제본을 반환한다.
+        public static Weapon GetWeapon(string name) { if (itemDatabase.TryGetValue(name, out var item) && item is Weapon weapon) return (Weapon)weapon.Clone(); else return null; }
+        public static Armor GetArmor(string name) { if(itemDatabase.TryGetValue(name, out var item) && item is Armor armor) return (Armor)armor.Clone(); else return null; }
+        public static Item GetItem(string name) { return itemDatabase.TryGetValue(name, out var item) ? item.Clone() : null; }
     }
 }

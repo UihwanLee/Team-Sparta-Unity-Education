@@ -8,7 +8,7 @@ namespace Text_RPG
 {
     public enum ItemType { Weapon, Armor, Potion, Etc }
 
-    internal abstract class Item
+    internal class Item
     {
         /*
          * Item 스크립트
@@ -76,6 +76,12 @@ namespace Text_RPG
                 UIManager.Instance.PadRightForConsole(description, 50),
                 UIManager.Instance.PadRightForConsole(itemPurchase, 6),
                 isGoldIcon));
+        }
+
+        // 아이템 복제
+        public virtual Item Clone()
+        {
+            return new Item(Id, name, effect, description, price, Type);
         }
     }
 }

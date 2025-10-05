@@ -21,6 +21,7 @@ namespace Text_RPG
          */
 
         private List<Item> productList;
+        private float saleRate = 0.85f;     // 판매 가격 환율
 
         public Shop() 
         {
@@ -101,8 +102,8 @@ namespace Text_RPG
                 player.Inventroy.Items[idx].EquipItem(player, false);
             }
 
-            // 판매 골드 흭득
-            player.Gold += player.Inventroy.Items[idx].price;
+            // 판매 골드 흭득 : 85%
+            player.Gold += (int)(player.Inventroy.Items[idx].price * saleRate);
 
             // 판매 및 골드 흭득 메세지 출력
             Console.WriteLine(UIManager.Instance.Shop_Success_Sale(player.Inventroy.Items[idx]));

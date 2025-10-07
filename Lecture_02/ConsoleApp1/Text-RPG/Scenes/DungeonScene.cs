@@ -170,13 +170,14 @@ namespace Text_RPG.Scenes
         {
             if (!hasExecutedList["DungeonClearView"])
             {
-                UIManager.Instance.DungeonClearView(player, current_dungeon);
                 hasExecutedList["DungeonClearView"] = true;
 
+                UIManager.Instance.DungeonClearView(player, current_dungeon);
+
                 // 던전 정산
-                player.Hp -= current_dungeon.GetLoseHp();
-                player.Gold += current_dungeon.GetRewardGold();
-                player.Exp += current_dungeon.GetRewardExp();
+                current_dungeon.Clear(player);
+
+                UIManager.Instance.DisplayOption(["0. 나가기"]);
             }
 
             choice = GetUserChoice(["0"]);

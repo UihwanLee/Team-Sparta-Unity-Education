@@ -48,7 +48,7 @@ namespace Text_RPG
             Console.WriteLine();
         }
 
-        private void DisplayOption(string[] options)
+        public void DisplayOption(string[] options)
         {
             foreach (var option in options)
             {
@@ -236,7 +236,6 @@ namespace Text_RPG
             Console.WriteLine($"체력 {player.HP} -> {player.HP-dungeon.GetLoseHp()}");
             Console.WriteLine($"Gold {player.Gold} -> {player.Gold+dungeon.GetRewardGold()}");
             Console.WriteLine();
-            DisplayOption(["0. 나가기"]);
         }
 
         /// <summary>
@@ -284,6 +283,8 @@ namespace Text_RPG
         public string Entering = "입장중...";
 
         public string ERROR_INDEX = "인덱스 에러";
+
+        public string LevelUp = "레벨이 상승했습니다!";
 
         public string GainGold(int gold) { return (gold >= 0) ? $"{gold}G 흭득" : $"{gold}G 소모"; }
         public string GainExp(int exp) { return$"{exp}exp 흭득"; }

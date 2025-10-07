@@ -83,8 +83,8 @@ namespace Text_RPG
             string levelTxt = (level < 10) ? $"0{level}" : $"{level}";
             Console.WriteLine($"Lv. {levelTxt}");
             Console.WriteLine($"Chad : ({job})");
-            Console.WriteLine($"공격력 : {atk}");
-            Console.WriteLine($"방어력 : {def}");
+            Console.WriteLine($"공격력 : {atk:0.#}");
+            Console.WriteLine($"방어력 : {def:0.#}");
             Console.WriteLine($"체력 : {hp}");
             Console.WriteLine($"골드 : {gold}");
             Console.WriteLine($"스태미나 : {stamina}");
@@ -134,6 +134,37 @@ namespace Text_RPG
             this.inventroy.Add(item);
         }
 
+        // 레벨업 체크
+        private void CheckLevelUp()
+        {
+            // 최대 레벨인지 체크
+            if (this.level >= GameManager.Instance.RequireExp.Length) return;
+
+            // 필요 경험치 비교를 통해 레벨업
+            do
+            {
+                if (this.exp >= GameManager.Instance.RequireExp[level])
+                {
+                    this.exp -= GameManager.Instance.RequireExp[level];
+                    LevelUp();
+                }
+            }
+            while (this.exp >= GameManager.Instance.RequireExp[level]);
+        }
+
+        // 레벨 업
+        private void LevelUp()
+        {
+            Console.WriteLine(UIManager.Instance.LevelUp);
+            Console.WriteLine();
+
+            level++;
+
+            // 레벨 업 시 기본 공격력, 방어력 상승
+            this.atk += 0.5f;
+            this.def += 1f;
+        }
+
         // 변수 프로퍼티
         public Inventroy Inventroy { get { return inventroy; } }
 
@@ -175,8 +206,12 @@ namespace Text_RPG
             get { return exp; }
             set
             {
-                if (value < 0) exp = 0;
-                else exp = value;
+                if (value < 0) { exp = 0; return; }
+
+                exp = value;
+
+                // 레벨업 체크
+                CheckLevelUp();
             }
         }
     }

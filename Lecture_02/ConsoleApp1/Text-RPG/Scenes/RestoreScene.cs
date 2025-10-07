@@ -154,6 +154,9 @@ namespace Text_RPG.Scenes
             {
                 hasExecutedList["RestoreEventHandle"] = true;
 
+                // 골드 소모
+                player.Gold -= goldRestore;
+
                 // 플레이어 회복
                 player.Hp = 100;
                 player.Stamina = (player.Stamina + 20 > 100) ? 100 : player.Stamina + 20;

@@ -23,8 +23,8 @@ namespace Text_RPG
          */
         protected int level;
         protected string name;
-        protected int atk;
-        protected int def;
+        protected float atk;
+        protected float def;
         protected int hp;
 
         public Character(int level, string name, int atk, int def, int hp)
@@ -60,7 +60,7 @@ namespace Text_RPG
 
         // 변수 프로퍼티
         public int Hp { get { return hp; } set { if (value < 0) hp = 0; else { hp = value; } } }
-        public int Atk { get { return atk; } set { if (value < 0) atk = 0; else { atk = value; } } }
-        public int Def { get { return def; } set { if (value < 0) def = 0; else { def = value; } } }
+        public float Atk { get { return atk; } set { if (value < 0) atk = 0; else { atk = value; } } }
+        public float Def { get { return def; } set { if (value < 0) def = 0; else { def = value; } } }
     }
 }

@@ -53,6 +53,9 @@ namespace Text_RPG
         private Player player;
         private Shop shop;
 
+        // 플레이어 필요 레벨 경험치
+        private int[] requiredExp;
+
         // 현재 씬
         private Scene currentScene;
 
@@ -76,6 +79,9 @@ namespace Text_RPG
             // 게임 오브젝트 생성
             player = new Player(1, "이의환", 10, 10, 100, "초보자", 10000);
             shop = new Shop();
+
+            // 필요 경험치 설정
+            requiredExp = new int[] { 0, 50, 80, 150, 500 };
 
             // 씬 생성
             sceneList = new List<Scene>();
@@ -129,5 +135,7 @@ namespace Text_RPG
         public Scene CurrentScene { get { return currentScene; } }
         public Player GetPlayer() { return player; }
         public Shop GetShop() { return shop; }
+
+        public int[] RequireExp { get { return requiredExp; } }
     }
 }

@@ -203,9 +203,39 @@ namespace Text_RPG
         // 던전
         public void DungeonView()
         {
-            Console.WriteLine("[던전]");
+            Console.WriteLine("[던전입장]");
+            Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
+            Console.WriteLine();
             DisplayScreen();
-            DisplayOption(["1. 쉬운 던전", "2. 일반 던전", "3. 어려운 던전", "0. 나가기"]);
+            Console.WriteLine();
+            Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", PadRightForConsole("1. 쉬운 던전", 15), 5));
+            Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", PadRightForConsole("2. 일반 던전", 15), 11));
+            Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", PadRightForConsole("3. 어려운 던전", 15), 17));
+            Console.WriteLine("0. 나가기");
+
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+        }
+
+        // 던전 탐험
+        public void DungeonTravelView()
+        {
+            Console.WriteLine("[던전 탐험]");
+            DisplayScreen();
+        }
+
+        // 던전 클리어
+        public void DungeonClearView(Player player, Dungeon dungeon)
+        {
+            Console.WriteLine("[던전 클리어]");
+            Console.WriteLine("축하합니다!!");
+            Console.WriteLine($"{dungeon.Name}을 클리어 하였습니다.");
+            Console.WriteLine();
+            Console.WriteLine("[탐험 결과]");
+            Console.WriteLine($"체력 {player.HP} -> {player.HP-dungeon.GetLoseHp()}");
+            Console.WriteLine($"Gold {player.Gold} -> {player.Gold+dungeon.GetRewardGold()}");
+            Console.WriteLine();
+            DisplayOption(["0. 나가기"]);
         }
 
         /// <summary>
@@ -256,6 +286,9 @@ namespace Text_RPG
         public string Not_Enough_Gold = "Gold가 부족합니다.";
 
         public string Shop_Success_Sale(Item item) { return $"{item.name} 판매 완료. {item.price}G 흭득!"; }
+
+        // Text 관리 : 던전
+        public string Dugeon_Not_Enough_Hp = "체력이 부족합니다!";
 
         /// <summary>
         /// -------------------------------------------------------------------------------------------------------

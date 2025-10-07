@@ -15,6 +15,7 @@ namespace Text_RPG.Scenes
          * - 던전은 3가지 난이도가 존재
          * - 각 던전은 권장 방어력이 존재 
          *   - 방어력보다 낮을 경우: 40% 확률 실패 / 보상 없음 체력 절반 까임
+         *   - 클리어 시 체력 감소 : (기본 체력 감소량(20~35) - (내 방어력 - 권장 방어력)
          * - 각 던전은 공격력으로 보상 결정
          *   - 쉬운 던전 - 1000G, 50Exp
          *   - 일반 던전 - 1700G, 100Exp
@@ -23,6 +24,21 @@ namespace Text_RPG.Scenes
          *   - 공격력 10 -> 보상 (10% ~ 20%) 추가 보상
          * 
          */
+
+        // 변수 초기화
+        int baseLine = 10;
+        int gainGold = 0;
+        string baseMessage = "";
+        private float EventStartTime = 3f;
+        private float EventEndTime = 6f;
+        string choice = "";
+
+        // 던전
+        Dungeon current_dungeon;
+        Dungeon dungeon_easy;
+        Dungeon dungeon_normal;
+        Dungeon dungeon_hard;
+
         public DungeonScene(int index) : base(index)
         {
         }
@@ -32,11 +48,23 @@ namespace Text_RPG.Scenes
             base.Init();
 
             // 변수 초기화
+            baseLine = 10;
+            gainGold = 0;
+            baseMessage = "던전 탐험 중";
+            EventStartTime = 3f;
+            EventEndTime = 6f;
 
             // bool 값 초기화
             hasExecutedList.Clear();
             hasExecutedList["TimeSet"] = false;
             hasExecutedList["DungeonView"] = false;
+            hasExecutedList["DungeonTravelView"] = false;
+            hasExecutedList["DungeonClearView"] = false;
+
+            // 던전 변수
+            dungeon_easy = new Dungeon("쉬운 던전", 1, 5, 6f, 1000, 50);
+            dungeon_normal = new Dungeon("일반 던전", 2, 11, 8f, 1700, 100);
+            dungeon_hard = new Dungeon("어려운 던전", 3, 17, 10f, 2500, 200);
 
             // 처음 View 설정: DungeonView
             ChangeView(DungeonView);
@@ -73,25 +101,89 @@ namespace Text_RPG.Scenes
             {
                 UIManager.Instance.DungeonView();
                 hasExecutedList["DungeonView"] = true;
+
+                choice = GetUserChoice(["0", "1", "2", "3"]);
+
+                while (true)
+                {
+                    // 선택한 난이도에 따라 던전 실행
+                    switch (choice)
+                    {
+                        case "0":
+                            GameManager.Instance.LoadScene("MainScene");
+                            return;
+                        case "1":
+                            current_dungeon = dungeon_easy;
+                            break;
+                        case "2":
+                            current_dungeon = dungeon_normal;
+                            break;
+                        case "3":
+                            current_dungeon = dungeon_hard;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    // 던전 입장 시도: 플레이어의 체력이 충분한지 체크
+                    if (current_dungeon.TryEnter() == true) break;
+
+                    choice = GetUserChoice(["0", "1", "2", "3"]);
+                }
             }
 
-            var choice = GetUserChoice(["0", "1", "2", "3"]);
-
-            switch(choice)
+            if (hasExecutedList["TimeSet"])
             {
-                case "0":
-                    GameManager.Instance.LoadScene("MainScene");
-                    break;
-                case "1":
-                    break;
-                case "2":
-                    break;
-                case "3":
-                    break;
-                default:
-                    break;
+                StartDungeon(current_dungeon);
             }
         }
+
+        // 던전 시작
+        private void StartDungeon(Dungeon dungeon)
+        {
+            if (!hasExecutedList["DungeonTravelView"])
+            {
+                Console.Clear();
+                UIManager.Instance.DungeonTravelView();
+                hasExecutedList["DungeonTravelView"] = true;
+            }
+
+            // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
+            TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
+
+            UIManager.Instance.WriteLine($"던전 탐험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+
+            // 정해진 시간이 지나면 던전 클리어 View로 이동
+            if (TimeManager.instance.LocalElapsed >= dungeon.duration)
+            {
+                // 던전 탐험 종료
+                ChangeView(DungeonClearView);
+                return;
+            }
+
+            // 던전 탐험 중 깜빡임
+            UIManager.Instance.BlinkingMessageWithDot(baseLine, baseMessage);
+        }
+
+        // 던전 클리어
+        private void DungeonClearView(float elapsed)
+        {
+            if (!hasExecutedList["DungeonClearView"])
+            {
+                UIManager.Instance.DungeonClearView(player, current_dungeon);
+                hasExecutedList["DungeonClearView"] = true;
+
+                // 던전 정산
+                player.Hp -= current_dungeon.GetLoseHp();
+                player.Gold += current_dungeon.GetRewardGold();
+                player.Exp += current_dungeon.GetRewardExp();
+            }
+
+            choice = GetUserChoice(["0"]);
+
+            GameManager.Instance.LoadScene("MainScene");
+        }
+
 
 
         public override void ChangeView(Action<float> view)

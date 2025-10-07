@@ -60,5 +60,7 @@ namespace Text_RPG
 
         // 변수 프로퍼티
         public int Hp { get { return hp; } set { if (value < 0) hp = 0; else { hp = value; } } }
+        public int Atk { get { return atk; } set { if (value < 0) atk = 0; else { atk = value; } } }
+        public int Def { get { return def; } set { if (value < 0) def = 0; else { def = value; } } }
     }
 }

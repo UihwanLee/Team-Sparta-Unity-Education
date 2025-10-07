@@ -66,7 +66,7 @@ namespace Text_RPG
             Console.WriteLine();
             Console.WriteLine("[마을]");
             DisplayScreen();
-            DisplayOption(["1. 상태 보기", "2. 인벤토리", "3. 랜덤 모험", "4. 마을 순찰하기", "5. 훈련하기", "6. 상점"]);
+            DisplayOption(["1. 상태 보기", "2. 인벤토리", "3. 랜덤 모험", "4. 마을 순찰하기", "5. 훈련하기", "6. 상점", "7. 던전 입장"]);
         }
 
         // 캐릭터 정보 화면
@@ -193,6 +193,19 @@ namespace Text_RPG
             player.Inventroy.DisplayInfoWithGold();
             Console.WriteLine();
             DisplayOption(["(번호). 해당 아이템 판매", "0. 나가기"]);
+        }
+
+        /// <summary>
+        /// -------------------------------------------------------------------------------------------------------
+        /// </summary>
+        ///
+
+        // 던전
+        public void DungeonView()
+        {
+            Console.WriteLine("[던전]");
+            DisplayScreen();
+            DisplayOption(["1. 쉬운 던전", "2. 일반 던전", "3. 어려운 던전", "0. 나가기"]);
         }
 
         /// <summary>

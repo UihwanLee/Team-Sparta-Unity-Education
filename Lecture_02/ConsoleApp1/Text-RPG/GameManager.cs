@@ -87,7 +87,8 @@ namespace Text_RPG
             Scene townScene = new TownScene(sceneDictionary["TownScene"]);
             Scene trainingScene = new TrainingScene(sceneDictionary["TrainingScene"]);
             Scene shopScene = new ShopScene(sceneDictionary["ShopScene"]);
-            
+            Scene dungeonScene = new DungeonScene(sceneDictionary["DungeonScene"]);
+
             sceneList.Add(mainScene);
             sceneList.Add(stateScene);
             sceneList.Add(inventoryScene); 
@@ -95,6 +96,7 @@ namespace Text_RPG
             sceneList.Add(townScene);
             sceneList.Add(trainingScene);
             sceneList.Add(shopScene);
+            sceneList.Add(dungeonScene);
 
             // 처음 씬 지정
             currentScene = mainScene;

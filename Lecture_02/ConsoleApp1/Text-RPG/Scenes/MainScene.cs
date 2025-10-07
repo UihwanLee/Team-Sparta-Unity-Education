@@ -72,7 +72,7 @@ namespace Text_RPG.Scenes
                 hasExecutedList["MainView"] = true;
             }
 
-            var choice = GetUserChoice(["1", "2", "3", "4", "5", "6", "7"]);
+            var choice = GetUserChoice(["1", "2", "3", "4", "5", "6", "7", "8"]);
 
             // MainView 분기점
             switch (choice)
@@ -97,6 +97,9 @@ namespace Text_RPG.Scenes
                     break;
                 case "7": // 던전 씬으로 이동
                     GameManager.Instance.LoadScene("DungeonScene");
+                    break;
+                case "8": // 휴식 씬으로 이동
+                    GameManager.Instance.LoadScene("RestoreScene");
                     break;
                 default:
                     break;

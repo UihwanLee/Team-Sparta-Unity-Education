@@ -66,7 +66,8 @@ namespace Text_RPG
             Console.WriteLine();
             Console.WriteLine("[마을]");
             DisplayScreen();
-            DisplayOption(["1. 상태 보기", "2. 인벤토리", "3. 랜덤 모험", "4. 마을 순찰하기", "5. 훈련하기", "6. 상점", "7. 던전 입장"]);
+            DisplayOption(["1. 상태 보기", "2. 인벤토리", "3. 랜덤 모험", "4. 마을 순찰하기", 
+                           "5. 훈련하기", "6. 상점", "7. 던전 입장", "8. 휴식하기"]);
         }
 
         // 캐릭터 정보 화면
@@ -243,6 +244,27 @@ namespace Text_RPG
         /// </summary>
         ///
 
+        // 휴식
+        public void RestoreView(int restoreGold, Player player)
+        {
+            Console.WriteLine("[휴식하기]");
+            Console.WriteLine($"{restoreGold} G를 내면 체력을 회복할 수 있습니다. (보유 골드: {player.Gold} G)");
+            Console.WriteLine();
+            DisplayOption(["1. 휴식하기", "0. 나가기"]);
+        }
+
+        // 휴식 중
+        public void RestoringView()
+        {
+            Console.WriteLine("[휴식 중]");
+            DisplayScreen();
+        }
+
+        /// <summary>
+        /// -------------------------------------------------------------------------------------------------------
+        /// </summary>
+        ///
+
         // 오류 메세지
         public void MessageError()
         {
@@ -256,6 +278,7 @@ namespace Text_RPG
 
         // Text 관리 : 공통
         public string NoStamina = "스태미나가 부족합니다.";
+        public string NoGold = "골드가 부족합니다.";
         public string UseStamin(int stamina) { return $"스태미나 {stamina} 소모되었습니다."; }
         public string NothingHappen = "아무 일도 일어나지 않았다";
         public string Entering = "입장중...";
@@ -289,6 +312,10 @@ namespace Text_RPG
 
         // Text 관리 : 던전
         public string Dugeon_Not_Enough_Hp = "체력이 부족합니다!";
+
+        // Text 관리 : 휴식
+        public string Restore_Hp(int hp) { return $"체력이 {hp} 회복했습니다."; }
+        public string Restore_Stamina(int stamina) { return $"스태미나가 {stamina} 회복했습니다."; }
 
         /// <summary>
         /// -------------------------------------------------------------------------------------------------------

@@ -64,7 +64,7 @@ namespace Text_RPG
         {
             { "MainScene", 0 }, { "StateScene", 1 }, { "InventoryScene", 2 }, { "AdventureScene", 3 },
             { "TownScene", 4 }, { "TrainingScene", 5 }, { "ShopScene", 6 }, { "DungeonScene", 7 },
-            { "RestScene", 8 },
+            { "RestoreScene", 8 },
         };
 
         // 현재 창 (시작창, 스탯창 등)
@@ -88,6 +88,7 @@ namespace Text_RPG
             Scene trainingScene = new TrainingScene(sceneDictionary["TrainingScene"]);
             Scene shopScene = new ShopScene(sceneDictionary["ShopScene"]);
             Scene dungeonScene = new DungeonScene(sceneDictionary["DungeonScene"]);
+            Scene restoreScene = new RestoreScene(sceneDictionary["RestoreScene"]);
 
             sceneList.Add(mainScene);
             sceneList.Add(stateScene);
@@ -97,6 +98,7 @@ namespace Text_RPG
             sceneList.Add(trainingScene);
             sceneList.Add(shopScene);
             sceneList.Add(dungeonScene);
+            sceneList.Add(restoreScene);
 
             // 처음 씬 지정
             currentScene = mainScene;

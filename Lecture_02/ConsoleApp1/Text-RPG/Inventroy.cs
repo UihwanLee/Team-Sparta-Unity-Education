@@ -142,6 +142,6 @@ namespace Text_RPG
         }
 
         // 프로퍼티 변수
-        public List<Item> Items { get { return items; } }
+        public List<Item> Items { get { return items; } set { items = value; } }
     }
 }

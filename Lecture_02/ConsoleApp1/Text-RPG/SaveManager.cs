@@ -27,10 +27,10 @@ namespace Text_RPG
         public int playerStamina;       // Player 스태미나
         public int playerExp;           // Player 경험치
 
-        public Inventroy playerInventroy;   // Player 인벤토리
+        public List<Item> playerItems;  // Player 아이템
 
-        public Weapon playerWeapon;           // Player 장착 무기
-        public Armor playerArmor;             // Player 장착 방어구
+        public Weapon playerWeapon;     // Player 장착 무기
+        public Armor playerArmor;       // Player 장착 방어구
     }
 
     public static class SaveManager
@@ -77,6 +77,8 @@ namespace Text_RPG
             SaveData saveData = JsonSerializer.Deserialize<SaveData>(json, new JsonSerializerOptions{IncludeFields = true});
 
             GameManager.Instance.GetPlayer().LoadFromSaveData(saveData);
+
+            Console.WriteLine($"로드 완료: {saveDataPath}");
         }
 
         // 현재 SaveData가 존재하는지 반환

@@ -72,7 +72,7 @@ namespace Text_RPG
             data.playerStamina = this.stamina;
             data.playerExp = this.exp;
 
-            data.playerInventroy = this.inventroy;
+            data.playerItems = this.inventroy.Items;
             data.playerWeapon = this.weapon;
             data.playerArmor = this.armor;
 
@@ -92,9 +92,13 @@ namespace Text_RPG
             this.stamina = saveData.playerStamina;
             this.exp = saveData.playerExp;
 
-            this.inventroy = saveData.playerInventroy;
+            this.inventroy.Items = saveData.playerItems;
             this.weapon = saveData.playerWeapon;
             this.armor = saveData.playerArmor;
+
+            // 장비가 존재하면 atk, def 갱신
+            this.atk = (this.weapon != null) ? origin_atk + weapon.ATK : origin_atk;
+            this.def = (this.armor != null) ? origin_def + armor.DEF : origin_def;
         }
 
         public override void Start()

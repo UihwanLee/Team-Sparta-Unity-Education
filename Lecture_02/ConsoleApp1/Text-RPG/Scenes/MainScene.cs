@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG.Scenes
 {
-    internal class MainScene : Scene
+    public class MainScene : Scene
     {
         /*
          * MainScene: 초기 상태를 확인할 수 있는 씬
@@ -33,6 +33,7 @@ namespace Text_RPG.Scenes
             base.Init();
 
             // bool 값 초기화
+            hasExecutedList["TimeSet"] = false;
             hasExecutedList["MainView"] = false;
 
             // 처음 View 설정: StarView
@@ -72,7 +73,7 @@ namespace Text_RPG.Scenes
                 hasExecutedList["MainView"] = true;
             }
 
-            var choice = GetUserChoice(["1", "2", "3", "4", "5", "6", "7", "8"]);
+            var choice = GetUserChoice(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
 
             // MainView 분기점
             switch (choice)
@@ -100,6 +101,12 @@ namespace Text_RPG.Scenes
                     break;
                 case "8": // 휴식 씬으로 이동
                     GameManager.Instance.LoadScene("RestoreScene");
+                    break;
+                case "0": // 게임 저장
+                    SaveManager.Save(player);
+                    break;
+                case "9": // 게임 로드
+                    SaveManager.Load();
                     break;
                 default:
                     break;

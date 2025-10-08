@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    internal class Player : Character
+    public class Player : Character
     {
         /*
          * 게임에서 플레이어 역할을 할 Player 클래스
@@ -30,12 +30,12 @@ namespace Text_RPG
         protected int stamina;
         protected int exp;
 
-        protected Inventroy inventroy;
+        public Inventroy inventroy;
 
         // 장착 중인 무기와 방어구
-        private int origin_atk, origin_def;
-        private Weapon weapon;
-        private Armor armor;
+        private float origin_atk, origin_def;
+        public Weapon weapon;
+        public Armor armor;
 
         public Player(int level, string name, int atk, int def, int hp, string job, int gold) : base(level, name, atk, def, hp)
         {
@@ -56,6 +56,45 @@ namespace Text_RPG
             inventroy.Add(ItemDatabase.GetArmor("무쇠갑옷"));
             inventroy.Add(ItemDatabase.GetWeapon("낡은 검"));
             inventroy.Add(ItemDatabase.GetWeapon("연습용 창"));
+        }
+
+        // Player 정보 저장
+        public SaveData ToSaveData()
+        {
+            SaveData data = new SaveData();
+            data.playerLevel = this.level;
+            data.playerName = this.name;
+            data.playerAtk = this.origin_atk;
+            data.playerDef = this.origin_def;
+            data.playerHp = this.hp;
+            data.playerJob = this.job;
+            data.playerGold = this.gold;
+            data.playerStamina = this.stamina;
+            data.playerExp = this.exp;
+
+            data.playerInventroy = this.inventroy;
+            data.playerWeapon = this.weapon;
+            data.playerArmor = this.armor;
+
+            return data;
+        }
+
+        // SavaData 저장 데이터 복원
+        public void LoadFromSaveData(SaveData saveData)
+        {
+            this.level = saveData.playerLevel;
+            this.name = saveData.playerName;
+            this.origin_atk = saveData.playerAtk;
+            this.origin_def = saveData.playerDef;
+            this.hp = saveData.playerHp;
+            this.job = saveData.playerJob;
+            this.gold = saveData.playerGold;
+            this.stamina = saveData.playerStamina;
+            this.exp = saveData.playerExp;
+
+            this.inventroy = saveData.playerInventroy;
+            this.weapon = saveData.playerWeapon;
+            this.armor = saveData.playerArmor;
         }
 
         public override void Start()
@@ -167,17 +206,6 @@ namespace Text_RPG
 
         // 변수 프로퍼티
         public Inventroy Inventroy { get { return inventroy; } }
-
-        // HP
-        public int HP
-        {
-            get { return hp; }
-            set
-            {
-                if (value < 0) hp = 0;
-                else hp = value;
-            }
-        }
 
         // 스태미나
         public int Stamina 

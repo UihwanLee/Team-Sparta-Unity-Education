@@ -80,6 +80,9 @@ namespace Text_RPG
             player = new Player(1, "이의환", 10, 10, 100, "초보자", 10000);
             shop = new Shop();
 
+            // SaveData 존재 시 로드
+            //if (SaveManager.SaveFileExists()) SaveManager.Load();
+
             // 필요 경험치 설정
             requiredExp = new int[] { 0, 50, 80, 150, 500 };
 

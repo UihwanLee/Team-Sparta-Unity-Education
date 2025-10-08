@@ -67,7 +67,7 @@ namespace Text_RPG
             Console.WriteLine("[마을]");
             DisplayScreen();
             DisplayOption(["1. 상태 보기", "2. 인벤토리", "3. 랜덤 모험", "4. 마을 순찰하기", 
-                           "5. 훈련하기", "6. 상점", "7. 던전 입장", "8. 휴식하기"]);
+                           "5. 훈련하기", "6. 상점", "7. 던전 입장", "8. 휴식하기", "9. 게임 로드", " ", "0. 저장"]);
         }
 
         // 캐릭터 정보 화면
@@ -233,7 +233,7 @@ namespace Text_RPG
             Console.WriteLine($"{dungeon.Name}을 클리어 하였습니다.");
             Console.WriteLine();
             Console.WriteLine("[탐험 결과]");
-            Console.WriteLine($"체력 {player.HP} -> {player.HP-dungeon.GetLoseHp()}");
+            Console.WriteLine($"체력 {player.Hp} -> {player.Hp-dungeon.GetLoseHp()}");
             Console.WriteLine($"Gold {player.Gold} -> {player.Gold+dungeon.GetRewardGold()}");
             Console.WriteLine();
         }

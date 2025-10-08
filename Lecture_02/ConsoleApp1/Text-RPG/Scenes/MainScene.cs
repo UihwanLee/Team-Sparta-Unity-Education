@@ -103,7 +103,7 @@ namespace Text_RPG.Scenes
                     GameManager.Instance.LoadScene("RestoreScene");
                     break;
                 case "0": // 게임 저장
-                    SaveManager.Save(player);
+                    SaveManager.Save();
                     break;
                 case "9": // 게임 로드
                     SaveManager.Load();

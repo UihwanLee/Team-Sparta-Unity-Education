@@ -59,24 +59,23 @@ namespace Text_RPG
         }
 
         // Player 정보 저장
-        public SaveData ToSaveData()
+        public SaveData ToSaveData(SaveData saveData)
         {
-            SaveData data = new SaveData();
-            data.playerLevel = this.level;
-            data.playerName = this.name;
-            data.playerAtk = this.origin_atk;
-            data.playerDef = this.origin_def;
-            data.playerHp = this.hp;
-            data.playerJob = this.job;
-            data.playerGold = this.gold;
-            data.playerStamina = this.stamina;
-            data.playerExp = this.exp;
+            saveData.playerLevel = this.level;
+            saveData.playerName = this.name;
+            saveData.playerAtk = this.origin_atk;
+            saveData.playerDef = this.origin_def;
+            saveData.playerHp = this.hp;
+            saveData.playerJob = this.job;
+            saveData.playerGold = this.gold;
+            saveData.playerStamina = this.stamina;
+            saveData.playerExp = this.exp;
 
-            data.playerItems = this.inventroy.Items;
-            data.playerWeapon = this.weapon;
-            data.playerArmor = this.armor;
+            saveData.playerItems = this.inventroy.Items;
+            saveData.playerWeapon = this.weapon;
+            saveData.playerArmor = this.armor;
 
-            return data;
+            return saveData;
         }
 
         // SavaData 저장 데이터 복원
@@ -93,6 +92,12 @@ namespace Text_RPG
             this.exp = saveData.playerExp;
 
             this.inventroy.Items = saveData.playerItems;
+
+            // 기존 장비가 있다면 장비 해제
+            if(this.weapon != null) this.weapon.isEquipped = false;
+            if(this.armor != null) this.armor.isEquipped = false;
+
+            // 장비 갱신
             this.weapon = saveData.playerWeapon;
             this.armor = saveData.playerArmor;
 

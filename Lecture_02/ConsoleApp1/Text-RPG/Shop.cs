@@ -20,7 +20,7 @@ namespace Text_RPG
          * 
          */
 
-        private List<Item> productList;
+        private List<Item> productList = new List<Item>();
         private float saleRate = 0.85f;     // 판매 가격 환율
 
         public Shop() 
@@ -29,13 +29,11 @@ namespace Text_RPG
         }
 
         // Shop 정보 저장
-        public SaveData ToSaveData()
+        public SaveData ToSaveData(SaveData saveData)
         {
-            SaveData data = new SaveData();
+            saveData.shopProductList = this.productList;
 
-            data.shopProductList = this.productList;
-
-            return data;
+            return saveData;
         }
 
         // SavaData 저장 데이터 복원
@@ -47,7 +45,6 @@ namespace Text_RPG
         private void Init()
         {
             // 상품 리스트 초기화
-            productList = new List<Item>();
             productList.Clear();
 
             // 상품 리스트 채우기
@@ -151,6 +148,6 @@ namespace Text_RPG
         }
 
         // 프로퍼티 변수
-        public List<Item> ProductList { get { return productList; } }
+        public List<Item> ProductList { get { return productList; } set { productList = value; } }
     }
 }

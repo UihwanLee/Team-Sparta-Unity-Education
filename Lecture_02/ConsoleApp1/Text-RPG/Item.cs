@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Text_RPG
 {
     public enum ItemType { Weapon, Armor, Potion, Etc }
 
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "$type")]
+    [JsonDerivedType(typeof(Weapon), "weapon")]
+    [JsonDerivedType(typeof(Armor), "armor")]
+    [Serializable]
     public class Item
     {
         /*

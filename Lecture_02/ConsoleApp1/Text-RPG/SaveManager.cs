@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
 
 namespace Text_RPG
@@ -47,21 +49,33 @@ namespace Text_RPG
           * 
           */
 
+        // SaveData
+        private static SaveData saveData = new SaveData();
+
         // SaveData 경로 설정
         private static string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "SaveData");
         private static string saveDataPath = Path.Combine(folderPath, "SaveData.json"); 
 
         // Json을 이용하여 객체 정보 저장
-        public static void Save(Player player)
+        public static void Save()
         {
             // 폴더 예외처리
             if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
             // SaveData 저장
-            SaveData saveData = player.ToSaveData();
+            saveData = GameManager.Instance.GetPlayer().ToSaveData(saveData);
+            saveData = GameManager.Instance.GetShop().ToSaveData(saveData);
 
-            // JSON 저장
-            string json = JsonSerializer.Serialize(saveData, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true });
+            // JSON 옵션 지정
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                IncludeFields = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.Never,  
+            };
+
+            // JSON 직렬화
+            string json = JsonSerializer.Serialize(saveData, options);
             File.WriteAllText(saveDataPath, json);
 
             Console.WriteLine($"저장 완료: {saveDataPath}");
@@ -76,12 +90,29 @@ namespace Text_RPG
                 return;
             }
 
+            // JSON 옵션 지정
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                IncludeFields = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+            };
+
+            // JSON 역직렬화
             string json = File.ReadAllText(saveDataPath);
-            SaveData saveData = JsonSerializer.Deserialize<SaveData>(json, new JsonSerializerOptions{IncludeFields = true});
+            SaveData saveData = JsonSerializer.Deserialize<SaveData>(json, options);
 
             GameManager.Instance.GetPlayer().LoadFromSaveData(saveData);
+            GameManager.Instance.GetShop().LoadFromSaveData(saveData);
 
             Console.WriteLine($"로드 완료: {saveDataPath}");
+
+            foreach (var item in saveData.playerItems)
+            {
+                Console.WriteLine($"{item.name} - 타입: {item.GetType().Name} - 장착 상태: {item.isEquipped}");
+            }
+
+            Console.WriteLine(GameManager.Instance.GetPlayer().weapon.name, GameManager.Instance.GetPlayer().weapon.isEquipped);
         }
 
         // 현재 SaveData가 존재하는지 반환

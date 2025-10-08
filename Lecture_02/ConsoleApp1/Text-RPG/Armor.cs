@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
+    [Serializable]
     public class Armor : Item
     {
         /*

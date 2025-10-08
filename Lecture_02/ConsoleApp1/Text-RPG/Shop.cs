@@ -28,6 +28,22 @@ namespace Text_RPG
             Init();
         }
 
+        // Shop 정보 저장
+        public SaveData ToSaveData()
+        {
+            SaveData data = new SaveData();
+
+            data.shopProductList = this.productList;
+
+            return data;
+        }
+
+        // SavaData 저장 데이터 복원
+        public void LoadFromSaveData(SaveData saveData)
+        {
+            this.productList = saveData.shopProductList;
+        }
+
         private void Init()
         {
             // 상품 리스트 초기화

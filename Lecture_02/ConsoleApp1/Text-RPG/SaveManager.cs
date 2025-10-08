@@ -31,6 +31,9 @@ namespace Text_RPG
 
         public Weapon playerWeapon;     // Player 장착 무기
         public Armor playerArmor;       // Player 장착 방어구
+
+        // Shop 정보
+        public List<Item> shopProductList;  // Shop 상품 리스트
     }
 
     public static class SaveManager

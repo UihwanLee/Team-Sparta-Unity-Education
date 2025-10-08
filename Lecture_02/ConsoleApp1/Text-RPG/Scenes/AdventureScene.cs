@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG.Scenes
 {
-    internal class AdventureScene : Scene
+    public class AdventureScene : Scene
     {
         /*
          * AdventureScene: 모험 씬

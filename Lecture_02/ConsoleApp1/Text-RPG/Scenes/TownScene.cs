@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG.Scenes
 {
-    internal class TownScene : Scene
+    public class TownScene : Scene
     {
 
         /*

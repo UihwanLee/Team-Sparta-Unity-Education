@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    internal interface IGameObject
+    public interface IGameObject
     {
         void Start();
         void Update(float elapsed);

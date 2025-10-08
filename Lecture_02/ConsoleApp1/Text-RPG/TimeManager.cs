@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    internal class TimeManager
+    public class TimeManager
     {
         /*
           * TImeManager 스크립트

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    internal class Inventroy
+    public class Inventroy
     {
         /*
          * 인벤토리는 캐릭터에 소속된다.

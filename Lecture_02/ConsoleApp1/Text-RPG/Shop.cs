@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Text_RPG
 {
-    internal class Shop
+    public class Shop
     {
         /*
          * Shop: 상점 클래스

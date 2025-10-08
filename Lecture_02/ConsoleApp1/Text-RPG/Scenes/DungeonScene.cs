@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG.Scenes
 {
-    internal class DungeonScene : Scene
+    public class DungeonScene : Scene
     {
         /*
          * DungeonScene: 던전 씬

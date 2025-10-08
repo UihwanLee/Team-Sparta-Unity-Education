@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    internal class Weapon : Item
+    public class Weapon : Item
     {
         /*
          * Weapon 클래스

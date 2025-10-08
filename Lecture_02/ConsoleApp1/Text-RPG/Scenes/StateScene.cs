@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG.Scenes
 {
-    internal class StateScene : Scene
+    public class StateScene : Scene
     {
         /*
          * StateScene: 스탯 창 씬

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    internal static class ItemSorter
+    public static class ItemSorter
     {
         /*
          * Item 정렬 클래스

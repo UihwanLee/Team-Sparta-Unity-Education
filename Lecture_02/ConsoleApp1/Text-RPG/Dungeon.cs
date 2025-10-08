@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    internal class Dungeon
+    public class Dungeon
     {
         /*
          * Dungeon: 던전 스크립트

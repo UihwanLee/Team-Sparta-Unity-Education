@@ -14,7 +14,7 @@ namespace Text_RPG
      * UIManager:       게임 UI를 관리할 클래스
      * 
      */
-    internal class GameMain
+    public class GameMain
     {
         static bool isRunning;              // 게임 종료/실행 변수
 

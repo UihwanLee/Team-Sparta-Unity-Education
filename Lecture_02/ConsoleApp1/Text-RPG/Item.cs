@@ -8,7 +8,7 @@ namespace Text_RPG
 {
     public enum ItemType { Weapon, Armor, Potion, Etc }
 
-    internal class Item
+    public class Item
     {
         /*
          * Item 스크립트

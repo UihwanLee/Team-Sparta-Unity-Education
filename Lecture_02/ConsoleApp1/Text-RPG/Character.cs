@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    internal class Character : IGameObject
+    public class Character : IGameObject
     {
         /*
          * Character 부모 클래스

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG.Scenes
 {
-    internal class RestoreScene : Scene
+    public class RestoreScene : Scene
     {
         /*
          * RestoreScene: 회복 씬

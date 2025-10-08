@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG
 {
-    internal static class ItemDatabase
+    public static class ItemDatabase
     {
         /*
          * ItemDatabase: 아이템 데이터베이스 클래스

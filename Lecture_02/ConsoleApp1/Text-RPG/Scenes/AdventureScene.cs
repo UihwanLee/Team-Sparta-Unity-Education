@@ -22,7 +22,6 @@ namespace Text_RPG.Scenes
 
         bool isFindMonster = false; // 몬스터 조우 bool 값
         int eventIdx = -1;
-        int baseLine = 10;
         int gainGold = 0;
         string baseMessage = "";
         private float EventStartTime = 3f;
@@ -40,7 +39,6 @@ namespace Text_RPG.Scenes
 
             // 변수 초기화
             eventIdx = -1;
-            baseLine = 10;
             gainGold = 0;
             baseMessage = "모험 중";
             EventStartTime = 3f;
@@ -108,7 +106,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            ConsoleHelper.WriteLine($"모험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            ConsoleHelper.WriteLine($"모험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", map.endLine + 2);
 
             // 정해진 시간이 지나면 MainScene으로 이동
             if (TimeManager.instance.LocalElapsed >= duration)
@@ -120,7 +118,7 @@ namespace Text_RPG.Scenes
 
             // 모험 중 깜빡임
             baseMessage = "모험 중";
-            ConsoleHelper.BlinkingMessageWithDot(baseLine, baseMessage);
+            ConsoleHelper.BlinkingMessageWithDot(map.endLine + 4, baseMessage);
 
             // 이벤트 발생
             if(TimeManager.Instance.LocalElapsed > EventStartTime && TimeManager.Instance.LocalElapsed < EventEndTime)
@@ -144,12 +142,12 @@ namespace Text_RPG.Scenes
             }
 
             // 이벤트 텍스트 표시
-            ConsoleHelper.WriteLine(GetAdventureEventText(eventIdx), baseLine + 2);
+            ConsoleHelper.WriteLine(GetAdventureEventText(eventIdx), map.endLine + 6);
 
             // 이벤트 효과 표시
             if (TimeManager.Instance.LocalElapsed > EventStartTime + 1)
             {
-                ConsoleHelper.WriteLine(TextManager.GainGold(gainGold), baseLine + 4);
+                ConsoleHelper.WriteLine(TextManager.GainGold(gainGold), map.endLine + 8);
             }
         }
 

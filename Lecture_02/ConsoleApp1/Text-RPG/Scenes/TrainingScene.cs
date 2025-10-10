@@ -28,6 +28,8 @@ namespace Text_RPG.Scenes
         private float EventStartTime = 3f;
         private float EventEndTime = 6f;
 
+        private float restoreDuration = 6.0f;
+
         public override void Init()
         {
             base.Init();
@@ -84,9 +86,13 @@ namespace Text_RPG.Scenes
             {
                 UIManager.Instance.TrainingView();
                 hasExecutedList["TrainingView"] = true;
+
+                // 이벤트 시작 타임 랜덤으로 정하기
+                EventStartTime = (float)GetRadomInt(2, (int)restoreDuration - 2);
+                EventEndTime = EventStartTime + 2.0f;
             }
 
-            if (hasExecutedList["TimeSet"]) TrainingEvent(6.0f);
+            if (hasExecutedList["TimeSet"]) TrainingEvent(restoreDuration);
         }
 
         // 랜덤 이벤트 : 일정 확률로 골드 흭득 가능

@@ -48,11 +48,30 @@ namespace Text_RPG
         private int dungeonHeight = 10;
         private char[,] dungeonMap;
 
-        // background : 모험, 마을 순찰
-        private int adventureWidth = 20;
-        private int adventureHeight = 6;
+        // background : 모험
+        private int adventureWidth = 30;
+        private int adventureHeight = 10;
         private List<string> adventureBG = new List<string>();
+
+        private string monster = "(M)";
+
+        // background : 마을 순찰
+        private int patrolTownWidth = 30;
+        private int patrolTownHeight = 10;
         private List<string> patrolTownBG = new List<string>();
+
+        // Player가 Patrol하는 방향
+        // Player는 작은 사각형 영역 안에서 루프를 돌며 돌아다님
+
+        private int moveDirection = 1;          // 1: 오른쪽, 2: 아래, 3: 왼쪽, 4: 위
+
+        private int patrolRectWidth = 15;        // 움직이는 영역 Width
+        private int patrolRectHeight = 7;       // 움직이는 영역 Height
+
+        private int playerPatrolPosX = 0;       // Player Patrol X 위치
+        private int playerPatrolPosY = 0;       // Player Patrol Y 위치
+
+        private string[] patrolEvent = { "(CH)", "(HD)", "(P1)", "(VL)" };
 
         // 애니메이션 연출을 위한 변수
         private int startBGFrameIdx = 0;
@@ -61,6 +80,12 @@ namespace Text_RPG
         // 애니메이션 시 Player frame
         private string[] playerFrames = { "(P)", "(p)" };
         private int frame = 0;
+
+        // ConsoleHelper Line
+        public int baseLine = 0;
+        public int endLine = 0;
+
+        Random radom = new Random();
 
         // 건물 유형
         string[][] buildings = new string[][]
@@ -222,17 +247,15 @@ namespace Text_RPG
         // 랜덤 모험 background 초기화
         private void DrawAdventureBG()
         {
-            Random rnd = new Random();
-
             // 듬성 듬성 나무가 있는 걸로 연출
             for(int i=0; i<200; i++)
             {
-                string isTree = (rnd.NextDouble() < 0.3) ? "|" : " ";
+                string isTree = (radom.NextDouble() < 0.3) ? "|" : " ";
                 adventureBG.Add(isTree);
             }
         }
 
-        // 랜덤 모험 애니메이션 연출
+        // 랜덤 모험 Map 그리기
         public void DisplayAdventure(float elapsed, bool isFindMonster)
         {
             elapsedSum += elapsed;
@@ -245,6 +268,7 @@ namespace Text_RPG
             }
         }
 
+        // 랜덤 모험 애니메이션 연출
         private void AdventureAnim(int frame, bool isFindMonster)
         {
             int midY = adventureHeight / 2;
@@ -260,14 +284,14 @@ namespace Text_RPG
 
             // SetCursorPosition을 이용하여 덮어쓰기를 하므로 한 라인 당 출력
             string drawLine = "";
-            int baseLine = 1;
-            int endLine = adventureHeight + baseLine;
+            baseLine = 1;
+            endLine = adventureHeight + baseLine;
 
             for (int line= baseLine; line < endLine; line++)
             {
                 drawLine = "";
 
-                if(line == midY - 2 || line == midY + 2)
+                if(line == baseLine || line == endLine - 1)
                 {
                     // 맨 윗 줄과 아랫 줄은 나무 표시
                     for (int x = 0; x < adventureWidth; x++)
@@ -286,7 +310,7 @@ namespace Text_RPG
                             // 몬스터 조우 시 몬스터 추가
                             if (isFindMonster)
                             {
-                                drawLine += "(M)";
+                                drawLine += monster;
                                 x += 3; 
                             }
                         }
@@ -301,5 +325,117 @@ namespace Text_RPG
                 ConsoleHelper.WriteLine(drawLine, line);
             }
         }
+
+        /////////////////////////////////////////////////////////////////////
+
+        // 마을 순찰 그리기
+        public void DisplayPatrolTown(float elapsed, int eventOption)
+        {
+            elapsedSum += elapsed;
+
+            if (elapsedSum >= 0.5f)
+            {
+                elapsedSum = 0f;
+                frame++;
+                PatrolTownAnim(frame, eventOption);
+            }
+        }
+
+        private void PatrolTownAnim(int frame, int eventOption)
+        {
+            int midX = patrolTownWidth / 2;
+            int midY = patrolTownHeight / 2;
+
+            // Player frame 작업
+            string player = playerFrames[(frame / 3) % playerFrames.Length]; // 0.3 간격으로 표시
+
+            // Player Patrol : Event 조우 시 Patrol 멈춤
+            if(eventOption==-1) SetPlayerPatrol(player);
+
+            // SetCursorPosition을 이용하여 덮어쓰기를 하므로 한 라인 당 출력
+            string drawLine = "";
+            baseLine = 1;
+            endLine = patrolTownHeight + baseLine;
+
+            for (int line = baseLine; line < endLine; line++)
+            {
+                drawLine = "";
+
+                if (line == baseLine || line == endLine - 1)
+                {
+                    // 맨 윗 줄과 아랫 줄은 벽 표시
+                    for (int x = 0; x < patrolTownWidth; x++)
+                    {
+                        string wall = (x==0 || x==patrolTownWidth-1) ? "+" : "-";
+                        drawLine += wall;
+                    }
+                }
+                else
+                {
+                    for (int x = 0; x < patrolTownWidth; x++)
+                    {
+                        // Player 중앙 배치
+                        int startX = (patrolTownWidth - patrolRectWidth) / 2;
+                        int startY = (patrolTownHeight - patrolRectHeight) / 2;
+
+                        int playerPosX = playerPatrolPosX + startX;
+                        int playerPosY = playerPatrolPosY + startY;
+
+                        if (x==0 || x==patrolTownWidth - 1)
+                        {
+                            // 양쪽 사이드에 벽 추가
+                            drawLine += "|";
+                        }
+                        else if (x == playerPosX && line - baseLine == playerPosY)
+                        {
+                            // Player Patrol 위치면 Player 추가
+                            drawLine += player;
+                            x += 2;
+
+                            // Event 시 Event string 값 추가
+                            if(eventOption!=-1)
+                            {
+                                drawLine += patrolEvent[eventOption];
+                                x += patrolEvent[eventOption].Length;
+                            }
+
+                            continue;
+                        }
+                        else
+                        {
+                            drawLine += " ";
+                        }
+                    }
+                }
+
+                ConsoleHelper.WriteLine(drawLine, line);
+            }
+        }
+
+        private void SetPlayerPatrol(string player)
+        {
+            switch (moveDirection)
+            {
+                case 1: // 오른쪽 이동
+                    playerPatrolPosX++;
+                    if (playerPatrolPosX >= patrolRectWidth - player.Length - 1)
+                        moveDirection = 2;
+                    break;
+                case 2: // 아래 이동
+                    playerPatrolPosY++;
+                    if (playerPatrolPosY >= patrolRectHeight - 2)
+                        moveDirection = 3;
+                    break;
+                case 3: // 왼쪽 이동
+                    playerPatrolPosX--;
+                    if (playerPatrolPosX <= 1) moveDirection = 4;
+                    break;
+                case 4: // 위로 이동
+                    playerPatrolPosY--;
+                    if (playerPatrolPosY <= 1) moveDirection = 1;
+                    break;
+            }
+        }
+
     }
 }

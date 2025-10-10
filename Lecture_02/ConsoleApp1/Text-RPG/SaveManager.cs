@@ -106,13 +106,6 @@ namespace Text_RPG
             GameManager.Instance.GetShop().LoadFromSaveData(saveData);
 
             Console.WriteLine($"로드 완료: {saveDataPath}");
-
-            foreach (var item in saveData.playerItems)
-            {
-                Console.WriteLine($"{item.name} - 타입: {item.GetType().Name} - 장착 상태: {item.isEquipped}");
-            }
-
-            Console.WriteLine(GameManager.Instance.GetPlayer().weapon.name + ", " + GameManager.Instance.GetPlayer().weapon.isEquipped);
         }
 
         // 현재 SaveData가 존재하는지 반환

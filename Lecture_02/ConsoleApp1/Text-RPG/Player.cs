@@ -213,7 +213,7 @@ namespace Text_RPG
         // 레벨 업
         private void LevelUp()
         {
-            Console.WriteLine(UIManager.Instance.LevelUp);
+            Console.WriteLine(TextManager.LevelUp);
             Console.WriteLine();
 
             level++;

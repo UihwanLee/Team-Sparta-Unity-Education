@@ -95,7 +95,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            UIManager.Instance.WriteLine($"훈련 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            ConsoleHelper.WriteLine($"훈련 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
 
             // 정해진 시간이 지나면 MainScene으로 이동
             if(TimeManager.instance.LocalElapsed >= duration)
@@ -107,7 +107,7 @@ namespace Text_RPG.Scenes
 
             // 훈련 중 깜빡임
             string baseMessage = "훈련 중";
-            UIManager.Instance.BlinkingMessageWithDot(baseLine, baseMessage);
+            ConsoleHelper.BlinkingMessageWithDot(baseLine, baseMessage);
 
             // 이벤트 발생
             if (TimeManager.Instance.LocalElapsed > EventStartTime && TimeManager.Instance.LocalElapsed < EventEndTime)
@@ -130,23 +130,23 @@ namespace Text_RPG.Scenes
             }
 
             // 이벤트 텍스트 표시
-            UIManager.Instance.WriteLine(GetTrainingEventText(eventIdx), baseLine + 2);
+            ConsoleHelper.WriteLine(GetTrainingEventText(eventIdx), baseLine + 2);
 
             // 이벤트 효과 표시
             if (TimeManager.Instance.LocalElapsed > EventStartTime + 1)
             {
-                UIManager.Instance.WriteLine(UIManager.Instance.GainExp(gainExp), baseLine + 4);
+                ConsoleHelper.WriteLine(TextManager.GainExp(gainExp), baseLine + 4);
             }
         }
 
         private string GetTrainingEventText(int value)
         {
             // 예외처리
-            if (value < 0 || value > 100) return UIManager.Instance.ERROR_INDEX;
+            if (value < 0 || value > 100) return TextManager.ERROR_INDEX;
 
-            if (value > 0 && value <= 15) return UIManager.Instance.Training_GreatSuccess;          // 훈련 대성공 이벤트
-            else if (value > 15 && value <= 75) return UIManager.Instance.Training_Success;         // 훈련 성공 이벤트
-            else return UIManager.Instance.Training_Fail;                                           // 훈련 실패 이벤트
+            if (value > 0 && value <= 15) return TextManager.Training_GreatSuccess;          // 훈련 대성공 이벤트
+            else if (value > 15 && value <= 75) return TextManager.Training_Success;         // 훈련 성공 이벤트
+            else return TextManager.Training_Fail;                                           // 훈련 실패 이벤트
         }
 
         // 마을 이벤트 처리 : 경험치

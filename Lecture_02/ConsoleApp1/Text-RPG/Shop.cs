@@ -64,7 +64,7 @@ namespace Text_RPG
             // 이미 구매한 상품이라면 구매한 아이템입니다 출력
             if (productList[idx].isPurchase)
             {
-                Console.WriteLine(UIManager.Instance.Shop_Already_Purchase);
+                Console.WriteLine(TextManager.Shop_Already_Purchase);
                 return false;
             }
 
@@ -72,7 +72,7 @@ namespace Text_RPG
             Player player = GameManager.Instance.GetPlayer();
             if(player.Gold < productList[idx].price)
             {
-                Console.WriteLine(UIManager.Instance.Not_Enough_Gold);
+                Console.WriteLine(TextManager.Not_Enough_Gold);
                 return false;
             }
 
@@ -90,7 +90,7 @@ namespace Text_RPG
             // 상품 품목의 복제본을 player에게 전달
             player.PurchaseItem(item.Clone());
 
-            Console.WriteLine(UIManager.Instance.Shop_Success_Purchase);
+            Console.WriteLine(TextManager.Shop_Success_Purchase);
         }
 
         // 상품 판매 시도 - 인덱스 검색
@@ -119,7 +119,7 @@ namespace Text_RPG
             player.Gold += (int)(player.Inventroy.Items[idx].price * saleRate);
 
             // 판매 및 골드 흭득 메세지 출력
-            Console.WriteLine(UIManager.Instance.Shop_Success_Sale(player.Inventroy.Items[idx]));
+            Console.WriteLine(TextManager.Shop_Success_Sale(player.Inventroy.Items[idx]));
 
             // 플레이어 인벤토리에서 삭제
             player.Inventroy.Items.RemoveAt(idx);
@@ -129,14 +129,14 @@ namespace Text_RPG
         public void DisplayInfo(bool isPurchase)
         {
             Console.WriteLine("[아이템 목록]\n");
-            string purchase = (isPurchase) ? UIManager.Instance.PadRightForConsole(" ", 6) : $"  ";
+            string purchase = (isPurchase) ? ConsoleHelper.PadRightForConsole(" ", 6) : $"  ";
 
             Console.WriteLine(
                 string.Format("{0}{1} | {2} | {3} | {4}",
                 purchase,
-                UIManager.Instance.PadRightForConsole("[아이템 이름]", 20),
-                UIManager.Instance.PadRightForConsole("[아이템 효과]", 15),
-                UIManager.Instance.PadRightForConsole("[아이템 설명]", 50),
+                ConsoleHelper.PadRightForConsole("[아이템 이름]", 20),
+                ConsoleHelper.PadRightForConsole("[아이템 효과]", 15),
+                ConsoleHelper.PadRightForConsole("[아이템 설명]", 50),
                 "[아이템 가격]\n"));
 
             for (int i = 0; i < productList.Count; i++)

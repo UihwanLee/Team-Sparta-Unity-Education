@@ -73,7 +73,7 @@ namespace Text_RPG
             // 던전에 입장 할 체력이 충분한지 체크
             if(player.Hp <= lose_hp)
             {
-                Console.WriteLine(UIManager.Instance.Dugeon_Not_Enough_Hp);
+                Console.WriteLine(TextManager.Dugeon_Not_Enough_Hp);
                 return false;
             }
 

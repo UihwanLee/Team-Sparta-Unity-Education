@@ -88,6 +88,9 @@ namespace Text_RPG.Scenes
                 hasExecutedList["AdventureView"] = true;
             }
 
+            // 모험 애니메이션 
+            //UIManager.Instance.DrawAdventure(TimeManager.Instance.Elapsed);
+
             if(hasExecutedList["TimeSet"]) RandomEvent(10.0f);
         }
 
@@ -97,7 +100,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            UIManager.Instance.WriteLine($"모험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            ConsoleHelper.WriteLine($"모험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
 
             // 정해진 시간이 지나면 MainScene으로 이동
             if (TimeManager.instance.LocalElapsed >= duration)
@@ -109,7 +112,7 @@ namespace Text_RPG.Scenes
 
             // 모험 중 깜빡임
             baseMessage = "모험 중";
-            UIManager.Instance.BlinkingMessageWithDot(baseLine, baseMessage);
+            ConsoleHelper.BlinkingMessageWithDot(baseLine, baseMessage);
 
             // 이벤트 발생
             if(TimeManager.Instance.LocalElapsed > EventStartTime && TimeManager.Instance.LocalElapsed < EventEndTime)
@@ -131,22 +134,22 @@ namespace Text_RPG.Scenes
             }
 
             // 이벤트 텍스트 표시
-            UIManager.Instance.WriteLine(GetAdventureEventText(eventIdx), baseLine + 2);
+            ConsoleHelper.WriteLine(GetAdventureEventText(eventIdx), baseLine + 2);
 
             // 이벤트 효과 표시
             if (TimeManager.Instance.LocalElapsed > EventStartTime + 1)
             {
-                UIManager.Instance.WriteLine(UIManager.Instance.GainGold(gainGold), baseLine + 4);
+                ConsoleHelper.WriteLine(TextManager.GainGold(gainGold), baseLine + 4);
             }
         }
 
         private string GetAdventureEventText(int value)
         {
             // 예외처리
-            if (value < 0 || value > 100) return UIManager.Instance.ERROR_INDEX;
+            if (value < 0 || value > 100) return TextManager.ERROR_INDEX;
 
-            if (value > 0 && value <= 50) return UIManager.Instance.MatchMonster;               // 몬스터 조우 이벤트
-            else return UIManager.Instance.NothingHappen;                                       // 몬스터 조우 실패 이벤트
+            if (value > 0 && value <= 50) return TextManager.MatchMonster;               // 몬스터 조우 이벤트
+            else return TextManager.NothingHappen;                                       // 몬스터 조우 실패 이벤트
         }
 
         private int GetAdventureEventGold(int value)

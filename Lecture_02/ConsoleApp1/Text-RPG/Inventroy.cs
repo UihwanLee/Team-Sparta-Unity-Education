@@ -83,13 +83,13 @@ namespace Text_RPG
         {
             Console.WriteLine("[아이템 목록]\n");
 
-            string equipped = (isEquipped) ? UIManager.Instance.PadRightForConsole(" ", 6) : $"  ";
+            string equipped = (isEquipped) ? ConsoleHelper.PadRightForConsole(" ", 6) : $"  ";
 
             Console.WriteLine(
                 string.Format("{0}{1} | {2} | {3}",
                 equipped,
-                UIManager.Instance.PadRightForConsole("[아이템 이름]", 20),
-                UIManager.Instance.PadRightForConsole("[아이템 효과]", 15),
+                ConsoleHelper.PadRightForConsole("[아이템 이름]", 20),
+                ConsoleHelper.PadRightForConsole("[아이템 효과]", 15),
                 "[아이템 설명]\n"));
 
             for (int i=0; i<items.Count; i++)
@@ -107,10 +107,10 @@ namespace Text_RPG
 
             Console.WriteLine(
                 string.Format("{0}{1} | {2} | {3} | {4}",
-                UIManager.Instance.PadRightForConsole(" ", 6),
-                UIManager.Instance.PadRightForConsole("[아이템 이름]", 20),
-                UIManager.Instance.PadRightForConsole("[아이템 효과]", 15),
-                UIManager.Instance.PadRightForConsole("[아이템 설명]", 50),
+                ConsoleHelper.PadRightForConsole(" ", 6),
+                ConsoleHelper.PadRightForConsole("[아이템 이름]", 20),
+                ConsoleHelper.PadRightForConsole("[아이템 효과]", 15),
+                ConsoleHelper.PadRightForConsole("[아이템 설명]", 50),
                 "[아이템 가격]\n"));
 
             for (int i = 0; i < items.Count; i++)

@@ -151,7 +151,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            UIManager.Instance.WriteLine($"던전 탐험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            ConsoleHelper.WriteLine($"던전 탐험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
 
             // 정해진 시간이 지나면 던전 클리어 View로 이동
             if (TimeManager.instance.LocalElapsed >= dungeon.duration)
@@ -162,7 +162,7 @@ namespace Text_RPG.Scenes
             }
 
             // 던전 탐험 중 깜빡임
-            UIManager.Instance.BlinkingMessageWithDot(baseLine, baseMessage);
+            ConsoleHelper.BlinkingMessageWithDot(baseLine, baseMessage);
         }
 
         // 던전 클리어

@@ -128,7 +128,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            UIManager.Instance.WriteLine($"휴식 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            ConsoleHelper.WriteLine($"휴식 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
 
             // 정해진 시간이 지나면 MainScene로 이동
             if (TimeManager.instance.LocalElapsed >= duration)
@@ -139,7 +139,7 @@ namespace Text_RPG.Scenes
             }
 
             // 휴식 중 깜빡임
-            UIManager.Instance.BlinkingMessageWithDot(baseLine, baseMessage);
+            ConsoleHelper.BlinkingMessageWithDot(baseLine, baseMessage);
 
             // 이벤트 발생
             if (TimeManager.Instance.LocalElapsed > EventStartTime && TimeManager.Instance.LocalElapsed < EventEndTime)
@@ -163,12 +163,12 @@ namespace Text_RPG.Scenes
             }
 
             // HP 회복 표시
-            UIManager.Instance.WriteLine(UIManager.Instance.Restore_Hp(100), baseLine + 2);
+            ConsoleHelper.WriteLine(TextManager.Restore_Hp(100), baseLine + 2);
 
             // 스태미나 회복 표시
             if (TimeManager.Instance.LocalElapsed > EventStartTime + 1)
             {
-                UIManager.Instance.WriteLine(UIManager.Instance.Restore_Stamina(20), baseLine + 4);
+                ConsoleHelper.WriteLine(TextManager.Restore_Stamina(20), baseLine + 4);
             }
         }
 

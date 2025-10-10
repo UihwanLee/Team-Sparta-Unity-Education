@@ -120,17 +120,17 @@ namespace Text_RPG.Scenes
             if (player.Stamina < stanima)
             {
                 // 현재 캐릭터의 스태미너가 부족하면 돌아감
-                Console.WriteLine(UIManager.Instance.NoStamina);
+                Console.WriteLine(TextManager.NoStamina);
                 Console.WriteLine();
-                Console.WriteLine(UIManager.Instance.Entering);
+                Console.WriteLine(TextManager.Entering);
                 scene = "MainScene";
             }
             else
             {
                 // 현재 캐릭터의 스태미너가 충분하면 스태미나 소모
-                Console.WriteLine(UIManager.Instance.UseStamin(stanima));
+                Console.WriteLine(TextManager.UseStamin(stanima));
                 Console.WriteLine();
-                Console.WriteLine(UIManager.Instance.Entering);
+                Console.WriteLine(TextManager.Entering);
                 player.Stamina -= stanima;
                 scene = loadScene;
             }

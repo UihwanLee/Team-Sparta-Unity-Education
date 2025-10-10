@@ -96,7 +96,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            UIManager.Instance.WriteLine($"마을 순찰 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            ConsoleHelper.WriteLine($"마을 순찰 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
 
             // 정해진 시간이 지나면 MainScene으로 이동
             if (TimeManager.instance.LocalElapsed >= duration)
@@ -108,7 +108,7 @@ namespace Text_RPG.Scenes
 
             // 순찰 중 깜빡임
             string baseMessage = "마을 순찰 중";
-            UIManager.Instance.BlinkingMessageWithDot(baseLine, baseMessage);
+            ConsoleHelper.BlinkingMessageWithDot(baseLine, baseMessage);
 
             // 이벤트 발생
             if (TimeManager.Instance.LocalElapsed > EventStartTime && TimeManager.Instance.LocalElapsed < EventEndTime)
@@ -131,12 +131,12 @@ namespace Text_RPG.Scenes
             }
 
             // 이벤트 텍스트 표시
-            UIManager.Instance.WriteLine(GetTownEventText(eventIdx), baseLine + 2);
+            ConsoleHelper.WriteLine(GetTownEventText(eventIdx), baseLine + 2);
 
             // 이벤트 효과 표시
             if (TimeManager.Instance.LocalElapsed > EventStartTime + 1)
             {
-                UIManager.Instance.WriteLine(UIManager.Instance.GainGold(gainGold), baseLine + 4);
+                ConsoleHelper.WriteLine(TextManager.GainGold(gainGold), baseLine + 4);
             }
         }
 
@@ -144,13 +144,13 @@ namespace Text_RPG.Scenes
         private string GetTownEventText(int value)
         {
             // 예외처리
-            if (value < 0 || value > 100) return UIManager.Instance.ERROR_INDEX;
+            if (value < 0 || value > 100) return TextManager.ERROR_INDEX;
 
-            if (value > 0 && value <= 10) return UIManager.Instance.PatrolTown_FindChild;           // 마을 아이들 이벤트
-            else if (value > 10 && value <= 20) return UIManager.Instance.PatrolTown_FindHeadMan;   // 마을 촌장 이벤트
-            else if (value > 20 && value <= 40) return UIManager.Instance.PatrolTown_FindHeadMan;   // 길 잃은 사람 이벤트
-            else if (value > 40 && value <= 70) return UIManager.Instance.PatrolTown_FindHeadMan;   // 마을 사람 이벤트
-            else return UIManager.Instance.NothingHappen;                                           // 노 이벤트
+            if (value > 0 && value <= 10) return TextManager.PatrolTown_FindChild;           // 마을 아이들 이벤트
+            else if (value > 10 && value <= 20) return TextManager.PatrolTown_FindHeadMan;   // 마을 촌장 이벤트
+            else if (value > 20 && value <= 40) return TextManager.PatrolTown_FindHeadMan;   // 길 잃은 사람 이벤트
+            else if (value > 40 && value <= 70) return TextManager.PatrolTown_FindHeadMan;   // 마을 사람 이벤트
+            else return TextManager.NothingHappen;                                           // 노 이벤트
         }
 
         // 마을 이벤트 처리 : 골드

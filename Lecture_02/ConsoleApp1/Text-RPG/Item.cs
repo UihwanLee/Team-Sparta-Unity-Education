@@ -63,8 +63,8 @@ namespace Text_RPG
 
             Console.WriteLine(
                 string.Format("{0} | {1} | {2}",
-                UIManager.Instance.PadRightForConsole(itemName, 20),
-                UIManager.Instance.PadRightForConsole(effect, 15),
+                ConsoleHelper.PadRightForConsole(itemName, 20),
+                ConsoleHelper.PadRightForConsole(effect, 15),
                 description));
         }
 
@@ -76,10 +76,10 @@ namespace Text_RPG
 
             Console.WriteLine( 
                 string.Format("{0} | {1} | {2} | {3} {4}",
-                UIManager.Instance.PadRightForConsole(name, 20),
-                UIManager.Instance.PadRightForConsole(effect, 15),
-                UIManager.Instance.PadRightForConsole(description, 50),
-                UIManager.Instance.PadRightForConsole(itemPurchase, 6),
+                ConsoleHelper.PadRightForConsole(name, 20),
+                ConsoleHelper.PadRightForConsole(effect, 15),
+                ConsoleHelper.PadRightForConsole(description, 50),
+                ConsoleHelper.PadRightForConsole(itemPurchase, 6),
                 isGoldIcon));
         }
 

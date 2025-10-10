@@ -18,6 +18,7 @@ namespace Text_RPG
           * 어디서든 사용할 수 있다.
           * 
           */
+
         // 싱글톤 생성
         private static UIManager instance;
 
@@ -209,9 +210,9 @@ namespace Text_RPG
             Console.WriteLine();
             DisplayScreen();
             Console.WriteLine();
-            Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", PadRightForConsole("1. 쉬운 던전", 15), 5));
-            Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", PadRightForConsole("2. 일반 던전", 15), 11));
-            Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", PadRightForConsole("3. 어려운 던전", 15), 17));
+            Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", ConsoleHelper.PadRightForConsole("1. 쉬운 던전", 15), 5));
+            Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", ConsoleHelper.PadRightForConsole("2. 일반 던전", 15), 11));
+            Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", ConsoleHelper.PadRightForConsole("3. 어려운 던전", 15), 17));
             Console.WriteLine("0. 나가기");
 
             Console.WriteLine();
@@ -257,107 +258,6 @@ namespace Text_RPG
         {
             Console.WriteLine("[휴식 중]");
             DisplayScreen();
-        }
-
-        /// <summary>
-        /// -------------------------------------------------------------------------------------------------------
-        /// </summary>
-        ///
-
-        // 오류 메세지
-        public void MessageError()
-        {
-            Console.WriteLine("잘못된 입력입니다");
-        }
-
-        /// <summary>
-        /// -------------------------------------------------------------------------------------------------------
-        /// </summary>
-        ///
-
-        // Text 관리 : 공통
-        public string NoStamina = "스태미나가 부족합니다.";
-        public string NoGold = "골드가 부족합니다.";
-        public string UseStamin(int stamina) { return $"스태미나 {stamina} 소모되었습니다."; }
-        public string NothingHappen = "아무 일도 일어나지 않았다";
-        public string Entering = "입장중...";
-
-        public string ERROR_INDEX = "인덱스 에러";
-
-        public string LevelUp = "레벨이 상승했습니다!";
-
-        public string GainGold(int gold) { return (gold >= 0) ? $"{gold}G 흭득" : $"{gold}G 소모"; }
-        public string GainExp(int exp) { return$"{exp}exp 흭득"; }
-
-
-        // Text 관리 : 모험
-        public string MatchMonster = "몬스터 조우!"; 
-
-        // Text 관리 : 마을 순찰
-        public string PatrolTown_FindChild = "마을 아이들이 모여있다. 간식을 사줘볼까?";
-        public string PatrolTown_FindHeadMan = "촌장님을 만나서 심부름을 했다.";
-        public string PatrolTown_LostMan = "길 읽은 사람을 안내해주었다.";
-        public string PatrolTown_FindPeople = "마을 주민과 인사를 나눴다. 선물을 받았다.";
-
-        // Text 관리 : 훈련
-        public string Training_GreatSuccess = "훈련이 잘 되었습니다!";
-        public string Training_Success = "오늘하루 열심히 훈련했습니다.";
-        public string Training_Fail = "하기 싫다... 훈련이...";
-
-        // Text 관리 : 상점
-        public string Shop_Already_Purchase = "이미 구매한 아이템입니다.";
-        public string Shop_Success_Purchase = "구매를 완료했습니다.";
-        public string Not_Enough_Gold = "Gold가 부족합니다.";
-
-        public string Shop_Success_Sale(Item item) { return $"{item.name} 판매 완료. {item.price}G 흭득!"; }
-
-        // Text 관리 : 던전
-        public string Dugeon_Not_Enough_Hp = "체력이 부족합니다!";
-
-        // Text 관리 : 휴식
-        public string Restore_Hp(int hp) { return $"체력이 {hp} 회복했습니다."; }
-        public string Restore_Stamina(int stamina) { return $"스태미나가 {stamina} 회복했습니다."; }
-
-        /// <summary>
-        /// -------------------------------------------------------------------------------------------------------
-        /// </summary>
-        ///
-
-        // SetCurPosition 함수를 이용한 한 줄 덮어쓰기 함수
-        public void WriteLine(string message, int line)
-        {
-            Console.SetCursorPosition(0, line);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, line);
-            Console.Write(message);
-        }
-
-        // 문자열 깜빡임 애니메이션
-        public void BlinkingMessageWithDot(int baseLine, string baseMessage)
-        {
-            int dotCount = ((int)(TimeManager.Instance.LocalElapsed * 2) % 3) + 1; // 1~3점
-            string message = baseMessage + new string('.', dotCount);
-            WriteLine(message, baseLine);
-        }
-
-        // 문자열 실제 표시 폭 계산 (한글 2칸, 알파벳 1칸 가정)
-        public int GetDisplayWidth(string text)
-        {
-            int width = 0;
-            foreach (char c in text)
-            {
-                if (char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.OtherLetter) width += 2; // 한글 등 넓은 글자
-                else width += 1; // 알파벳, 숫자 등
-            }
-            return width;
-        }
-
-        // 문자열을 특정 칸에 맞춰 정렬
-        public string PadRightForConsole(string text, int totalWidth)
-        {
-            int pad = totalWidth - GetDisplayWidth(text);
-            if (pad > 0) return text + new string(' ', pad);
-            else return text;
         }
     }
 }

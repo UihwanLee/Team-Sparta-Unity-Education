@@ -99,7 +99,7 @@ namespace Text_RPG.Scenes
         {
             if (!hasExecutedList["DungeonView"])
             {
-                UIManager.Instance.DungeonView();
+                UIManager.Instance.DungeonView(map);
                 hasExecutedList["DungeonView"] = true;
 
                 choice = GetUserChoice(["0", "1", "2", "3"]);

@@ -34,9 +34,6 @@ namespace Text_RPG
             }
         }
 
-        private int width = 20;
-        private int height = 5;
-
         public UIManager() { }
 
         public void DisplayOption(string[] options)
@@ -56,7 +53,7 @@ namespace Text_RPG
             Console.WriteLine("이곳에서 던전으로 들어가진 전 활동을 할 수 있습니다.");
             Console.WriteLine();
             Console.WriteLine("[마을]");
-            map.DisplayTownMap();
+            map.DisplayTown();
             DisplayOption(["1. 상태 보기", "2. 인벤토리", "3. 랜덤 모험", "4. 마을 순찰하기", 
                            "5. 훈련하기", "6. 상점", "7. 던전 입장", "8. 휴식하기", "9. 게임 로드", " ", "0. 저장"]);
         }
@@ -190,11 +187,12 @@ namespace Text_RPG
         ///
 
         // 던전
-        public void DungeonView()
+        public void DungeonView(MapManager map)
         {
             Console.WriteLine("[던전입장]");
             Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
             Console.WriteLine();
+            map.DisplayDungeon();
             Console.WriteLine();
             Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", ConsoleHelper.PadRightForConsole("1. 쉬운 던전", 15), 5));
             Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", ConsoleHelper.PadRightForConsole("2. 일반 던전", 15), 11));

@@ -54,7 +54,8 @@ namespace Text_RPG
         private List<string> adventureBG = new List<string>();
         private List<string> patrolTownBG = new List<string>();
 
-        // 애니메이션 연출을 위한 elapsed 합계
+        // 애니메이션 연출을 위한 변수
+        private int startBGFrameIdx = 0;
         private float elapsedSum = 0;
 
         // 애니메이션 시 Player frame
@@ -232,7 +233,7 @@ namespace Text_RPG
         }
 
         // 랜덤 모험 애니메이션 연출
-        public void DisplayAdventure(float elapsed)
+        public void DisplayAdventure(float elapsed, bool isFindMonster)
         {
             elapsedSum += elapsed;
 
@@ -240,16 +241,18 @@ namespace Text_RPG
             {
                 elapsedSum = 0f;
                 frame++;
-                AdventureAnim(frame);
+                AdventureAnim(frame, isFindMonster);
             }
         }
 
-        private void AdventureAnim(int frame)
+        private void AdventureAnim(int frame, bool isFindMonster)
         {
             int midY = adventureHeight / 2;
 
-            // 애니메이션 연출을 위한 frame 단위 작업
-            int startBGIdx = frame % adventureBG.Count; // 리스트 다 돌면 다시 루프 진행
+            // BG frame 단위 작업 : 몬스터 조우 시 배경 멈춤
+            startBGFrameIdx = (isFindMonster) ? startBGFrameIdx : frame % adventureBG.Count; // 리스트 다 돌면 다시 루프 진행
+
+            // Player frame 작업
             string player = playerFrames[(frame / 3) % playerFrames.Length]; // 0.3 간격으로 표시
 
             // Player는 항상 맵 가운데 배치
@@ -268,7 +271,7 @@ namespace Text_RPG
                 {
                     // 맨 윗 줄과 아랫 줄은 나무 표시
                     for (int x = 0; x < adventureWidth; x++)
-                        drawLine += adventureBG[(startBGIdx + x) % adventureBG.Count];
+                        drawLine += adventureBG[(startBGFrameIdx + x) % adventureBG.Count];
                 }
                 else if(line == midY)
                 {
@@ -279,6 +282,13 @@ namespace Text_RPG
                         {
                             drawLine += player;
                             x += 2;     // Player는 '(', 'P', ')' 3가지 char로 이루어져있으므로 2개 띄어넘기
+
+                            // 몬스터 조우 시 몬스터 추가
+                            if (isFindMonster)
+                            {
+                                drawLine += "(M)";
+                                x += 3; 
+                            }
                         }
                         else drawLine += " ";   // 나머지는 공백
                     }

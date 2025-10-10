@@ -20,12 +20,15 @@ namespace Text_RPG.Scenes
          * 
          */
 
+        bool isFindMonster = false; // 몬스터 조우 bool 값
         int eventIdx = -1;
         int baseLine = 10;
         int gainGold = 0;
         string baseMessage = "";
         private float EventStartTime = 3f;
         private float EventEndTime = 6f;
+
+        private float adventureDuration = 8.0f; // 랜덤 모험 duration
 
         public AdventureScene(int index, MapManager map) : base(index, map)
         {
@@ -42,6 +45,7 @@ namespace Text_RPG.Scenes
             baseMessage = "모험 중";
             EventStartTime = 3f;
             EventEndTime = 6f;
+            isFindMonster = false;
 
             // bool 값 초기화
             hasExecutedList.Clear();
@@ -86,12 +90,16 @@ namespace Text_RPG.Scenes
             {
                 UIManager.Instance.AdventureView(player);
                 hasExecutedList["AdventureView"] = true;
+
+                // 이벤트 시작 타임 랜덤으로 정하기
+                EventStartTime = (float)GetRadomInt(2, (int)adventureDuration - 4);
+                EventEndTime = EventStartTime + 2.0f;
             }
 
             // 모험 애니메이션 
-            map.DisplayAdventure(TimeManager.Instance.Elapsed);
+            map.DisplayAdventure(TimeManager.Instance.Elapsed, isFindMonster);
 
-            if(hasExecutedList["TimeSet"]) RandomEvent(10.0f);
+            if(hasExecutedList["TimeSet"]) RandomEvent(adventureDuration);
         }
 
         // 랜덤 이벤트 : 일정 확률로 골드 흭득 가능
@@ -128,6 +136,8 @@ namespace Text_RPG.Scenes
             {
                 hasExecutedList["isFindEvent"] = true;
                 eventIdx = GetRadomInt(1,100);
+
+                isFindMonster = (eventIdx <= 50);
 
                 gainGold = GetAdventureEventGold(eventIdx);
                 player.Gold += gainGold;

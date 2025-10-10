@@ -34,6 +34,7 @@ namespace Text_RPG
         // 아이템 복제
         public override Item Clone()
         {
+            this.Id += 1;   // 복제 시 Id 증가
             return new Armor(Id, name, effect, description, price, Type, def);
         }
 

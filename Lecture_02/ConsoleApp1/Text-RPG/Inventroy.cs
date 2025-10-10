@@ -48,16 +48,18 @@ namespace Text_RPG
             items.Clear();
         }
 
-        // 장비 장착/해제 - 아이템 검색
-        public void EquipItem(Item _item, bool isEquipped)
+        //  아이템 검색 : 아이디로 검색
+        public Item FindItemById(int id)
         {
             foreach(var item in items)
             {
-                if(item.Id == _item.Id)
+                if(item.Id == id)
                 {
-                    item.EquipItem(GameManager.Instance.GetPlayer(), isEquipped);
+                    return item;
                 }
             }
+
+            return null;
         }
 
         // 장비 장착/해제 - 인덱스 검색

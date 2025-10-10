@@ -73,7 +73,7 @@ namespace Text_RPG.Scenes
                 hasExecutedList["MainView"] = true;
             }
 
-            var choice = GetUserChoice(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]);
+            var choice = GetUserChoice(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "10"]);
 
             // MainView 분기점
             switch (choice)
@@ -107,6 +107,16 @@ namespace Text_RPG.Scenes
                     break;
                 case "9": // 게임 로드
                     SaveManager.Load();
+                    break;
+                case "10":
+                    {
+                        foreach (var item in GameManager.Instance.GetPlayer().Inventroy.Items)
+                        {
+                            Console.WriteLine($"{item.name} - 타입: {item.GetType().Name} - 장착 상태: {item.isEquipped}");
+                        }
+
+                        Console.WriteLine(GameManager.Instance.GetPlayer().weapon.name + ", " + GameManager.Instance.GetPlayer().weapon.isEquipped);
+                    }
                     break;
                 default:
                     break;

@@ -94,12 +94,21 @@ namespace Text_RPG
             this.inventroy.Items = saveData.playerItems;
 
             // 기존 장비가 있다면 장비 해제
-            if(this.weapon != null) this.weapon.isEquipped = false;
+            if (this.weapon != null) this.weapon.isEquipped = false;
             if(this.armor != null) this.armor.isEquipped = false;
 
-            // 장비 갱신
-            this.weapon = saveData.playerWeapon;
-            this.armor = saveData.playerArmor;
+            // 로드 시 player의 Weapon이 inventroy.Items의 Weapon을 참조하고 있는지 확인
+            if(saveData.playerWeapon != null)
+            {
+                Weapon playerWeapon = (Weapon)inventroy.FindItemById(saveData.playerWeapon.Id);
+                if(playerWeapon != null) this.weapon = playerWeapon;
+            }
+
+            if (saveData.playerArmor != null)
+            {
+                Armor playerArmor = (Armor)inventroy.FindItemById(saveData.playerArmor.Id);
+                if (playerArmor != null) this.armor = playerArmor;
+            }
 
             // 장비가 존재하면 atk, def 갱신
             this.atk = (this.weapon != null) ? origin_atk + weapon.ATK : origin_atk;
@@ -148,9 +157,10 @@ namespace Text_RPG
             if(this.weapon != null)
             {
                 this.weapon.isEquipped = false;
+                this.weapon = null;
             }
 
-            this.weapon = (isEquipped) ? weapon : null;
+            this.weapon = !isEquipped ? null : weapon;
 
             // 무기 속성에 따라 스탯 증가
             this.atk = (isEquipped) ? origin_atk + weapon.ATK : origin_atk;

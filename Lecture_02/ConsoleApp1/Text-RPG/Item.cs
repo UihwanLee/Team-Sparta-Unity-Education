@@ -26,7 +26,7 @@ namespace Text_RPG
          * 
          */
 
-        public int Id { get; }
+        public int Id { get; set; }
         public string name;
         public string effect;
         public string description;

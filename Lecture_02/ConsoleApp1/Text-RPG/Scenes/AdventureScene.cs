@@ -27,7 +27,7 @@ namespace Text_RPG.Scenes
         private float EventStartTime = 3f;
         private float EventEndTime = 6f;
 
-        public AdventureScene(int index) : base(index)
+        public AdventureScene(int index, MapManager map) : base(index, map)
         {
         }
 

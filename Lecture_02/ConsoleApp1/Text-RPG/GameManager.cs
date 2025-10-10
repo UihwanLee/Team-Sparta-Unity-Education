@@ -52,6 +52,7 @@ namespace Text_RPG
         // 공유 객체
         private Player player;
         private Shop shop;
+        private MapManager map;
 
         // 플레이어 필요 레벨 경험치
         private int[] requiredExp;
@@ -79,6 +80,7 @@ namespace Text_RPG
             // 게임 오브젝트 생성
             player = new Player(1, "이의환", 10, 10, 100, "초보자", 10000);
             shop = new Shop();
+            map = new MapManager();
 
             // SaveData 존재 시 로드
             //if (SaveManager.SaveFileExists()) SaveManager.Load();
@@ -89,15 +91,15 @@ namespace Text_RPG
             // 씬 생성
             sceneList = new List<Scene>();
 
-            Scene mainScene = new MainScene(sceneDictionary["MainScene"]);
-            Scene stateScene = new StateScene(sceneDictionary["StateScene"]);
-            Scene inventoryScene = new InventroyScene(sceneDictionary["InventoryScene"]);
-            Scene adventureScene = new AdventureScene(sceneDictionary["AdventureScene"]);
-            Scene townScene = new TownScene(sceneDictionary["TownScene"]);
-            Scene trainingScene = new TrainingScene(sceneDictionary["TrainingScene"]);
-            Scene shopScene = new ShopScene(sceneDictionary["ShopScene"]);
-            Scene dungeonScene = new DungeonScene(sceneDictionary["DungeonScene"]);
-            Scene restoreScene = new RestoreScene(sceneDictionary["RestoreScene"]);
+            Scene mainScene = new MainScene(sceneDictionary["MainScene"], map);
+            Scene stateScene = new StateScene(sceneDictionary["StateScene"], map);
+            Scene inventoryScene = new InventroyScene(sceneDictionary["InventoryScene"], map);
+            Scene adventureScene = new AdventureScene(sceneDictionary["AdventureScene"], map);
+            Scene townScene = new TownScene(sceneDictionary["TownScene"], map);
+            Scene trainingScene = new TrainingScene(sceneDictionary["TrainingScene"], map);
+            Scene shopScene = new ShopScene(sceneDictionary["ShopScene"], map);
+            Scene dungeonScene = new DungeonScene(sceneDictionary["DungeonScene"], map);
+            Scene restoreScene = new RestoreScene(sceneDictionary["RestoreScene"], map);
 
             sceneList.Add(mainScene);
             sceneList.Add(stateScene);

@@ -16,7 +16,7 @@ namespace Text_RPG.Scenes
          * - 아이템 장착 / 해제
          * 
          */
-        public InventroyScene(int index) : base(index)
+        public InventroyScene(int index, MapManager map) : base(index, map)
         {
         }
 

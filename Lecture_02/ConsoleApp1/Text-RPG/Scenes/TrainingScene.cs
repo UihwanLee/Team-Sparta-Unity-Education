@@ -18,7 +18,7 @@ namespace Text_RPG.Scenes
          * - 25% 확률 → "하기 싫다... 훈련이..." 획득경험치 30
          * 
          */
-        public TrainingScene(int index) : base(index)
+        public TrainingScene(int index, MapManager map) : base(index, map)
         {
         }
 

@@ -23,7 +23,7 @@ namespace Text_RPG.Scenes
          * 
          */
 
-        public MainScene(int index) : base(index)
+        public MainScene(int index, MapManager map) : base(index, map)
         {
 
         }
@@ -69,7 +69,7 @@ namespace Text_RPG.Scenes
         {
             if (!hasExecutedList["MainView"])
             {
-                UIManager.Instance.MainView();
+                UIManager.Instance.MainView(map);
                 hasExecutedList["MainView"] = true;
             }
 

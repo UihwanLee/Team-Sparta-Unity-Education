@@ -27,7 +27,7 @@ namespace Text_RPG.Scenes
         string choice = "";
         private int goldRestore = 500;
 
-        public RestoreScene(int index) : base(index)
+        public RestoreScene(int index, MapManager map) : base(index, map)
         {
         }
 

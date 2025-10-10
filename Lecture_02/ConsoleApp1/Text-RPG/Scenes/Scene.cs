@@ -34,9 +34,12 @@ namespace Text_RPG.Scenes
 
         Random random = new Random();
 
-        public Scene(int index)
+        protected MapManager map;   // Scene에서 구현할 Map 정보
+
+        public Scene(int index, MapManager map)
         {
             this.index = index;
+            this.map = map;
         }
 
         public virtual void Init()

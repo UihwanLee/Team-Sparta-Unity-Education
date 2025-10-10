@@ -19,7 +19,7 @@ namespace Text_RPG.Scenes
 
         private Shop shop;
 
-        public ShopScene(int index) : base(index)
+        public ShopScene(int index, MapManager map) : base(index, map)
         {
         }
 

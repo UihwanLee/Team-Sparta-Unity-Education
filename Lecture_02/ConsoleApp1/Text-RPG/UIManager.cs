@@ -39,16 +39,6 @@ namespace Text_RPG
 
         public UIManager() { }
 
-        private void DisplayScreen()
-        {
-            Console.Write("『");
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            for (int i = 0; i < height; i++) Console.WriteLine();
-            for (int i = 0; i < width; i++) Console.Write(" ");
-            Console.Write("』");
-            Console.WriteLine();
-        }
-
         public void DisplayOption(string[] options)
         {
             foreach (var option in options)
@@ -60,13 +50,13 @@ namespace Text_RPG
         }
 
         // 메인 화면
-        public void MainView()
+        public void MainView(MapManager map)
         {
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("이곳에서 던전으로 들어가진 전 활동을 할 수 있습니다.");
             Console.WriteLine();
             Console.WriteLine("[마을]");
-            DisplayScreen();
+            map.DisplayTownMap();
             DisplayOption(["1. 상태 보기", "2. 인벤토리", "3. 랜덤 모험", "4. 마을 순찰하기", 
                            "5. 훈련하기", "6. 상점", "7. 던전 입장", "8. 휴식하기", "9. 게임 로드", " ", "0. 저장"]);
         }
@@ -76,7 +66,7 @@ namespace Text_RPG
         {
             Console.WriteLine("[캐릭터 상태]");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
-            DisplayScreen();
+            Console.WriteLine();
             player.ShowInfo();
             Console.WriteLine();
             DisplayOption(["0. 나가기"]);
@@ -123,7 +113,6 @@ namespace Text_RPG
         public void AdventureView(Player player)
         {
             Console.WriteLine("[랜덤 모험]");
-            DisplayScreen();
         }
 
         /// <summary>
@@ -135,7 +124,6 @@ namespace Text_RPG
         public void TownView()
         {
             Console.WriteLine("[마을 순찰]");
-            DisplayScreen();
         }
 
         /// <summary>
@@ -146,8 +134,7 @@ namespace Text_RPG
         // 훈련
         public void TrainingView()
         {
-            Console.WriteLine("[훈련]");
-            DisplayScreen();
+            Console.WriteLine("[훈련]");;
         }
 
         /// <summary>
@@ -208,7 +195,6 @@ namespace Text_RPG
             Console.WriteLine("[던전입장]");
             Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
             Console.WriteLine();
-            DisplayScreen();
             Console.WriteLine();
             Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", ConsoleHelper.PadRightForConsole("1. 쉬운 던전", 15), 5));
             Console.WriteLine(string.Format("{0} | 방어력 {1}이상 권장", ConsoleHelper.PadRightForConsole("2. 일반 던전", 15), 11));
@@ -223,7 +209,6 @@ namespace Text_RPG
         public void DungeonTravelView()
         {
             Console.WriteLine("[던전 탐험]");
-            DisplayScreen();
         }
 
         // 던전 클리어
@@ -257,7 +242,6 @@ namespace Text_RPG
         public void RestoringView()
         {
             Console.WriteLine("[휴식 중]");
-            DisplayScreen();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Text_RPG.Scenes
         Dungeon dungeon_normal;
         Dungeon dungeon_hard;
 
-        public DungeonScene(int index) : base(index)
+        public DungeonScene(int index, MapManager map) : base(index, map)
         {
         }
 

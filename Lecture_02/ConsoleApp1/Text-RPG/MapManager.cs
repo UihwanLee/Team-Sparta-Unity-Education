@@ -48,6 +48,19 @@ namespace Text_RPG
         private int dungeonHeight = 10;
         private char[,] dungeonMap;
 
+        // background : 모험, 마을 순찰
+        private int adventureWidth = 20;
+        private int adventureHeight = 6;
+        private List<string> adventureBG = new List<string>();
+        private List<string> patrolTownBG = new List<string>();
+
+        // 애니메이션 연출을 위한 elapsed 합계
+        private float elapsedSum = 0;
+
+        // 애니메이션 시 Player frame
+        private string[] playerFrames = { "(P)", "(p)" };
+        private int frame = 0;
+
         // 건물 유형
         string[][] buildings = new string[][]
         {
@@ -75,6 +88,7 @@ namespace Text_RPG
         {
             DrawTownMap();
             DrawDungeon();
+            DrawAdventureBG();
         }
 
         // 마을 맵 초기화
@@ -200,6 +214,82 @@ namespace Text_RPG
                 Console.WriteLine();
             }
             Console.WriteLine();
+        }
+
+        /////////////////////////////////////////////////////////////////////
+
+        // 랜덤 모험 background 초기화
+        private void DrawAdventureBG()
+        {
+            Random rnd = new Random();
+
+            // 듬성 듬성 나무가 있는 걸로 연출
+            for(int i=0; i<200; i++)
+            {
+                string isTree = (rnd.NextDouble() < 0.3) ? "|" : " ";
+                adventureBG.Add(isTree);
+            }
+        }
+
+        // 랜덤 모험 애니메이션 연출
+        public void DisplayAdventure(float elapsed)
+        {
+            elapsedSum += elapsed;
+
+            if(elapsedSum >= 0.1f)
+            {
+                elapsedSum = 0f;
+                frame++;
+                AdventureAnim(frame);
+            }
+        }
+
+        private void AdventureAnim(int frame)
+        {
+            int midY = adventureHeight / 2;
+
+            // 애니메이션 연출을 위한 frame 단위 작업
+            int startBGIdx = frame % adventureBG.Count; // 리스트 다 돌면 다시 루프 진행
+            string player = playerFrames[(frame / 3) % playerFrames.Length]; // 0.3 간격으로 표시
+
+            // Player는 항상 맵 가운데 배치
+            int playerPosX = adventureWidth / 2 - 1;
+
+            // SetCursorPosition을 이용하여 덮어쓰기를 하므로 한 라인 당 출력
+            string drawLine = "";
+            int baseLine = 1;
+            int endLine = adventureHeight + baseLine;
+
+            for (int line= baseLine; line < endLine; line++)
+            {
+                drawLine = "";
+
+                if(line == midY - 2 || line == midY + 2)
+                {
+                    // 맨 윗 줄과 아랫 줄은 나무 표시
+                    for (int x = 0; x < adventureWidth; x++)
+                        drawLine += adventureBG[(startBGIdx + x) % adventureBG.Count];
+                }
+                else if(line == midY)
+                {
+                    // 중간 줄에는 Player 표시
+                    for(int x=0; x< adventureWidth; x++)
+                    {
+                        if (x == playerPosX)
+                        {
+                            drawLine += player;
+                            x += 2;     // Player는 '(', 'P', ')' 3가지 char로 이루어져있으므로 2개 띄어넘기
+                        }
+                        else drawLine += " ";   // 나머지는 공백
+                    }
+                }
+                else
+                {
+                    drawLine = new string(' ', adventureWidth);
+                }
+
+                ConsoleHelper.WriteLine(drawLine, line);
+            }
         }
     }
 }

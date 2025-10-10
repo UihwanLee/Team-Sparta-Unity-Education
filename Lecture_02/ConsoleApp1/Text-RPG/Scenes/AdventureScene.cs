@@ -89,7 +89,7 @@ namespace Text_RPG.Scenes
             }
 
             // 모험 애니메이션 
-            //UIManager.Instance.DrawAdventure(TimeManager.Instance.Elapsed);
+            map.DisplayAdventure(TimeManager.Instance.Elapsed);
 
             if(hasExecutedList["TimeSet"]) RandomEvent(10.0f);
         }

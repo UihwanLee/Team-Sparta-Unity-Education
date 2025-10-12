@@ -28,6 +28,8 @@ namespace Text_RPG.Scenes
         string choice = "";
         private int goldRestore = 500;
 
+        private RestoreMap map = new RestoreMap();  // 휴식 Map
+
         public RestoreScene(int index) : base(index)
         {
         }
@@ -35,6 +37,9 @@ namespace Text_RPG.Scenes
         public override void Init()
         {
             base.Init();
+
+            // 맵 그리기
+            map.DrawMap();
 
             // 변수 초기화
             baseLine = 10;
@@ -99,6 +104,9 @@ namespace Text_RPG.Scenes
                 }
             }
 
+            // 휴식 애니메이션 
+            map.DisplayMap(TimeManager.Instance.Elapsed);
+
             if (hasExecutedList["TimeSet"])
             {
                 StartRestore(8f);
@@ -129,7 +137,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            ConsoleHelper.WriteLine($"휴식 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            ConsoleHelper.WriteLine($"휴식 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", map.endLine + 2);
 
             // 정해진 시간이 지나면 MainScene로 이동
             if (TimeManager.instance.LocalElapsed >= duration)
@@ -140,7 +148,7 @@ namespace Text_RPG.Scenes
             }
 
             // 휴식 중 깜빡임
-            ConsoleHelper.BlinkingMessageWithDot(baseLine, baseMessage);
+            ConsoleHelper.BlinkingMessageWithDot(map.endLine + 4, baseMessage);
 
             // 이벤트 발생
             if (TimeManager.Instance.LocalElapsed > EventStartTime && TimeManager.Instance.LocalElapsed < EventEndTime)
@@ -164,12 +172,12 @@ namespace Text_RPG.Scenes
             }
 
             // HP 회복 표시
-            ConsoleHelper.WriteLine(TextManager.Restore_Hp(100), baseLine + 2);
+            ConsoleHelper.WriteLine(TextManager.Restore_Hp(100), map.endLine + 6);
 
             // 스태미나 회복 표시
             if (TimeManager.Instance.LocalElapsed > EventStartTime + 1)
             {
-                ConsoleHelper.WriteLine(TextManager.Restore_Stamina(20), baseLine + 4);
+                ConsoleHelper.WriteLine(TextManager.Restore_Stamina(20), map.endLine + 8);
             }
         }
 

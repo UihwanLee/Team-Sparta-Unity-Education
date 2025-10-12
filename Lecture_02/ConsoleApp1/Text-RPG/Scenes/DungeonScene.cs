@@ -41,6 +41,7 @@ namespace Text_RPG.Scenes
         Dungeon dungeon_hard;
 
         private DungeonMap map = new DungeonMap();  // 던전 Map
+        private DungeounCrawlMap dungeounMap = new DungeounCrawlMap(); // 던전 탐험 Map
 
         public DungeonScene(int index) : base(index)
         {
@@ -52,6 +53,7 @@ namespace Text_RPG.Scenes
 
             // 맵 그리기
             map.DrawMap();
+            dungeounMap.DrawMap();
 
             // 변수 초기화
             baseLine = 10;
@@ -138,6 +140,9 @@ namespace Text_RPG.Scenes
                 }
             }
 
+            // 던전 탐험 애니메이션 
+            dungeounMap.DisplayMap(TimeManager.Instance.Elapsed);
+
             if (hasExecutedList["TimeSet"])
             {
                 StartDungeon(current_dungeon);
@@ -157,7 +162,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            ConsoleHelper.WriteLine($"던전 탐험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            ConsoleHelper.WriteLine($"던전 탐험 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", dungeounMap.endLine + 2);
 
             // 정해진 시간이 지나면 던전 클리어 View로 이동
             if (TimeManager.instance.LocalElapsed >= dungeon.duration)
@@ -168,7 +173,7 @@ namespace Text_RPG.Scenes
             }
 
             // 던전 탐험 중 깜빡임
-            ConsoleHelper.BlinkingMessageWithDot(baseLine, baseMessage);
+            ConsoleHelper.BlinkingMessageWithDot(dungeounMap.endLine + 4, baseMessage);
         }
 
         // 던전 클리어

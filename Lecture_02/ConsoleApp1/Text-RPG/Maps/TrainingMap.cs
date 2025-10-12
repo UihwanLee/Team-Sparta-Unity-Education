@@ -10,7 +10,7 @@ namespace Text_RPG.Maps
     public class TrainingMap : Map
     {
         /*
-        * 랜덤 모험 Map
+        * Training Map
         */
 
         // 운동 frame
@@ -111,7 +111,6 @@ namespace Text_RPG.Maps
             {
                 for (int x = 0; x < exercise[y].Length; x++)
                 {
-                    // Start Position 위치 기준으로 사각형 그리기 (좌측 상단 꼭짓점에서 시작)
                     int posX = startX + x;
                     int posY = startY + y;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -15,7 +16,7 @@ namespace Text_RPG.Scenes
          * - 현재 플레이어 정보 확인
          * 
          */
-        public StateScene(int index, MapManager map) : base(index, map)
+        public StateScene(int index) : base(index)
         {
         }
 

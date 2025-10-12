@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -39,13 +40,18 @@ namespace Text_RPG.Scenes
         Dungeon dungeon_normal;
         Dungeon dungeon_hard;
 
-        public DungeonScene(int index, MapManager map) : base(index, map)
+        private DungeonMap map = new DungeonMap();  // 던전 Map
+
+        public DungeonScene(int index) : base(index)
         {
         }
 
         public override void Init()
         {
             base.Init();
+
+            // 맵 그리기
+            map.DrawMap();
 
             // 변수 초기화
             baseLine = 10;

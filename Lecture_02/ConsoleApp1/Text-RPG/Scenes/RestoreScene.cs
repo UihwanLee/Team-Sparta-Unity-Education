@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -27,7 +28,7 @@ namespace Text_RPG.Scenes
         string choice = "";
         private int goldRestore = 500;
 
-        public RestoreScene(int index, MapManager map) : base(index, map)
+        public RestoreScene(int index) : base(index)
         {
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -19,7 +20,7 @@ namespace Text_RPG.Scenes
 
         private Shop shop;
 
-        public ShopScene(int index, MapManager map) : base(index, map)
+        public ShopScene(int index) : base(index)
         {
         }
 

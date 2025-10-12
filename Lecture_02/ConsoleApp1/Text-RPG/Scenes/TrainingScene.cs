@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -18,7 +19,7 @@ namespace Text_RPG.Scenes
          * - 25% 확률 → "하기 싫다... 훈련이..." 획득경험치 30
          * 
          */
-        public TrainingScene(int index, MapManager map) : base(index, map)
+        public TrainingScene(int index) : base(index)
         {
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -34,12 +35,9 @@ namespace Text_RPG.Scenes
 
         Random random = new Random();
 
-        protected MapManager map;   // Scene에서 구현할 Map 정보
-
-        public Scene(int index, MapManager map)
+        public Scene(int index)
         {
             this.index = index;
-            this.map = map;
         }
 
         public virtual void Init()

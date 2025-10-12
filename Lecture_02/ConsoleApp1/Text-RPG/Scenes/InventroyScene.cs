@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -16,7 +17,7 @@ namespace Text_RPG.Scenes
          * - 아이템 장착 / 해제
          * 
          */
-        public InventroyScene(int index, MapManager map) : base(index, map)
+        public InventroyScene(int index) : base(index)
         {
         }
 

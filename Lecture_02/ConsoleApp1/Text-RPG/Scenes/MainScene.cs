@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -23,7 +24,9 @@ namespace Text_RPG.Scenes
          * 
          */
 
-        public MainScene(int index, MapManager map) : base(index, map)
+        private TownMap map = new TownMap();  // 모험 Map
+
+        public MainScene(int index) : base(index)
         {
 
         }
@@ -31,6 +34,9 @@ namespace Text_RPG.Scenes
         public override void Init()
         {
             base.Init();
+
+            // 맵 그리기
+            map.DrawMap();
 
             // bool 값 초기화
             hasExecutedList["TimeSet"] = false;

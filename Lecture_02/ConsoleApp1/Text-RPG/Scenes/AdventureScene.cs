@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -29,13 +30,18 @@ namespace Text_RPG.Scenes
 
         private float adventureDuration = 8.0f; // 랜덤 모험 duration
 
-        public AdventureScene(int index, MapManager map) : base(index, map)
+        private AdventureMap map = new AdventureMap();  // 모험 Map
+
+        public AdventureScene(int index) : base(index)
         {
         }
 
         public override void Init()
         {
             base.Init();
+
+            // 맵 그리기
+            map.DrawMap();
 
             // 변수 초기화
             eventIdx = -1;
@@ -95,7 +101,7 @@ namespace Text_RPG.Scenes
             }
 
             // 모험 애니메이션 
-            map.DisplayAdventure(TimeManager.Instance.Elapsed, isFindMonster);
+            map.DisplayMap(TimeManager.Instance.Elapsed, isFindMonster);
 
             if(hasExecutedList["TimeSet"]) RandomEvent(adventureDuration);
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Text_RPG.Maps;
 
 namespace Text_RPG.Scenes
 {
@@ -32,13 +33,18 @@ namespace Text_RPG.Scenes
         private int eventOption = -1;
         private float patrolTownDuration = 8f;
 
-        public TownScene(int index, MapManager map) : base(index, map)
+        private PatrolTownMap map = new PatrolTownMap();  // 마을 순찰 Map
+
+        public TownScene(int index) : base(index)
         {
         }
 
         public override void Init()
         {
             base.Init();
+
+            // 맵 그리기
+            map.DrawMap();
 
             // 변수 초기화
             eventIdx = -1;
@@ -95,7 +101,7 @@ namespace Text_RPG.Scenes
             }
 
             // 마을 순찰 애니메이션 
-            map.DisplayPatrolTown(TimeManager.Instance.Elapsed, eventOption);
+            map.DisplayMap(TimeManager.Instance.Elapsed, eventOption);
 
             if (hasExecutedList["TimeSet"]) PatrolTownView(patrolTownDuration);
         }

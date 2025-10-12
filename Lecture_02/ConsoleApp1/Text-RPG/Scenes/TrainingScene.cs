@@ -25,15 +25,20 @@ namespace Text_RPG.Scenes
 
         private int eventIdx = 0;
         private int gainExp = 0;
-        private int baseLine = 0;
         private float EventStartTime = 3f;
         private float EventEndTime = 6f;
+        private int eventOption = 0;
 
         private float restoreDuration = 6.0f;
+
+        private TrainingMap map = new TrainingMap();  // 훈련 Map
 
         public override void Init()
         {
             base.Init();
+
+            // 맵 그리기
+            map.DrawMap();
 
             // 캐릭터 추가
             player = GameManager.Instance.GetPlayer();
@@ -48,9 +53,9 @@ namespace Text_RPG.Scenes
             // 변수 초기화
             eventIdx = 0;
             gainExp = 0;
-            baseLine = 10;
             EventStartTime = 3f;
             EventEndTime = 6f;
+            eventOption = 0;
 
             // 처음 View 설정: StarView
             ChangeView(TrainingView);
@@ -93,6 +98,9 @@ namespace Text_RPG.Scenes
                 EventEndTime = EventStartTime + 2.0f;
             }
 
+            // 운동 애니메이션 
+            map.DisplayMap(TimeManager.Instance.Elapsed, eventOption);
+
             if (hasExecutedList["TimeSet"]) TrainingEvent(restoreDuration);
         }
 
@@ -102,7 +110,7 @@ namespace Text_RPG.Scenes
             // 시간 경과 초기화 : 게임 전체 시간 경과 - 함수 호출 시간 대 시간 경과
             TimeManager.Instance.LocalElapsed = TimeManager.Instance.Elapsed - startTime;
 
-            ConsoleHelper.WriteLine($"훈련 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", 8);
+            ConsoleHelper.WriteLine($"훈련 시간: {TimeManager.Instance.LocalElapsed:0.#} (초)", map.endLine + 2);
 
             // 정해진 시간이 지나면 MainScene으로 이동
             if(TimeManager.instance.LocalElapsed >= duration)
@@ -114,7 +122,7 @@ namespace Text_RPG.Scenes
 
             // 훈련 중 깜빡임
             string baseMessage = "훈련 중";
-            ConsoleHelper.BlinkingMessageWithDot(baseLine, baseMessage);
+            ConsoleHelper.BlinkingMessageWithDot(map.endLine + 4, baseMessage);
 
             // 이벤트 발생
             if (TimeManager.Instance.LocalElapsed > EventStartTime && TimeManager.Instance.LocalElapsed < EventEndTime)
@@ -137,12 +145,12 @@ namespace Text_RPG.Scenes
             }
 
             // 이벤트 텍스트 표시
-            ConsoleHelper.WriteLine(GetTrainingEventText(eventIdx), baseLine + 2);
+            ConsoleHelper.WriteLine(GetTrainingEventText(eventIdx), map.endLine + 6);
 
             // 이벤트 효과 표시
             if (TimeManager.Instance.LocalElapsed > EventStartTime + 1)
             {
-                ConsoleHelper.WriteLine(TextManager.GainExp(gainExp), baseLine + 4);
+                ConsoleHelper.WriteLine(TextManager.GainExp(gainExp), map.endLine + 8);
             }
         }
 
@@ -162,9 +170,9 @@ namespace Text_RPG.Scenes
             // 예외처리
             if (value < 0 || value > 100) return 0;
 
-            if (value > 0 && value <= 15) return 60;            // 훈련 대성공 이벤트
-            else if (value > 15 && value <= 75) return 40;      // 훈련 성공 이벤트
-            else return 30;                                     // 훈련 실패 이벤트
+            if (value > 0 && value <= 15) { eventOption = 1; return 60; }            // 훈련 대성공 이벤트
+            else if (value > 15 && value <= 75) { eventOption = 0; return 40; }      // 훈련 성공 이벤트
+            else { eventOption = 2; return 30; }                                     // 훈련 실패 이벤트
         }
 
         public override void ChangeView(Action<float> view)

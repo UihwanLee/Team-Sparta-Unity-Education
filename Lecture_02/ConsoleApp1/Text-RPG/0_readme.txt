@@ -50,6 +50,7 @@
 
 6. Player - Inventory - Item 구조
 - Player 객체 내 Inventory를 가지고 있으며 Inveontory는 List<Item>을 통해 아이템을 관리합니다.
+- Player내 있는 Weapon, Armor 객체를 Item 정보를 가져올 때 Double Dispatch 패턴을 활용하였습니다.
 
 7. Item
 - Item을 상속하는 Weapon, Armor 클래스를 만들었으며 override를 통해 각 다른 기능을 구현하도록 설계하였습니다.
@@ -92,8 +93,12 @@ staic으로 구현하였습니다. 이 과정에서 싱글톤과 static을 활�
 그래서 어디까지 기능을 확장할지에 대한 고민이 많았고, UIManager가 원래 UI 관리, Text 관리, Console 관리에서 TextManager, ConsoleHelper를 추가해
 분리하는 작업까지 진행하였습니다. 이렇게 컴포넌트화 시키는 범위를 어떤식으로 진행하면 좋을지 고민이 많습니다.
 
-3. Monster 클래스 구현 실패
-- 원래 Character를 상속하는 Player와 Monster 클래스를 만들어 던전 내 몬스터 전투를 구현하지 못해 아쉽습니다.
+3. Player-Inventory-Item 관계
+- 본 과제에서 Item에는 Weapon과 Armor 객체가 존재하고 Player에 대한 장착에 대한 기능을 구현할 때 저는 Player내 Weapon, Armor 객체를 만들어
+해결하려고 하였습니다. 정확히는 Inventory내 Weapon, Armor 객체를 Player에 있는 Weapon, Armor 객체에 넣어서 같은 것을 참조하도록 구현하려고 했습니다.
+Double Dispatch 패턴이라는 것을 공부하며 Inventory->Item->Player 순으로 호출하며 Player 내에서 장비 타입에 따라 다르게 수행했니다.
+하지만 이 과정에서 Player 내 EquipWeapon, EquipArmor라는 2가지 메서드를 추가하였는데 Player 클래스는 후에 다른 기능을 추가한다하면 
+너무 무거워지는게 아닐까 고민을 많이 했습니다.
 
 
 

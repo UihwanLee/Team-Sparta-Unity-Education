@@ -15,3 +15,7 @@
  - 개인 블로그(https://springpool.tistory.com/entry/%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84-%ED%8C%80%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80-%EC%82%AC%EC%A0%84OT-%EC%88%98%EC%97%85-%EC%B0%B8%EC%97%AC)
 
 개인 블로그를 올리며 학습한 내용들을 정리할 예정이다.
+
+## 3. 과제 수행
+
+- [1️⃣ **Assignment 1 - Text RPG**](/Lecture_02/Readme_TextRPG.md)

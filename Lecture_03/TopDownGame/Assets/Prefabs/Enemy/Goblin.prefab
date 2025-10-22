@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3098330962270942964}
   m_Layer: 7
-  m_Name: WeaponRenderer
+  m_Name: WeaponPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ Transform:
   m_GameObject: {fileID: 2931733769559683028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.865, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: 6751914258926958966}
   weaponPivot: {fileID: 3098330962270942964}
-  WeaponPrefab: {fileID: 0}
+  WeaponPrefab: {fileID: 3980043028301288727, guid: 7cf15b3de6a50b64da76a660eee0d877, type: 3}
   followRange: 15
 --- !u!1 &3257121961155205901
 GameObject:

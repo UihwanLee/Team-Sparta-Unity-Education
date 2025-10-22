@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
 
     private EnemyManager enemyManager;
 
+    private UIManager uiManager;
+    public static bool isFirstLoading = true;
+
     private void Awake()
     {
         Instance = this;
@@ -22,10 +25,29 @@ public class GameManager : MonoBehaviour
 
         enemyManager = GetComponentInChildren<EnemyManager>();
         enemyManager.Init(this);
+
+        uiManager = FindObjectOfType<UIManager>();
+
+        _PlayerResourceController = player.GetComponent<ResourceController>();
+        _PlayerResourceController.RemoveHealthChangeEvent(uiManager.ChangePlayerHP);
+        _PlayerResourceController.AddHealthChangeEvent(uiManager.ChangePlayerHP);
+    }
+
+    private void Start()
+    {
+        if (!isFirstLoading)
+        {
+            StartGame();
+        }
+        else
+        {
+            isFirstLoading = false;
+        }
     }
 
     public void StartGame()
     {
+        uiManager.SetPlayGame();
         StartNextWave();
     }
 
@@ -33,6 +55,7 @@ public class GameManager : MonoBehaviour
     {
         currentWaveIndex += 1;
         enemyManager.StartWave(1 + currentWaveIndex / 5);
+        uiManager.ChangeWave(currentWaveIndex);
     }
 
     public void EndOfWave()
@@ -43,13 +66,6 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         enemyManager.StopWave();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            StartGame();
-        }
+        uiManager.SetGameOver();
     }
 }

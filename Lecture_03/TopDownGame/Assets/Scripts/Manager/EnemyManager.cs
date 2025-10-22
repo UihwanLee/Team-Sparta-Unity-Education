@@ -17,8 +17,21 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float timeBetweenSpawns = 0.2f;
     [SerializeField] private float timeBetweenWaves = 1f;
 
+    GameManager gameManager;
+
+    public void Init(GameManager gameManager)
+    {
+        this.gameManager = gameManager;
+    }
+
     public void StartWave(int waveCount)
     {
+        if(waveCount <= 0)
+        {
+            gameManager.EndOfWave();
+            return;
+        }
+
         if(waveRoutine != null)
             StopCoroutine(waveRoutine);
 
@@ -77,14 +90,6 @@ public class EnemyManager : MonoBehaviour
             Vector3 size = new Vector3(area.width, area.height);
 
             Gizmos.DrawCube(center, size);
-        }
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            StartWave(1);
         }
     }
 }
